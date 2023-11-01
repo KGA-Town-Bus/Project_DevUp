@@ -7,7 +7,7 @@ const router = express.Router()
  *  /:
  *    get:
  *      tags:
- *      - BACK Main
+ *      - FRONT Main
  *      description: 메인
  *      parameters:
  *        - in: query
