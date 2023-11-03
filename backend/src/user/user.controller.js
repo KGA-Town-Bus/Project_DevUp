@@ -11,10 +11,7 @@ class UserController {
 
       res.status(201).json(data)
 
-      return data;
-
     }catch(e){
-
       next(e)
     }
   }

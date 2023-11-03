@@ -15,9 +15,15 @@ const options = {
       },
     ],
   },
-  apis: [`${__dirname}/../src/*.js`, `${__dirname}/../src/routes/*.js`, `${__dirname}/../src/models/*.js`]
+  apis: [
+    `${__dirname}/../src/*.js`,
+    `${__dirname}/../src/router/*.js`,
+    `${__dirname}/../src/**/*.router.js`,
+    `${__dirname}/../src/models/*.js`
+  ]
 
 }
+console.log(options.apis)
 
 const backSpecs = swaggerJsdoc(options);
 

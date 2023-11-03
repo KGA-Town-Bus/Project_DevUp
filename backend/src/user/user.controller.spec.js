@@ -5,35 +5,25 @@ const http = require("node-mocks-http");
 const {UserSignupRequestDTO} = require("./dto/user.signup.request.dto");
 const {BadRequest} = require("./exception/customException");
 const {Logger} = require("sequelize/lib/utils/logger");
-
-const correctData = {
-  userUid: 1,
+const correctRequestData = {
   userId: "testId",
   userPassword: "testPassword",
   userName: "testName",
   userNickname: "testNickname",
-  userProvider: "service",
-  userCreatedAt: Date.now(),
-  userAccountLocked: false,
-  userProfile: "http://abcd/image1.png",
-  roleAuthority: "user"
+  userProfile: "이미지 데이터",
+  userEmail:"abcd@naver.com"
 }
-
-const wrongData = {
-  userUid: 1,
+const wrongRequestData = {
   userId: "testId",
   userPassword: "testPassword",
   // userName: "testName",
   userNickname: "testNickname",
-  userProvider: "service",
-  userCreatedAt: Date.now(),
-  userAccountLocked: false,
-  userProfile: "http://abcd/image1.png",
-  roleAuthority: "user"
+  userProfile: "이미지 데이터",
+  userEmail:"abcd@naver.com"
+
 }
 
 const correctReturnData = {
-  userUid: 1,
   userId: "testId",
   userName: "testName",
   userNickname: "testNickname",
@@ -41,12 +31,13 @@ const correctReturnData = {
   userCreatedAt: Date.now(),
   userAccountLocked: false,
   userProfile: "http://abcd/image1.png",
-  roleAuthority: "user"
+  roleAuthority: "user",
+  userEmail:"abcd@naver.com"
 }
 
 
 
-describe("File:: user.controller.js ", () => {
+describe("File:: user.controller.js", () => {
 
   let req, res, next
   userService.signup = jest.fn()
@@ -73,14 +64,14 @@ describe("File:: user.controller.js ", () => {
     describe("요청 바디 검증", () => {
       it("요청 바디 검증 성공", async() => {
         const {UserSignupRequestDTO} = require("./dto/user.signup.request.dto")
-        new UserSignupRequestDTO(correctData)
+        new UserSignupRequestDTO(correctRequestData)
       })
 
       it("요청 바디 검증 실패", async() => {
 
         const {UserSignupRequestDTO} = require("./dto/user.signup.request.dto")
         expect(() => {
-          new UserSignupRequestDTO(wrongData)
+          new UserSignupRequestDTO(wrongRequestData)
         }).toThrow()
       })
     })
@@ -96,14 +87,12 @@ describe("File:: user.controller.js ", () => {
         const response = Promise.resolve(correctReturnData)
         userService.signup.mockReturnValue(response);
 
-        req.body = correctData
-        const result = await userController.postSignup(req,res,next)
-
-
+        req.body = correctRequestData
+        await userController.postSignup(req,res,next)
 
         expect(res.statusCode).toBe(201)
         expect(res._isEndCalled()).toBe(true)
-        expect(res._getJSONData()).toStrictEqual(correctData)
+        expect(res._getJSONData()).toStrictEqual(correctReturnData)
       })
 
     })
