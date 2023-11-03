@@ -7,6 +7,7 @@ const config = {
   dialect: process.env["DB_DIALECT"],
 };
 
+
 const sequelize = new Sequelize(
   process.env["DB_DATABASE"],
   process.env["DB_USERNAME"],
@@ -14,7 +15,7 @@ const sequelize = new Sequelize(
   config
 );
 
-const entityList = [`../user/models/user`, `../board/models/board`];
+const entityList = [`../user/user`, `../board/models/board`];
 
 entityList.forEach((entity, index) => {
   const model = require(entityList[index])(sequelize, Sequelize.DataTypes);

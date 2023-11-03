@@ -9,7 +9,10 @@ app.use("/api-docs", swaggerUi.serveFiles(backSpecs), swaggerUi.setup(backSpecs,
 
 
 
+app.use((error, req, res, next) => {
 
+  res.status(error.statusCode).json(error);
+})
 
 
 

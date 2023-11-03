@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+const userRouter = require("./user/user.router")
 
 // 참고 용도
 /**
@@ -25,6 +26,9 @@ const router = express.Router()
 router.get("/", (req, res, next) => {
   res.send("Swagger Test")
 })
+
+
+router.use("/users",userRouter)
 
 module.exports = router
 
