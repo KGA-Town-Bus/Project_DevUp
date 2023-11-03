@@ -3,7 +3,7 @@ const userService = require("./user.service")
 
 const http = require("node-mocks-http");
 const {UserSignupRequestDTO} = require("./dto/user.signup.request.dto");
-const {BadRequest} = require("./exception/customException");
+const {BadRequest} = require("../lib/customException");
 const {Logger} = require("sequelize/lib/utils/logger");
 const correctRequestData = {
   userId: "testId",

@@ -1,8 +1,8 @@
-const UserBaseDTO = require("./user.base.dto")
-const {BadRequest} = require("../exception/customException");
+const baseDTO = require("../../lib/base.dto")
+const {BadRequest} = require("../../lib/customException");
 
 
-class UserSignupRequestDTO extends UserBaseDTO {
+class UserSignupRequestDTO extends baseDTO {
   userId
   userPassword
   userName

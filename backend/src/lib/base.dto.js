@@ -1,4 +1,4 @@
-class UserBaseDto {
+class BaseDto {
   validate(props, BadRequest){
     if(!props) throw new BadRequest("Body 내용이 비어있습니다.")
 
@@ -22,4 +22,4 @@ class UserBaseDto {
   }
 
 }
-module.exports = UserBaseDto;
+module.exports = BaseDto;
