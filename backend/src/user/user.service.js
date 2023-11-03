@@ -6,6 +6,7 @@ class UserService {
 
   async signup (dto)  {
     try{
+
       const userEntity = this.User.build({
         Users_id: dto.userId,
         Users_password: dto.userPassword,
@@ -21,7 +22,7 @@ class UserService {
       });
 
 
-      const response = userEntity.save()
+      const response = await userEntity.save()
 
       return response
     }catch(e){

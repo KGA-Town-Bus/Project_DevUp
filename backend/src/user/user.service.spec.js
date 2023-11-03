@@ -38,6 +38,9 @@ describe("File:: user.service.js", () => {
   }
 
 
+
+
+
   beforeEach(() => {
     userService = new UserService(User);
   });
@@ -54,21 +57,21 @@ describe("File:: user.service.js", () => {
 
     describe("응답 확인", () => {
       it("응답 성공", async() => {
-        User.build.mockResolvedValue(correctReturnData)
+        User.build.mockReturnValue({correctReturnData, save:jest.fn()})
+        const save = User.build().save
+        save.mockResolvedValue({correctReturnData})
+
+
         const dto = correctRequestData
         const response = await userService.signup(dto)
 
-        expect(User.build).toBeCalledWith(dto)
-        expect(response).toStrictEqual(correctReturnData)
+        expect(response).toStrictEqual({correctReturnData})
       })
 
       it("응답 실패", async() => {
-        User.build.mockResolvedValue({save: jest.fn})
-
-        User.build.save.mockRejectedValue(new Error("User Error"))
-
-
-        // User.build.mockRejectedValue(new Error("User Error"))
+        User.build.mockReturnValue({correctReturnData, save:jest.fn()})
+        const save = User.build().save
+        save.mockRejectedValue(new Error("User Error"))
 
         const dto = wrongRequestData
 
