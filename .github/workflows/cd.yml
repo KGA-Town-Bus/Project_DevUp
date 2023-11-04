@@ -47,7 +47,7 @@ jobs:
           npm install
 
       - name: zip file
-        run: zip -r code.zip ./dist index.js ./src ./scripts ./appspec.yml ./.env ./package.json
+        run: zip -r code.zip ./dist index.js ./src ./frontend ./backend ./scripts ./appspec.yml ./.env ./package.json
 
       - name: AWS configure credentials
         uses: aws-actions/configure-aws-credentials@v1
