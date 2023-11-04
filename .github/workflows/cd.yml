@@ -53,7 +53,7 @@ jobs:
           done
 
       - name: zip file
-        run: zip -r code.zip ./dist index.js ./src ./frontend ./backend ./scripts ./appspec.yml ./.env ./package.json ./package-lock.json
+        run: zip -r code.zip ./dist index.js ./src ./frontend ./backend ./scripts ./appspec.yml ./.env ./package.json ./package-lock.json ./node_modules
 
       - name: AWS configure credentials
         uses: aws-actions/configure-aws-credentials@v1
