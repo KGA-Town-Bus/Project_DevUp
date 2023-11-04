@@ -13,6 +13,11 @@ permissions:
     mode: '0755'
 
 hooks:
+  BeforeInstall:
+    - location: scripts/before-install.sh
+      timeout: 300
+      runas: root
+
   AfterInstall:
     - location: scripts/after-deploy.sh
       timeout: 300

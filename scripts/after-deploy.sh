@@ -1,14 +1,10 @@
 #!/bin/bash
 
-# Navigate to the project directory
 REPOSITORY=/home/ubuntu/build
 cd $REPOSITORY
 
-# Install dependencies
 npm install
 
-
-# .env
 source .env
 echo "FRONTEND_SERVER_PORT: $FRONTEND_SERVER_PORT"
 echo "BACKEND_SERVER_PORT: $BACKEND_SERVER_PORT"
