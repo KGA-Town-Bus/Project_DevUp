@@ -10,16 +10,22 @@ npm install
 
 # .env
 source .env
-echo "SERVER_PORT: $SERVER_PORT"
+echo "FRONTEND_SERVER_PORT: $FRONTEND_SERVER_PORT"
+echo "BACKEND_SERVER_PORT: $BACKEND_SERVER_PORT"
 
-# 해당 포트를 사용하는 프로세스의 PID를 찾음
-PID=$(lsof -t -i:$SERVER_PORT)
+PID_FRONTEND=$(lsof -t -i:$FRONTEND_SERVER_PORT)
+PID_BACKEND=$(lsof -t -i:$BACKEND_SERVER_PORT)
 
-# PID가 0보다 큰지 확인하여 해당 포트를 사용하는 프로세스가 존재하는지 확인
-if [ $PID -gt 0 ]; then
-    # 프로세스가 존재하면 종료
-    echo "포트 $PORT를 사용하는 프로세스를 종료합니다 (PID: $PID)"
-    kill -9 $PID
+if [ $PID_FRONTEND -gt 0 ]; then
+    echo "포트 $FRONTEND_SERVER_PORT를 사용하는 프론트엔드 프로세스를 종료합니다 (PID: $PID_FRONTEND)"
+    kill -9 $PID_FRONTEND
 else
-    echo "포트 $PORT를 사용하는 프로세스가 없습니다."
+    echo "포트 $FRONTEND_SERVER_PORT를 사용하는 프론트엔드 프로세스가 없습니다."
+fi
+
+if [ $PID_BACKEND -gt 0 ]; then
+    echo "포트 $BACKEND_SERVER_PORT를 사용하는 백엔드 프로세스를 종료합니다 (PID: $PID_BACKEND)"
+    kill -9 $PID_BACKEND
+else
+    echo "포트 $BACKEND_SERVER_PORT를 사용하는 백엔드 프로세스가 없습니다."
 fi
