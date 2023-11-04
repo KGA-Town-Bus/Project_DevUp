@@ -29,7 +29,7 @@ const {
 
 describe("board service", () => {
   beforeAll(async () => {
-    await sequelize.authenticate();
+    await sequelize.sync({ force: false });
   });
   afterAll(async () => {
     await sequelize.close();
