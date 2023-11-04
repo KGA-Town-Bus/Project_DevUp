@@ -3,8 +3,6 @@
 REPOSITORY=/home/ubuntu/build
 cd $REPOSITORY
 
-npm install
-
 source .env
 echo "FRONTEND_SERVER_PORT: $FRONTEND_SERVER_PORT"
 echo "BACKEND_SERVER_PORT: $BACKEND_SERVER_PORT"
