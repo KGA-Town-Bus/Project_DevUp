@@ -19,7 +19,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: npm install
-        # 여기서 하위 폴더로 이동하고 해당 폴더에 있는 package.json을 찾아서 npm install 실행
       - name: Install dependencies in subfolders
         run: |
           for dir in $(find . -type d -name "node_modules" -prune -o -name "package.json" -exec dirname {} \;); do

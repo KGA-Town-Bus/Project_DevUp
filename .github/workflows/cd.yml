@@ -46,6 +46,12 @@ jobs:
         run: |
           npm install
 
+      - name: Install dependencies in subfolders
+        run: |
+          for dir in $(find . -type d -name "node_modules" -prune -o -name "package.json" -exec dirname {} \;); do
+            (cd "$dir" && npm install)
+          done
+
       - name: zip file
         run: zip -r code.zip ./dist index.js ./src ./frontend ./backend ./scripts ./appspec.yml ./.env ./package.json
 
