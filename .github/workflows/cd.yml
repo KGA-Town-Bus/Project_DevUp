@@ -1,0 +1,67 @@
+name: Node.js CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.15.1]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Check Npm -v
+        run: npm -v
+
+      - name: create env file
+        working-directory: ./
+        run: |
+          pwd
+          touch .env
+          echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo DB_DATABASE=${{ secrets.DB_DATABASE }} >> .env
+          echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo DB_DIALECT=${{ secrets.DB_DIALECT }} >> .env
+          echo FRONTEND_SERVER_IP=${{ secrets.FRONTEND_SERVER_IP }} >> .env
+          echo FRONTEND_SERVER_PORT=${{ secrets.FRONTEND_SERVER_PORT }} >> .env
+          echo BACKEND_SERVER_IP=${{ secrets.BACKEND_SERVER_IP }} >> .env
+          echo BACKEND_SERVER_PORT=${{ secrets.BACKEND_SERVER_PORT }} >> .env
+          cat .env
+
+      - name: build server files
+        working-directory: ./
+        run: |
+          npm install
+
+      - name: zip file
+        run: zip -r code.zip ./dist index.js ./src ./scripts ./appspec.yml ./.env ./package.json
+
+      - name: AWS configure credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./code.zip s3://ci-cd-express/deploy/
+
+      - name: deploy with AWS codeDeploy
+        run: aws deploy create-deployment
+          --application-name express-codedeploy
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name EXPRESS-GROUP
+          --s3-location bucket=ci-cd-express,bundleType=zip,key=deploy/code.zip

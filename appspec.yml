@@ -1,0 +1,29 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/build
+    overwrite: yes
+
+permissions:
+  - object: /home/ubuntu
+    pattern: '**'
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
+
+hooks:
+  AfterInstall:
+    - location: scripts/after-deploy.sh
+      timeout: 300
+      runas: root
+
+  ApplicationStart:
+    - location: scripts/application-start.sh
+      timeout: 300
+      runas: root
+
+  ValidateService:
+    - location: scripts/validate-service.sh
+      timeout: 300
+      runas: root
