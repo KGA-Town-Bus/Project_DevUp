@@ -1,266 +1,281 @@
-const BaseDTO = require("./base.dto");
+const BaseDTO = require("../../lib/base.dto");
+const { BadRequest } = require("../../lib/customException");
 
-class PostsCreateRequestDTO extends BaseDTO {
-  Posts_title;
-  Posts_content;
-  Posts_writer;
-
-  constructor(body) {
-    super();
-    this.Posts_title = body.Posts_title;
-    this.Posts_content = body.Posts_content;
-    this.Posts_writer = body.Posts_writer;
-    this.validate(this);
-  }
-}
-
-class PostsCreateResponseDTO extends BaseDTO {
-  Posts_uid;
-  Posts_title;
-  Posts_writer;
-  Posts_created_at;
-
-  constructor(response) {
-    super();
-    this.Posts_uid = response.Posts_uid;
-    this.Posts_title = response.Posts_title;
-    this.Posts_writer = response.Posts_writer;
-    this.Posts_created_at = this.toDate(response.Posts_created_at);
-    this.validate(this);
-  }
-}
-
-class PostsReadRequestDTO extends BaseDTO {
-  Posts_uid;
+class PostCreateRequestDTO extends BaseDTO {
+  postTitle;
+  postContent;
+  postWriter;
 
   constructor(body) {
     super();
-    this.Posts_uid = body.Posts_uid;
-    this.validate(this);
+    this.postTitle = body.postTitle;
+    this.postContent = body.postContent;
+    this.postWriter = body.postWriter;
+    this.validate(this, BadRequest);
   }
 }
 
-class PostsReadResponseDTO extends BaseDTO {
-  Posts_uid;
-  Posts_title;
-  Posts_content;
-  Posts_writer;
-  Posts_created_at;
+class PostCreateResponseDTO extends BaseDTO {
+  postUid;
+  message;
 
   constructor(response) {
     super();
-    this.Posts_uid = response.Posts_uid;
-    this.Posts_title = response.Posts_title;
-    this.Posts_content = response.Posts_content;
-    this.Posts_writer = response.Posts_writer;
-    this.Posts_created_at = this.toDate(response.Posts_created_at);
-    this.validate(this);
+    this.postUid = response.postUid;
+    this.message = "게시물이 성공적으로 생성되었습니다.";
+    this.validate(this, BadRequest);
   }
 }
 
-class PostsUpdateRequestDTO extends BaseDTO {
-  Posts_uid;
-  Posts_title;
-  Posts_content;
+class PostReadRequestDTO extends BaseDTO {
+  postUid;
 
   constructor(body) {
     super();
-    this.Posts_uid = body.Posts_uid;
-    this.Posts_title = body.Posts_title;
-    this.Posts_content = body.Posts_content;
-    this.validate(this);
+    this.postUid = body.postUid;
+    this.validate(this, BadRequest);
   }
 }
 
-class PostsUpdateResponseDTO extends BaseDTO {
-  Posts_uid;
-  Posts_title;
-  Posts_content;
-  Posts_created_at;
+class PostReadAllResponseDTO extends BaseDTO {
+  postUid;
+  postTitle;
+  postContent;
+  postWriter;
+  postCreatedAt;
 
   constructor(response) {
     super();
-    this.Posts_uid = response.Posts_uid;
-    this.Posts_title = response.Posts_title;
-    this.Posts_content = response.Posts_content;
-    this.Posts_created_at = this.toDate(response.Posts_created_at);
-    this.validate(this);
+    this.postUid = response.Posts_uid;
+    this.postTitle = response.Posts_title;
+    this.postContent = response.Posts_content;
+    this.postWriter = response.Posts_writer;
+    this.postCreatedAt = this.toDate(response.Posts_created_at);
   }
 }
 
-class PostsDeleteRequestDTO extends BaseDTO {
-  Posts_uid;
+class PostReadResponseDTO extends BaseDTO {
+  postUid;
+  postTitle;
+  postContent;
+  postWriter;
+  postCreatedAt;
+
+  constructor(response) {
+    super();
+    this.postUid = response.Posts_uid;
+    this.postTitle = response.Posts_title;
+    this.postContent = response.Posts_content;
+    this.postWriter = response.Posts_writer;
+    this.postCreatedAt = this.toDate(response.Posts_created_at);
+    this.validate(this, BadRequest);
+  }
+}
+
+class PostUpdateRequestDTO extends BaseDTO {
+  postUid;
+  postTitle;
+  postContent;
 
   constructor(body) {
     super();
-    this.Posts_uid = body.Posts_uid;
-    this.validate(this);
+    this.postUid = body.postUid;
+    this.postTitle = body.postTitle;
+    this.postContent = body.postContent;
+    this.validate(this, BadRequest);
   }
 }
 
-class CommentsCreateRequestDTO extends BaseDTO {
-  Posts_uid;
-  comment_content;
-  comment_writer;
+class PostUpdateResponseDTO extends BaseDTO {
+  postUid;
+  postTitle;
+  postContent;
+  postCreatedAt;
+  message;
+
+  constructor(response) {
+    super();
+    this.postUid = response.Posts_uid;
+    this.postTitle = response.Posts_title;
+    this.postContent = response.Posts_content;
+    this.postCreatedAt = this.toDate(response.Posts_created_at);
+    this.message = "게시물이 성공적으로 수정되었습니다.";
+    this.validate(this, BadRequest);
+  }
+}
+
+class PostDeleteRequestDTO extends BaseDTO {
+  postUid;
 
   constructor(body) {
     super();
-    this.Posts_uid = body.Posts_uid;
-    this.comment_content = body.comment_content;
-    this.comment_writer = body.comment_writer;
-    this.validate(this);
+    this.postUid = body.postUid;
+    this.validate(this, BadRequest);
   }
 }
 
-class CommentsCreateResponseDTO extends BaseDTO {
-  comment_id;
-  Posts_uid;
-  comment_content;
-  comment_writer;
-  comment_created_at;
-
-  constructor(response) {
-    super();
-    this.comment_id = response.comment_id;
-    this.Posts_uid = response.Posts_uid;
-    this.comment_content = response.comment_content;
-    this.comment_writer = response.comment_writer;
-    this.comment_created_at = this.toDate(response.comment_created_at);
-    this.validate(this);
-  }
-}
-
-class CommentsReadResponseDTO extends BaseDTO {
-  comment_id;
-  Posts_uid;
-  comment_content;
-  comment_writer;
-  comment_created_at;
-
-  constructor(response) {
-    super();
-    this.comment_id = response.comment_id;
-    this.Posts_uid = response.Posts_uid;
-    this.comment_content = response.comment_content;
-    this.comment_writer = response.comment_writer;
-    this.comment_created_at = this.toDate(response.comment_created_at);
-    this.validate(this);
-  }
-}
-
-class CommentsUpdateRequestDTO extends BaseDTO {
-  comment_id;
-  comment_content;
+class CommentCreateRequestDTO extends BaseDTO {
+  postUid;
+  commentContent;
+  commentWriter;
 
   constructor(body) {
     super();
-    this.comment_id = body.comment_id;
-    this.comment_content = body.comment_content;
-    this.validate(this);
+    this.postUid = body.postUid;
+    this.commentContent = body.commentContent;
+    this.commentWriter = body.commentWriter;
+    this.validate(this, BadRequest);
   }
 }
-
-class CommentsUpdateResponseDTO extends BaseDTO {
-  comment_id;
-  comment_content;
-  comment_updated_at;
+class CommentCreateResponseDTO extends BaseDTO {
+  commentUid;
+  postUid;
+  commentContent;
+  commentWriter;
+  commentCreatedAt;
 
   constructor(response) {
     super();
-    this.comment_id = response.comment_id;
-    this.comment_content = response.comment_content;
-    this.comment_updated_at = this.toDate(response.comment_updated_at);
-    this.validate(this);
+    this.commentUid = response.Comment_uid;
+    this.postUid = response.Post_uid;
+    this.commentContent = response.Comment_content;
+    this.commentWriter = response.Comment_writer;
+    this.commentCreatedAt = this.toDate(response.Comment_created_at);
+    this.validate(this, BadRequest);
+  }
+}
+class CommentReadResponseDTO extends BaseDTO {
+  commentUid;
+  postUid;
+  commentContent;
+  commentWriter;
+  commentCreatedAt;
+
+  constructor(response) {
+    super();
+    this.commentUid = response.Comment_uid;
+    this.postUid = response.Post_uid;
+    this.commentContent = response.Comment_content;
+    this.commentWriter = response.Comment_writer;
+    this.commentCreatedAt = this.toDate(response.Comment_created_at);
+    this.validate(this, BadRequest);
   }
 }
 
-class CommentsDeleteRequestDTO extends BaseDTO {
-  comment_id;
+class CommentUpdateRequestDTO extends BaseDTO {
+  commentUid;
+  commentContent;
 
   constructor(body) {
     super();
-    this.comment_id = body.comment_id;
-    this.validate(this);
+    this.commentUid = body.commentUid;
+    this.commentContent = body.commentContent;
+    this.validate(this, BadRequest);
   }
 }
 
-class CommentsDeleteResponseDTO extends BaseDTO {
-  comment_id;
-  comment_deleted_at;
+class CommentUpdateResponseDTO extends BaseDTO {
+  commentUid;
+  commentContent;
+  commentUpdatedAt;
 
   constructor(response) {
     super();
-    this.comment_id = response.comment_id;
-    this.comment_deleted_at = this.toDate(response.comment_deleted_at);
-    this.validate(this);
+    this.commentUid = response.Comment_uid;
+    this.commentContent = response.Comment_content;
+    this.commentUpdatedAt = this.toDate(response.Comment_updated_at);
+    this.validate(this, BadRequest);
   }
 }
 
-class IncreamentHitRequestDTO extends BaseDTO {
-  Posts_uid;
+class CommentDeleteRequestDTO extends BaseDTO {
+  commentUid;
 
   constructor(body) {
     super();
-    this.Posts_uid = body.Posts_uid;
-    this.validate(this);
+    this.commentUid = body.commentUid;
+    this.validate(this, BadRequest);
   }
 }
 
-class IncreamentHitResponseDTO extends BaseDTO {
-  Posts_uid;
-  hit;
+class CommentDeleteResponseDTO extends BaseDTO {
+  commentUid;
+  commentDeletedAt;
 
   constructor(response) {
     super();
-    this.Posts_uid = response.Posts_uid;
-    this.hit = response.hit;
-    this.validate(this);
+    this.commentUid = response.commentUid;
+    this.commentDeletedAt = this.toDate(response.commentDeletedAt);
+    this.validate(this, BadRequest);
   }
 }
 
-class LikesRequestDTO extends BaseDTO {
-  Posts_uid;
-  user_id;
+class IncrementHitRequestDTO extends BaseDTO {
+  postUid;
 
   constructor(body) {
     super();
-    this.Posts_uid = body.Posts_uid;
-    this.user_id = body.user_id;
-    this.validate(this);
+    this.postUid = body.postUid;
+    this.validate(this, BadRequest);
   }
 }
 
-class LikesResponseDTO extends BaseDTO {
-  Posts_uid;
-  user_id;
-  liked_at;
+class IncrementHitResponseDTO extends BaseDTO {
+  postUid;
+  postHit;
 
   constructor(response) {
     super();
-    this.Posts_uid = response.Posts_uid;
-    this.user_id = response.user_id;
-    this.liked_at = this.toDate(response.liked_at);
-    this.validate(this);
+    this.postUid = response.Post_uid;
+    this.postHit = response.Post_hit;
+    this.validate(this, BadRequest);
+  }
+}
+
+class LikeRequestDTO extends BaseDTO {
+  postUid;
+  userId;
+
+  constructor(body) {
+    super();
+    this.postUid = body.postUid;
+    this.userId = body.userId;
+    this.validate(this, BadRequest);
+  }
+}
+
+class LikeResponseDTO extends BaseDTO {
+  postUid;
+  userId;
+  likedAt;
+
+  constructor(response) {
+    super();
+    this.postUid = response.Post_uid;
+    this.userId = response.User_id;
+    this.likedAt = this.toDate(response.Liked_at);
+    this.validate(this, BadRequest);
   }
 }
 
 module.exports = {
-  PostsCreateRequestDTO,
-  PostsCreateResponseDTO,
-  PostsReadRequestDTO,
-  PostsReadResponseDTO,
-  PostsUpdateRequestDTO,
-  PostsUpdateResponseDTO,
-  PostsDeleteRequestDTO,
-  CommentsCreateRequestDTO,
-  CommentsCreateResponseDTO,
-  CommentsReadResponseDTO,
-  CommentsUpdateRequestDTO,
-  CommentsUpdateResponseDTO,
-  CommentsDeleteRequestDTO,
-  CommentsDeleteResponseDTO,
-  IncreamentHitRequestDTO,
-  IncreamentHitResponseDTO,
-  LikesRequestDTO,
-  LikesResponseDTO,
+  PostCreateRequestDTO,
+  PostCreateResponseDTO,
+  PostReadRequestDTO,
+  PostReadAllResponseDTO,
+  PostReadResponseDTO,
+  PostUpdateRequestDTO,
+  PostUpdateResponseDTO,
+  PostDeleteRequestDTO,
+  CommentCreateRequestDTO,
+  CommentCreateResponseDTO,
+  CommentReadResponseDTO,
+  CommentUpdateRequestDTO,
+  CommentUpdateResponseDTO,
+  CommentDeleteRequestDTO,
+  CommentDeleteResponseDTO,
+  IncrementHitRequestDTO,
+  IncrementHitResponseDTO,
+  LikeRequestDTO,
+  LikeResponseDTO,
 };
