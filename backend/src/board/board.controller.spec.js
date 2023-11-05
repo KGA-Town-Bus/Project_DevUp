@@ -1,15 +1,14 @@
-const httpMocks = require("node-mocks-http");
-const BoardController = require("./board.controller");
-const boardService = require("./board.service");
+const httpMocks = require('node-mocks-http');
+const BoardController = require('./board.controller');
 
-jest.mock("./board.service");
+jest.mock('./board.service');
 
-describe("BoardController", () => {
+describe('BoardController', () => {
   let boardService;
   let boardController;
 
   beforeEach(() => {
-    boardService = require("./board.service"); // 모킹된 서비스를 가져옵니다.
+    boardService = require('./board.service');
     boardController = new BoardController(boardService);
     boardService.findAllPost = jest.fn();
     boardService.createPost = jest.fn();
@@ -23,26 +22,26 @@ describe("BoardController", () => {
     jest.resetModules();
   });
 
-  describe("postCreate", () => {
-    it("게시글 생성 후 생성된 게시물의 정보 반환", async () => {
+  describe('postCreate', () => {
+    it('게시글 생성 성공', async () => {
       const mockRequestBody = {
-        postTitle: "Test Title",
-        postContent: "Test Content",
-        postWriter: "Test Writer",
+        postTitle: 'Test Title',
+        postContent: 'Test Content',
+        postWriter: 'Test Writer',
       };
       const mockResponseData = {
         postUid: 1,
-        postTitle: "Test Title",
-        postContent: "Test Content",
-        postWriter: "Test Writer",
+        postTitle: 'Test Title',
+        postContent: 'Test Content',
+        postWriter: 'Test Writer',
         postCreatedAt: new Date().toISOString().slice(0, 10),
       };
 
       boardService.createPost.mockResolvedValue(mockResponseData);
 
       const request = httpMocks.createRequest({
-        method: "POST",
-        url: "/posts",
+        method: 'POST',
+        url: '/posts',
         body: mockRequestBody,
       });
       const response = httpMocks.createResponse();
@@ -52,19 +51,19 @@ describe("BoardController", () => {
       expect(response._getStatusCode()).toBe(201);
       expect(parsedResponseData).toEqual(mockResponseData);
     });
-    it("게시글 생성 실패", async () => {
+    it('게시글 생성 실패', async () => {
       const mockRequestBody = {
-        postTitle: "Test Title",
-        postContent: "Test Content",
-        postWriter: "Test Writer",
+        postTitle: 'Test Title',
+        postContent: 'Test Content',
+        postWriter: 'Test Writer',
       };
-      const mockError = new Error("Database error");
+      const mockError = new Error('Database error');
 
       boardService.createPost.mockRejectedValue(mockError);
 
       const request = httpMocks.createRequest({
-        method: "POST",
-        url: "/posts",
+        method: 'POST',
+        url: '/posts',
         body: mockRequestBody,
       });
       const response = httpMocks.createResponse();
@@ -76,21 +75,21 @@ describe("BoardController", () => {
     });
   });
 
-  describe("getAllPost", () => {
-    it("모든 게시글을 반환", async () => {
+  describe('getAllPost', () => {
+    it('모든 게시글 조회', async () => {
       const mockPosts = [
         {
           postUid: 1,
-          postTitle: "Test Title 1",
-          postContent: "Test Content 1",
-          postWriter: "Test Writer 1",
+          postTitle: 'Test Title 1',
+          postContent: 'Test Content 1',
+          postWriter: 'Test Writer 1',
           postCreatedAt: new Date().toISOString(),
         },
         {
           postUid: 2,
-          postTitle: "Test Title 2",
-          postContent: "Test Content 2",
-          postWriter: "Test Writer 2",
+          postTitle: 'Test Title 2',
+          postContent: 'Test Content 2',
+          postWriter: 'Test Writer 2',
           postCreatedAt: new Date().toISOString(),
         },
       ];
@@ -111,8 +110,8 @@ describe("BoardController", () => {
       expect(response._getStatusCode()).toBe(201);
       expect(responseData).toEqual(mockPosts);
     });
-    it("모든 게시글 조회 실패", async () => {
-      const mockError = new Error("Database error");
+    it('모든 게시글 조회 실패', async () => {
+      const mockError = new Error('Database error');
       boardService.findAllPost.mockRejectedValue(mockError);
       const request = httpMocks.createRequest();
       const response = httpMocks.createResponse();
@@ -125,20 +124,20 @@ describe("BoardController", () => {
       expect(errorPassedToNext).toBeInstanceOf(Error);
     });
   });
-  describe("getPost", () => {
-    it("특정 게시글을 반환", async () => {
+  describe('getPost', () => {
+    it('특정 게시글 조회', async () => {
       const mockPost = {
         postUid: 1,
-        postTitle: "Test Title 1",
-        postContent: "Test Content 1",
-        postWriter: "Test Writer 1",
+        postTitle: 'Test Title 1',
+        postContent: 'Test Content 1',
+        postWriter: 'Test Writer 1',
         postCreatedAt: new Date().toISOString(),
       };
 
       boardService.findOnePost.mockResolvedValue(mockPost);
 
       const request = httpMocks.createRequest({
-        method: "GET",
+        method: 'GET',
         url: `/posts/${mockPost.postUid}`,
         params: {
           uid: mockPost.postUid.toString(),
@@ -154,13 +153,13 @@ describe("BoardController", () => {
       expect(response._getStatusCode()).toBe(201);
       expect(responseData).toEqual(mockPost);
     });
-    it("특정 게시글 조회 실패", async () => {
+    it('특정 게시글 조회 실패', async () => {
       const mockPostUid = 1;
-      const mockError = new Error("Database error");
+      const mockError = new Error('Database error');
       boardService.findOnePost.mockRejectedValue(mockError);
 
       const request = httpMocks.createRequest({
-        method: "GET",
+        method: 'GET',
         url: `/posts/${mockPostUid}`,
         params: {
           uid: mockPostUid.toString(),
@@ -174,26 +173,26 @@ describe("BoardController", () => {
       expect(nextMock).toHaveBeenCalledWith(mockError);
     });
   });
-  describe("updatePost", () => {
-    it("특정 게시글을 업데이트하고 반환", async () => {
+  describe('updatePost', () => {
+    it('특정 게시글을 업데이트 성공', async () => {
       const mockPost = {
         postUid: 1,
-        postTitle: "Updated Title",
-        postContent: "Updated Content",
+        postTitle: 'Updated Title',
+        postContent: 'Updated Content',
       };
 
       const result = boardService.updatePost.mockResolvedValue(mockPost);
-      console.log(boardService.updatePost.mock.calls.length); // 호출 횟수
+      console.log(boardService.updatePost.mock.calls.length);
 
       const request = httpMocks.createRequest({
-        method: "PUT",
+        method: 'PUT',
         url: `/posts/${mockPost.postUid}`,
         params: {
           uid: mockPost.postUid.toString(),
         },
         body: {
-          postTitle: "Updated Title",
-          postContent: "Updated Content",
+          postTitle: 'Updated Title',
+          postContent: 'Updated Content',
         },
       });
 
@@ -208,21 +207,21 @@ describe("BoardController", () => {
       expect(response._getStatusCode()).toBe(201);
       expect(responseData).toEqual(mockPost);
     });
-    it("특정 게시글 업데이트 실패", async () => {
+    it('특정 게시글 업데이트 실패', async () => {
       const mockPostUid = 1;
-      const mockError = new Error("Database error");
+      const mockError = new Error('Database error');
 
       boardService.updatePost.mockRejectedValue(mockError);
 
       const request = httpMocks.createRequest({
-        method: "PUT",
+        method: 'PUT',
         url: `/posts/${mockPostUid}`,
         params: {
           uid: mockPostUid.toString(),
         },
         body: {
-          postTitle: "Updated Title",
-          postContent: "Updated Content",
+          postTitle: 'Updated Title',
+          postContent: 'Updated Content',
         },
       });
       const response = httpMocks.createResponse();
@@ -233,16 +232,16 @@ describe("BoardController", () => {
       expect(nextMock).toHaveBeenCalledWith(mockError);
     });
   });
-  describe("deletePost", () => {
-    it("특정 게시글을 삭제하고 결과를 반환", async () => {
+  describe('deletePost', () => {
+    it('특정 게시글을 삭제 성공', async () => {
       const mockPostUid = 1;
 
       boardService.deletePost.mockResolvedValue({
-        message: "Post deleted successfully",
+        message: 'Post deleted successfully',
       });
 
       const request = httpMocks.createRequest({
-        method: "DELETE",
+        method: 'DELETE',
         url: `/posts/${mockPostUid}`,
         params: {
           uid: mockPostUid.toString(),
@@ -257,16 +256,16 @@ describe("BoardController", () => {
       const responseData = JSON.parse(response._getData());
 
       expect(response._getStatusCode()).toBe(201);
-      expect(responseData).toEqual({ message: "Post deleted successfully" });
+      expect(responseData).toEqual({message: 'Post deleted successfully'});
     });
-    it("특정 게시글 삭제 실패", async () => {
+    it('특정 게시글 삭제 실패', async () => {
       const mockPostUid = 1;
-      const mockError = new Error("Database error");
+      const mockError = new Error('Database error');
 
       boardService.deletePost.mockRejectedValue(mockError);
 
       const request = httpMocks.createRequest({
-        method: "DELETE",
+        method: 'DELETE',
         url: `/posts/${mockPostUid}`,
         params: {
           uid: mockPostUid.toString(),

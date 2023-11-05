@@ -1,7 +1,6 @@
-const BoardService = require("./board.service").getInstance();
-const db = require("../lib/db");
+const BoardService = require('./board.service').getInstance();
+const db = require('../lib/db');
 const {
-
   PostCreateRequestDTO,
   PostCreateResponseDTO,
   PostReadRequestDTO,
@@ -9,27 +8,26 @@ const {
   PostUpdateRequestDTO,
   PostUpdateResponseDTO,
   PostDeleteRequestDTO,
-} = require("./dto/board.dto");
+} = require('./dto/board.dto');
 
-jest.mock("../lib/db");
+jest.mock('../lib/db');
 
-describe("BoardService", () => {
+describe('BoardService', () => {
   afterEach(() => {
     jest.clearAllMocks();
-
   });
-  describe("createPost", () => {
-    it("createPost를 호출하면 새로운 게시글이 생성되어야 합니다.", async () => {
+  describe('createPost', () => {
+    it('createPost 동작 완료', async () => {
       const newPost = {
-        postTitle: "Test title",
-        postContent: "Test content",
-        postWriter: "Test writer",
+        postTitle: 'Test title',
+        postContent: 'Test content',
+        postWriter: 'Test writer',
       };
-      const createdPost = { ...newPost, postUid: 1 };
+      const createdPost = {...newPost, postUid: 1};
       db.Posts.create.mockResolvedValue(createdPost);
 
       const result = await BoardService.createPost(
-        new PostCreateRequestDTO(newPost)
+        new PostCreateRequestDTO(newPost),
       );
       expect(result).toEqual(new PostCreateResponseDTO(createdPost));
       expect(db.Posts.create).toHaveBeenCalledWith({
@@ -38,39 +36,39 @@ describe("BoardService", () => {
         Posts_writer: newPost.postWriter,
       });
     });
-    it("createPost가 실패하면 에러가 발생해야 합니다.", async () => {
+    it('createPost 동작 실패', async () => {
       const newPost = {
-        postTitle: "Test title",
-        postContent: "Test content",
-        postWriter: "Test writer",
+        postTitle: 'Test title',
+        postContent: 'Test content',
+        postWriter: 'Test writer',
       };
-      const mockError = new Error("Database error");
+      const mockError = new Error('Database error');
       db.Posts.create.mockRejectedValue(mockError);
 
       try {
         await BoardService.createPost(new PostCreateRequestDTO(newPost));
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe("Database error");
+        expect(error.message).toBe('Database error');
       }
     });
   });
 
-  describe("findAllPost", () => {
-    it("findAllPost를 호출하면 모든 게시글이 반환되어야 합니다.", async () => {
+  describe('findAllPost', () => {
+    it('findAllPost 동작 완료', async () => {
       const posts = [
         {
           postUid: 1,
-          postTitle: "Title 1",
-          postContent: "Content 1",
-          postWriter: "Writer 1",
+          postTitle: 'Title 1',
+          postContent: 'Content 1',
+          postWriter: 'Writer 1',
           postCreatedAt: new Date(),
         },
         {
           postUid: 2,
-          postTitle: "Title 2",
-          postContent: "Content 2",
-          postWriter: "Writer 2",
+          postTitle: 'Title 2',
+          postContent: 'Content 2',
+          postWriter: 'Writer 2',
           postCreatedAt: new Date(),
         },
       ];
@@ -78,81 +76,81 @@ describe("BoardService", () => {
 
       const result = await BoardService.findAllPost();
       expect(result).toEqual(
-        posts.map((post) => new PostReadAllResponseDTO(post))
+        posts.map(post => new PostReadAllResponseDTO(post)),
       );
       expect(db.Posts.findAll).toHaveBeenCalled();
     });
-    it("findAllPost가 실패하면 에러가 발생해야 합니다.", async () => {
-      const mockError = new Error("Database error");
+    it('findAllPost 동작 실패', async () => {
+      const mockError = new Error('Database error');
       db.Posts.findAll.mockRejectedValue(mockError);
 
       try {
         await BoardService.findAllPost();
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe("Database error");
+        expect(error.message).toBe('Database error');
       }
     });
   });
 
-  describe("findOnePost", () => {
-    it("findOnePost를 호출하면 주어진 uid에 해당하는 게시글이 반환되어야 합니다.", async () => {
+  describe('findOnePost', () => {
+    it('findOnePost 동작 완료', async () => {
       const currentDate = new Date();
       const formattedDate = `${currentDate.getFullYear()}-${String(
-        currentDate.getMonth() + 1
-      ).padStart(2, "0")}-${String(currentDate.getDate()).padStart(1)}`;
+        currentDate.getMonth() + 1,
+      ).padStart(2, '0')}-${String(currentDate.getDate()).padStart(1)}`;
 
       const mockPost = {
         Posts_uid: 1,
-        Posts_title: "Title 1",
-        Posts_content: "Content 1",
-        Posts_writer: "Writer 1",
+        Posts_title: 'Title 1',
+        Posts_content: 'Content 1',
+        Posts_writer: 'Writer 1',
         Posts_created_at: formattedDate,
       };
       db.Posts.findOne.mockResolvedValue(mockPost);
 
       const result = await BoardService.findOnePost(
-        new PostReadRequestDTO({ postUid: mockPost.Posts_uid })
+        new PostReadRequestDTO({postUid: mockPost.Posts_uid}),
       );
 
       const expectedPost = {
         postUid: 1,
-        postTitle: "Title 1",
-        postContent: "Content 1",
-        postWriter: "Writer 1",
+        postTitle: 'Title 1',
+        postContent: 'Content 1',
+        postWriter: 'Writer 1',
         postCreatedAt: formattedDate,
       };
 
       expect(result).toEqual(expectedPost);
       expect(db.Posts.findOne).toHaveBeenCalledWith({
-        where: { Posts_uid: mockPost.Posts_uid },
+        where: {Posts_uid: mockPost.Posts_uid},
       });
     });
-    it("findOnePost가 실패하면 에러가 발생해야 합니다.", async () => {
-      const mockError = new Error("Database error");
+    it('findOnePost 동작 실패', async () => {
+      const mockError = new Error('Database error');
       db.Posts.findOne.mockRejectedValue(mockError);
 
       try {
-        await BoardService.findOnePost(new PostReadRequestDTO({ postUid: 1 }));
+        await BoardService.findOnePost(new PostReadRequestDTO({postUid: 1}));
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe("Database error");
+        expect(error.message).toBe('Database error');
       }
     });
   });
 
-  describe("updatePost", () => {
-    it("updatePost를 호출하면 주어진 uid에 해당하는 게시글이 업데이트되어야 합니다.", async () => {
+  describe('updatePost', () => {
+    it('updatePost 동작 완료', async () => {
       const postUpdateRequestDTO = new PostUpdateRequestDTO({
         postUid: 1,
-        postTitle: "Updated title",
-        postContent: "Updated content",
+        postTitle: 'Updated title',
+        postContent: 'Updated content',
       });
 
       const mockUpdatedPost = {
         Posts_uid: 1,
-        Posts_title: "Updated title",
-        Posts_content: "Updated content",
+        Posts_title: 'Updated title',
+        Posts_content: 'Updated content',
         Posts_created_at: new Date(),
       };
 
@@ -169,48 +167,48 @@ describe("BoardService", () => {
           Posts_title: postUpdateRequestDTO.postTitle,
           Posts_content: postUpdateRequestDTO.postContent,
         },
-        { where: { Posts_uid: postUpdateRequestDTO.postUid } }
+        {where: {Posts_uid: postUpdateRequestDTO.postUid}},
       );
     });
-    it("updatePost가 실패하면 에러가 발생해야 합니다.", async () => {
-      const mockError = new Error("Database error");
+    it('updatePost 동작 실패', async () => {
+      const mockError = new Error('Database error');
       db.Posts.update.mockRejectedValue(mockError);
 
       try {
         await BoardService.updatePost(
           new PostUpdateRequestDTO({
             postUid: 1,
-            postTitle: "Updated title",
-            postContent: "Updated content",
-          })
+            postTitle: 'Updated title',
+            postContent: 'Updated content',
+          }),
         );
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe("Database error");
+        expect(error.message).toBe('Database error');
       }
     });
   });
 
-  describe("deletePost", () => {
-    it("deletePost를 호출하면 주어진 uid에 해당하는 게시글이 삭제되어야 합니다.", async () => {
-      const postDeleteRequestDTO = new PostDeleteRequestDTO({ postUid: 1 });
+  describe('deletePost', () => {
+    it('deletePost 동작 완료', async () => {
+      const postDeleteRequestDTO = new PostDeleteRequestDTO({postUid: 1});
       db.Posts.destroy.mockResolvedValue(1);
 
       const result = await BoardService.deletePost(postDeleteRequestDTO);
-      expect(result).toEqual({ message: "게시글 삭제 성공" });
+      expect(result).toEqual({message: '게시글 삭제 성공'});
       expect(db.Posts.destroy).toHaveBeenCalledWith({
-        where: { Posts_uid: postDeleteRequestDTO.postUid },
+        where: {Posts_uid: postDeleteRequestDTO.postUid},
       });
     });
-    it("deletePost가 실패하면 에러가 발생해야 합니다.", async () => {
-      const mockError = new Error("Database error");
+    it('deletePost 동작 실패', async () => {
+      const mockError = new Error('Database error');
       db.Posts.destroy.mockRejectedValue(mockError);
 
       try {
-        await BoardService.deletePost(new PostDeleteRequestDTO({ postUid: 1 }));
+        await BoardService.deletePost(new PostDeleteRequestDTO({postUid: 1}));
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe("Database error");
+        expect(error.message).toBe('Database error');
       }
     });
   });
