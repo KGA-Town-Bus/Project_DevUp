@@ -1,6 +1,7 @@
 const BoardService = require("./board.service").getInstance();
 const db = require("../lib/db");
 const {
+
   PostCreateRequestDTO,
   PostCreateResponseDTO,
   PostReadRequestDTO,
@@ -15,6 +16,7 @@ jest.mock("../lib/db");
 describe("BoardService", () => {
   afterEach(() => {
     jest.clearAllMocks();
+
   });
   describe("createPost", () => {
     it("createPost를 호출하면 새로운 게시글이 생성되어야 합니다.", async () => {
