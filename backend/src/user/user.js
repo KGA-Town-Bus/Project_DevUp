@@ -8,6 +8,12 @@ module.exports = (sequelize, DataTypes) => {
           primaryKey: true,
           autoIncrement: true
         },
+
+        Users_suid: {
+          type: DataTypes.STRING,
+          allowNull: true,
+        },
+
         Users_id:{
           type: DataTypes.STRING(255),
           allowNull: false,

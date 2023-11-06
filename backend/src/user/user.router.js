@@ -3,7 +3,7 @@ const userRouter = express.Router()
 
 const {userController} = require("./user.module")
 const postSignup = userController.postSignup.bind(userController)
-
+const login = userController.login.bind(userController)
 
 
 /**
@@ -11,7 +11,7 @@ const postSignup = userController.postSignup.bind(userController)
  *  /users:
  *    post:
  *      tags:
- *      - User
+ *      - userRepository
  *      description: 유저
  *      requestBody:
  *        content:
@@ -49,6 +49,10 @@ const postSignup = userController.postSignup.bind(userController)
  *        description: 실패
  */
 userRouter.post("/", postSignup)
+
+userRouter.get("/:provider", login)
+userRouter.post("/:provider", login)
+
 
 module.exports = userRouter
 

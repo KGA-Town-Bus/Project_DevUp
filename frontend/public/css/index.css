@@ -16,7 +16,7 @@ input {
 
 @font-face {
   font-family: 'Inria Sans';
-  src: url('../fonts/InriaSans-Regular.ttf') format('truetype');
+  src: url('/fonts/InriaSans-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -138,7 +138,7 @@ input[type='text']::placeholder {
   row-gap: 50px;
 }
 
-.contents div {
+.contents > section {
   width: 800px;
   height: 200px;
   border-radius: 20px;
@@ -201,7 +201,7 @@ input[type='text']::placeholder {
   top: 100%; /* Position directly below the user box */
   left: 0;
   min-width: 300px; /* Or however wide you want it */
-  height: 400px;
+  height: 50vh;
   background: linear-gradient(rgba(23, 29, 37, 0.35), #374151);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
