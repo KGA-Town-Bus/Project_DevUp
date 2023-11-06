@@ -24,12 +24,12 @@ class BoardService {
         throw new Error('Invalid request DTO');
       }
       const {postTitle, postContent, postWriter} = createRequestDTO;
-      const response = await db.Posts.create({
+      const createdPost = await db.Posts.create({
         Posts_title: postTitle,
         Posts_content: postContent,
         Posts_writer: postWriter,
       });
-      return new PostCreateResponseDTO(response);
+      return new PostCreateResponseDTO(createdPost);
     } catch (e) {
       console.error('Service createPost Error', e);
       throw new Error(e.message);
@@ -109,6 +109,16 @@ class BoardService {
       return {message: '게시글 삭제 성공'};
     } catch (e) {
       console.error('Service deletePost Error', e);
+      throw new Error(e.message);
+    }
+  }
+  async incrementHit(postUid) {
+    try {
+      await db.Posts.increment('Posts_hit', {
+        where: {Posts_uid: postUid},
+      });
+    } catch (e) {
+      console.error('Service incrementHit Error', e);
       throw new Error(e.message);
     }
   }

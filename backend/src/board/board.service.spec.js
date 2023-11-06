@@ -17,7 +17,7 @@ describe('BoardService', () => {
     jest.clearAllMocks();
   });
   describe('createPost', () => {
-    it('createPost 동작 완료', async () => {
+    it('createPost and redirect to the created post', async () => {
       const newPost = {
         postTitle: 'Test title',
         postContent: 'Test content',
@@ -29,13 +29,16 @@ describe('BoardService', () => {
       const result = await BoardService.createPost(
         new PostCreateRequestDTO(newPost),
       );
+
       expect(result).toEqual(new PostCreateResponseDTO(createdPost));
       expect(db.Posts.create).toHaveBeenCalledWith({
         Posts_title: newPost.postTitle,
         Posts_content: newPost.postContent,
         Posts_writer: newPost.postWriter,
       });
+      expect(result.postUid).toBe(createdPost.postUid);
     });
+
     it('createPost 동작 실패', async () => {
       const newPost = {
         postTitle: 'Test title',
@@ -210,6 +213,24 @@ describe('BoardService', () => {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('Database error');
       }
+    });
+  });
+
+  describe('incrementHit', () => {
+    it('게시물 조회수 증가 성공', async () => {
+      const mockPostUid = 1;
+
+      db.Posts.findOne.mockResolvedValue({
+        Posts_uid: mockPostUid,
+        Posts_hit: 10,
+      });
+      db.Posts.increment.mockResolvedValue([1]);
+
+      await BoardService.incrementHit(mockPostUid);
+
+      expect(db.Posts.increment).toHaveBeenCalledWith('Posts_hit', {
+        where: {Posts_uid: mockPostUid},
+      });
     });
   });
 });
