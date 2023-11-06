@@ -19,7 +19,7 @@ class BoardController {
       const createRequestDTO = new PostCreateRequestDTO(req.body);
       const data = await this.boardService.createPost(createRequestDTO);
 
-      res.status(201).json(data);
+      res.status(302).header('Location', `/posts/${data.postUid}`).send();
     } catch (e) {
       console.error('postCreate Error', e);
       next(e);
@@ -41,8 +41,10 @@ class BoardController {
   async getPost(req, res, next) {
     try {
       const postUid = req.params.uid;
+      await this.boardService.incrementHit(postUid); // 조회수 증가 로직 호출
       const postReadRequestDTO = new PostReadRequestDTO({postUid});
       const data = await this.boardService.findOnePost(postReadRequestDTO);
+
       res.status(201).json(data);
     } catch (e) {
       console.error('postCreate Error', e);
@@ -50,15 +52,15 @@ class BoardController {
     }
   }
 
-  async updatePost(req, res, next) {
+  async putUpdatePost(req, res, next) {
     try {
       const postUpdateRequestDTO = new PostUpdateRequestDTO({
         postUid: req.params.uid,
         ...req.body,
       });
-      console.log(postUpdateRequestDTO);
       const data = await this.boardService.updatePost(postUpdateRequestDTO);
-      res.status(201).json(data);
+
+      res.status(302).header('Location', `/posts/${data.postUid}`).send();
     } catch (e) {
       console.error('updatePost Error', e);
       next(e);
@@ -80,8 +82,27 @@ class BoardController {
 
   async postLiked(req, res, next) {
     try {
+      const postUid = Number(req.params.uid);
+      const userUid = req.user.uid;
+
+      await this.boardService.addLike(postUid, userUid);
+
+      res.status(201).json({message: '좋아요 추가'});
     } catch (e) {
       console.error('postLiked Error', e);
+      next(e);
+    }
+  }
+
+  async deleteLiked(req, res, next) {
+    try {
+      const postUid = Number(req.params.uid);
+      const userUid = req.user.uid;
+
+      await this.boardService.removeLike(postUid, userUid);
+      res.status(201).json({message: '좋아요 취소'});
+    } catch (e) {
+      console.error('deleteLiked Error', e);
       next(e);
     }
   }

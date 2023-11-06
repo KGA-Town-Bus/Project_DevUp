@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    "Posts",
+    'Posts',
     {
       Posts_uid: {
         type: DataTypes.INTEGER,
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       Posts_created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       },
       Posts_hit: {
         type: DataTypes.INTEGER,
@@ -39,6 +39,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       freezeTableName: true,
       timestamps: false,
-    }
+    },
   );
 };

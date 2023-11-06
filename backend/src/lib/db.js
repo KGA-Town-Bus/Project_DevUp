@@ -1,20 +1,20 @@
-const Sequelize = require("sequelize");
-require("dotenv").config();
+const Sequelize = require('sequelize');
+require('dotenv').config();
 const db = {};
 
 const config = {
-  host: process.env["DB_HOST"],
-  dialect: process.env["DB_DIALECT"],
+  host: process.env['DB_HOST'],
+  dialect: process.env['DB_DIALECT'],
 };
 
 const sequelize = new Sequelize(
-  process.env["DB_DATABASE"],
-  process.env["DB_USERNAME"],
-  process.env["DB_PASSWORD"],
-  config
+  process.env['DB_DATABASE'],
+  process.env['DB_USERNAME'],
+  process.env['DB_PASSWORD'],
+  config,
 );
 
-const entityList = [`../user/user`, `../board/board`];
+const entityList = [`../user/user`, `../board/model/board`];
 
 entityList.forEach((entity, index) => {
   const model = require(entityList[index])(sequelize, Sequelize.DataTypes);
