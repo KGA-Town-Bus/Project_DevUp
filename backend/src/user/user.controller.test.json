@@ -1,0 +1,26 @@
+{
+  "correctRequestData": {
+    "userId": "testId",
+    "userPassword": "testPassword",
+    "userName": "testName",
+    "userNickname": "testNickname",
+    "userProfile": "이미지 데이터",
+    "userEmail": "abcd@naver.com"
+  },
+  "wrongRequestData": {
+    "name": "testName",
+    "id": "testId",
+    "pw": "password"
+  },
+  "correctReturnData": {
+       "userId": "testId",
+       "userName": "testName",
+       "userNickname": "testNickname",
+       "userProvider": "service",
+       "userCreatedAt": "2023-11-04 22:00:00",
+       "userAccountLocked": false,
+       "userProfile": "http://abcd/image1.png",
+       "roleAuthority": "user",
+       "userEmail": "abcd@naver.com"
+  }
+}

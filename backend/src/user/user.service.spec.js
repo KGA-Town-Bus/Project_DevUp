@@ -1,4 +1,5 @@
 const UserService = require("./user.service")
+const axios = require("axios");
 
 const correctRequestData = {
   userId: "testId",
@@ -37,23 +38,11 @@ describe("File:: user.service.js", () => {
     build: jest.fn()
   }
 
-
-
-
-
   beforeEach(() => {
     userService = new UserService(User);
   });
 
-  it("Service:: 유무 확인", () => {
-    expect(typeof userService).toBe("object")
-  })
-
-
   describe("Method:: signup", () => {
-    it("메서드 유무 확인", () => {
-      expect(typeof userService.signup).toBe("function")
-    })
 
     describe("응답 확인", () => {
       it("응답 성공", async() => {
@@ -71,43 +60,31 @@ describe("File:: user.service.js", () => {
       it("응답 실패", async() => {
         User.build.mockReturnValue({correctReturnData, save:jest.fn()})
         const save = User.build().save
-        save.mockRejectedValue(new Error("User Error"))
+        save.mockRejectedValue(new Error("userRepository Error"))
 
         const dto = wrongRequestData
 
         expect(
             async () => await userService.signup(dto)
-        ).rejects.toThrowError("User Error")
+        ).rejects.toThrowError("userRepository Error")
 
       })
     })
+  })
+
+
+  describe("Method:: login", () => {
+
+    describe('카카오 로그인', () => {
+
+    });
+
 
 
   })
 
+
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
