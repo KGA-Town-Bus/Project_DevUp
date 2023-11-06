@@ -1,4 +1,4 @@
-const BoardService = require('./board.service').getInstance();
+const boardService = require('./board.service').getInstance();
 const db = require('../lib/db');
 const {
   PostCreateRequestDTO,
@@ -26,7 +26,7 @@ describe('BoardService', () => {
       const createdPost = {...newPost, postUid: 1};
       db.Posts.create.mockResolvedValue(createdPost);
 
-      const result = await BoardService.createPost(
+      const result = await boardService.createPost(
         new PostCreateRequestDTO(newPost),
       );
 
@@ -49,7 +49,7 @@ describe('BoardService', () => {
       db.Posts.create.mockRejectedValue(mockError);
 
       try {
-        await BoardService.createPost(new PostCreateRequestDTO(newPost));
+        await boardService.createPost(new PostCreateRequestDTO(newPost));
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('Database error');
@@ -77,7 +77,7 @@ describe('BoardService', () => {
       ];
       db.Posts.findAll.mockResolvedValue(posts);
 
-      const result = await BoardService.findAllPost();
+      const result = await boardService.findAllPost();
       expect(result).toEqual(
         posts.map(post => new PostReadAllResponseDTO(post)),
       );
@@ -88,7 +88,7 @@ describe('BoardService', () => {
       db.Posts.findAll.mockRejectedValue(mockError);
 
       try {
-        await BoardService.findAllPost();
+        await boardService.findAllPost();
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('Database error');
@@ -112,7 +112,7 @@ describe('BoardService', () => {
       };
       db.Posts.findOne.mockResolvedValue(mockPost);
 
-      const result = await BoardService.findOnePost(
+      const result = await boardService.findOnePost(
         new PostReadRequestDTO({postUid: mockPost.Posts_uid}),
       );
 
@@ -134,7 +134,7 @@ describe('BoardService', () => {
       db.Posts.findOne.mockRejectedValue(mockError);
 
       try {
-        await BoardService.findOnePost(new PostReadRequestDTO({postUid: 1}));
+        await boardService.findOnePost(new PostReadRequestDTO({postUid: 1}));
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('Database error');
@@ -160,7 +160,7 @@ describe('BoardService', () => {
       db.Posts.update.mockResolvedValue([1]);
       db.Posts.findOne.mockResolvedValue(mockUpdatedPost);
 
-      const result = await BoardService.updatePost(postUpdateRequestDTO);
+      const result = await boardService.updatePost(postUpdateRequestDTO);
 
       const expectedResponse = new PostUpdateResponseDTO(mockUpdatedPost);
 
@@ -178,7 +178,7 @@ describe('BoardService', () => {
       db.Posts.update.mockRejectedValue(mockError);
 
       try {
-        await BoardService.updatePost(
+        await boardService.updatePost(
           new PostUpdateRequestDTO({
             postUid: 1,
             postTitle: 'Updated title',
@@ -197,7 +197,7 @@ describe('BoardService', () => {
       const postDeleteRequestDTO = new PostDeleteRequestDTO({postUid: 1});
       db.Posts.destroy.mockResolvedValue(1);
 
-      const result = await BoardService.deletePost(postDeleteRequestDTO);
+      const result = await boardService.deletePost(postDeleteRequestDTO);
       expect(result).toEqual({message: '게시글 삭제 성공'});
       expect(db.Posts.destroy).toHaveBeenCalledWith({
         where: {Posts_uid: postDeleteRequestDTO.postUid},
@@ -208,7 +208,7 @@ describe('BoardService', () => {
       db.Posts.destroy.mockRejectedValue(mockError);
 
       try {
-        await BoardService.deletePost(new PostDeleteRequestDTO({postUid: 1}));
+        await boardService.deletePost(new PostDeleteRequestDTO({postUid: 1}));
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error.message).toBe('Database error');
@@ -226,11 +226,59 @@ describe('BoardService', () => {
       });
       db.Posts.increment.mockResolvedValue([1]);
 
-      await BoardService.incrementHit(mockPostUid);
+      await boardService.incrementHit(mockPostUid);
 
       expect(db.Posts.increment).toHaveBeenCalledWith('Posts_hit', {
         where: {Posts_uid: mockPostUid},
       });
+    });
+  });
+  describe('addLike', () => {
+    it('좋아요 추가 성공', async () => {
+      const mockPostUid = 1;
+      const mockUserUid = 1;
+
+      db.Likes.findOne.mockResolvedValue(null);
+      db.Likes.create.mockResolvedValue(true);
+      db.Posts.increment.mockResolvedValue(true);
+
+      await boardService.addLike(mockPostUid, mockUserUid);
+
+      expect(db.Likes.create).toHaveBeenCalledWith({
+        Post_uid: mockPostUid,
+        User_uid: mockUserUid,
+      });
+      expect(db.Posts.increment).toHaveBeenCalledWith('Posts_like', {
+        where: {Posts_uid: mockPostUid},
+      });
+    });
+
+    it('좋아요 중복 에러', async () => {
+      const mockPostUid = 1;
+      const mockUserUid = 1;
+
+      db.Likes.findOne.mockResolvedValue(true);
+
+      await expect(
+        boardService.addLike(mockPostUid, mockUserUid),
+      ).rejects.toThrow('이미 좋아요를 눌렀습니다.');
+    });
+  });
+
+  it('좋아요 취소', async () => {
+    const mockPostUid = 1;
+    const mockUserUid = 1;
+
+    db.Likes.destroy.mockResolvedValue(true);
+    db.Posts.decrement.mockResolvedValue(true);
+
+    await boardService.removeLike(mockPostUid, mockUserUid);
+
+    expect(db.Likes.destroy).toHaveBeenCalledWith({
+      where: {Post_uid: mockPostUid, User_uid: mockUserUid},
+    });
+    expect(db.Posts.decrement).toHaveBeenCalledWith('Posts_like', {
+      where: {Posts_uid: mockPostUid},
     });
   });
 });
