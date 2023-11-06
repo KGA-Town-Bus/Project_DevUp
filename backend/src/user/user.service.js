@@ -1,6 +1,7 @@
 const axios = require("axios");
-const {kakao} = require("./socialLogin/kakao")
-const JWT  = require("../lib/jwt")
+const Kakao = require("./socialLogin/kakao")
+const Google = require("./socialLogin/google")
+const JWT = require("../lib/jwt")
 const jwt = new JWT()
 
 class UserService {
@@ -37,49 +38,49 @@ class UserService {
 
   async login(provider, code) {
 
-    try{
+    try {
       let userInfo;
-      let uid;
+      let user;
+
       if (provider === "kakao") {
-        userInfo = await kakao(code)
-        uid = userInfo.id
+        const kakao = new Kakao(code)
+        userInfo = await kakao.getSocialUserInfo()
+        user = this.userRepository.build(kakao.buildUser(userInfo))
+      }
+
+      if (provider === "google") {
+        const google = new Google(code)
+        userInfo = await google.getSocialUserInfo()
+        user = this.userRepository.build(google.buildUser(userInfo))
       }
 
       const isUser = await this.userRepository.findOne({
-        where:{
-          Users_uid: uid
+        where: {
+          Users_suid: user.dataValues.Users_suid
         },
         attributes: {
           exclude: ['Users_password']
         }
       })
 
+
       if (isUser !== null) return setJWTToken(isUser.dataValues)
 
-      const user = this.userRepository.build({
-        Users_uid: uid,
-        Users_id: "kakao",
-        Users_password: "kakao",
-        Users_name: "kakao",
-        Users_nickname: userInfo.properties.nickname,
-        Users_provider: "kakao",
-        Users_email: "kakao",
-        Users_profile: userInfo.properties.profile_image,
-        Role_authority: "user"
+      // const response = await user.save()
+      const response = await user.save().then(() => {
+        return user.reload()
       })
-
-      const response = await user.save()
       delete response.dataValues.Users_password
 
       return setJWTToken(response.dataValues)
-    }catch(e){
+    } catch (e) {
       throw e
     }
 
   }
 }
 
-const setJWTToken =(data) => {
+const setJWTToken = (data) => {
   const jwtPayload = data;
   const token = jwt.sign(jwtPayload)
   return token
