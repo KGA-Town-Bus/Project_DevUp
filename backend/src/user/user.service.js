@@ -1,6 +1,7 @@
 const axios = require("axios");
 const Kakao = require("./socialLogin/kakao")
 const Google = require("./socialLogin/google")
+const Github = require("./socialLogin/github")
 const JWT = require("../lib/jwt")
 const jwt = new JWT()
 
@@ -52,6 +53,12 @@ class UserService {
         const google = new Google(code)
         userInfo = await google.getSocialUserInfo()
         user = this.userRepository.build(google.buildUser(userInfo))
+      }
+
+      if (provider === "github") {
+        const github = new Github(code)
+        userInfo = await github.getSocialUserInfo()
+        user = this.userRepository.build(github.buildUser(userInfo))
       }
 
       const isUser = await this.userRepository.findOne({

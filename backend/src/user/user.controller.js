@@ -27,6 +27,7 @@ class UserController {
 
       if(provider === "kakao") code = req.query.code
       if(provider === "google") code = req.query.code
+      if(provider === "github") code = req.query.code
 
       const token = await this.service.login(provider, code);
 
