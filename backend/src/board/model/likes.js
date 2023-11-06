@@ -1,34 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'Posts',
+    'Likes',
     {
-      Posts_uid: {
+      Likes_uid: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
       },
-      Posts_title: {
-        type: DataTypes.STRING(50),
+      Posts_uid: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'Posts',
+          key: 'Posts_uid',
+        },
       },
-      Posts_content: {
-        type: DataTypes.TEXT,
+      Users_uid: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'User_uid',
+        },
       },
-      Posts_writer: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-      },
-      Posts_created_at: {
+      Likes_create_at: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-      },
-      Posts_hit: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
       },
     },
     {

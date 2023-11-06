@@ -122,6 +122,43 @@ class BoardService {
       throw new Error(e.message);
     }
   }
+
+  async addLike(postUid, userUid) {
+    try {
+      const overLike = await db.Likes.findOne({
+        where: {Post_uid: postUid, User_uid: userUid},
+      });
+      if (overLike) {
+        throw new Error('이미 좋아요를 눌렀습니다.');
+      }
+
+      await db.Likes.create({
+        Post_uid: postUid,
+        User_uid: userUid,
+      });
+
+      await db.Posts.increment('Posts_like', {
+        where: {Posts_uid: postUid},
+      });
+    } catch (e) {
+      console.error('Service addLike Error', e);
+      throw new Error(e.message);
+    }
+  }
+
+  async removeLike(postUid, userUid) {
+    try {
+      await db.Likes.destroy({
+        where: {Post_uid: postUid, User_uid: userUid},
+      });
+      await db.Posts.decrement('Posts_like', {
+        where: {Posts_uid: postUid},
+      });
+    } catch (e) {
+      console.error('Service removeLike Error', e);
+      throw new Error(e.message);
+    }
+  }
 }
 
 module.exports = BoardService;

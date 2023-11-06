@@ -14,7 +14,12 @@ const sequelize = new Sequelize(
   config,
 );
 
-const entityList = [`../user/user`, `../board/model/board`];
+const entityList = [
+  `../user/user`,
+  `../board/model/board`,
+  // `../board/model/comments`,
+  `../board/model/likes`,
+];
 
 entityList.forEach((entity, index) => {
   const model = require(entityList[index])(sequelize, Sequelize.DataTypes);
