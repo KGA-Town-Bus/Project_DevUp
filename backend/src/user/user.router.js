@@ -50,9 +50,9 @@ const login = userController.login.bind(userController)
  */
 userRouter.post("/", postSignup)
 
-
 userRouter.get("/:provider", login)
-// userRouter.post("/:provider", login)
+userRouter.post("/:provider", login)
+
 
 module.exports = userRouter
 

@@ -2,8 +2,11 @@ const axios = require("axios");
 const Kakao = require("./socialLogin/kakao")
 const Google = require("./socialLogin/google")
 const Github = require("./socialLogin/github")
+const Naver = require("./socialLogin/naver")
 const JWT = require("../lib/jwt")
 const jwt = new JWT()
+const { Op } = require('sequelize');
+
 
 class UserService {
   constructor(User) {
@@ -37,7 +40,7 @@ class UserService {
     }
   }
 
-  async login(provider, code) {
+  async login(provider, code, state, userLoginRequestDTO) {
 
     try {
       let userInfo;
@@ -60,6 +63,28 @@ class UserService {
         userInfo = await github.getSocialUserInfo()
         user = this.userRepository.build(github.buildUser(userInfo))
       }
+
+      if (provider == "naver"){
+        const naver = new Naver(code, state)
+        userInfo = await naver.getSocialUserInfo()
+        user = this.userRepository.build(naver.buildUser(userInfo))
+      }
+
+      if(provider == "login"){
+        const {dataValues: user} = await this.userRepository.findOne({
+          where: {
+            [Op.and]: [
+              {Users_id : userLoginRequestDTO.userId},
+              {Users_password: userLoginRequestDTO.userPassword},
+              {Users_provider: "service"}
+            ]
+          }
+        })
+        delete user.Users_password
+
+        return setJWTToken(user)
+      }
+
 
       const isUser = await this.userRepository.findOne({
         where: {

@@ -26,8 +26,6 @@ const userRouter = require("./user/user.router")
 router.get("/", (req, res, next) => {
   res.send("Swagger Test")
 })
-
-
 router.use("/users",userRouter)
 
 module.exports = router
