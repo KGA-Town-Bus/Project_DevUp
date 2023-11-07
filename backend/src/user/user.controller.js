@@ -1,6 +1,7 @@
 const {UserSignupRequestDTO} = require("./dto/user.signup.request.dto");
 const {UserLoginRequestDTO} = require("./dto/user.login.request.dto");
 const {BadRequest} = require("../lib/customException");
+const {Created} = require("../lib/customMessage");
 
 
 require("dotenv").config()
@@ -13,13 +14,12 @@ class UserController {
   }
   async postSignup(req, res, next)  {
     try{
-
       if(req.body.userPassword[0] !== req.body.userPassword[1]) throw new BadRequest("비밀번호가 일치하지 않습니다.")
 
-
       const userSignupRequestDTO = new UserSignupRequestDTO(req.body)
-      const data = await this.service.signup(userSignupRequestDTO)
-      res.status(201).json(data)
+      const userSignupResponseDTO = await this.service.signup(userSignupRequestDTO)
+
+      res.status(201).json(new Created(userSignupResponseDTO))
     }catch(e){
       next(e)
     }
@@ -45,7 +45,6 @@ class UserController {
         userLoginRequestDTO = new UserLoginRequestDTO(req.body)
       }
 
-
       const token = await this.service.login(provider, code, state, userLoginRequestDTO);
 
       res.cookie("authorization", token, {
@@ -57,7 +56,6 @@ class UserController {
 
 
       res.redirect(`http://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/`)
-
     }catch(e){
       next(e)
     }

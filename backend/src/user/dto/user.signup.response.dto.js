@@ -1,5 +1,5 @@
 const baseDTO = require("../../lib/base.dto")
-const {BadRequest} = require("../../lib/customException");
+const {InternalServerError} = require("../../lib/customException");
 
 
 class UserSignupResponseDTO extends baseDTO {
@@ -21,7 +21,7 @@ class UserSignupResponseDTO extends baseDTO {
     this.userAccountLocked = response.Users_account_locked
     this.roleAuthority = response.Role_authority
 
-    this.validate(this, BadRequest)
+    this.validate(this, InternalServerError)
   }
 }
 
