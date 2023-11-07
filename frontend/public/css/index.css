@@ -13,7 +13,6 @@ input {
   outline: none;
   caret-color: transparent;
   border-radius: 20px;
-  color: #171d25;
 }
 
 input::selection {
@@ -107,6 +106,7 @@ input[type='email']:focus {
   opacity: 0.8;
 }
 
+.search > input,
 .search > input::placeholder {
   color: #eee;
 }
