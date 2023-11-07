@@ -2,9 +2,6 @@
   "correctRequestData": {
     "userId": "testId",
     "userPassword": "testPassword",
-    "userName": "testName",
-    "userNickname": "testNickname",
-    "userProfile": "이미지 데이터",
     "userEmail": "abcd@naver.com"
   },
   "wrongRequestData": {

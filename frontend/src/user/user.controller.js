@@ -54,6 +54,16 @@ class UserController {
       next(e)
     }
   }
+
+  async postSignup(req, res, next) {
+    try{
+      const result = await this.service.signup(req.body)
+
+      res.redirect("/")
+    }catch(e){
+      next(e)
+    }
+  }
 }
 
 

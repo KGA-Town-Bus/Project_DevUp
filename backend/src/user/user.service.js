@@ -6,6 +6,7 @@ const Naver = require("./socialLogin/naver")
 const JWT = require("../lib/jwt")
 const jwt = new JWT()
 const { Op } = require('sequelize');
+const {UserSignupResponseDTO} = require("./dto/user.signup.response.dto");
 
 
 class UserService {
@@ -13,27 +14,28 @@ class UserService {
     this.userRepository = User
   }
 
-  async signup(dto) {
+  async signup(requestDTO) {
     try {
 
       const userEntity = this.userRepository.build({
-        Users_id: dto.userId,
-        Users_password: dto.userPassword,
-        Users_name: dto.userName,
-        Users_nickname: dto.userNickname,
+        Users_id: requestDTO.userId,
+        Users_password: requestDTO.userPassword,
+        Users_name: "__default__",
+        Users_nickname: "__default__",
         Users_provider: "service",
         Users_created_at: Date.now(),
         Users_account_locked: false,
-        Users_email: dto.userEmail,
-        //todo
-        Users_profile: "https://test.com/image01.png",
+        Users_email: requestDTO.userEmail,
+        // todo: 기본 이미지 설정
+        Users_profile: "__default__",
         Role_authority: "user",
       });
 
 
       const response = await userEntity.save()
+      const responseDTO = new UserSignupResponseDTO(response.dataValues)
 
-      return response
+      return responseDTO
     } catch (e) {
       console.log(e.message)
       throw new Error(e.message)

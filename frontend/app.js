@@ -9,6 +9,7 @@ nunjucks.configure('frontend/views', {express: app});
 
 app.use(express.static('frontend/public'));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(router);
 app.use(
   '/api-docs',
