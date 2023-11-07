@@ -4,12 +4,12 @@ const {userController} = require("./user.module")
 const getSignup = userController.getSignup.bind(userController)
 const getLogin = userController.getLogin.bind(userController)
 const postSignup = userController.postSignup.bind(userController)
-
+const getProfile = userController.getProfile.bind(userController)
 
 
 userRouter.get("/", getSignup)
 userRouter.post("/", postSignup)
-
+userRouter.get("/profile", getProfile)
 userRouter.get("/:provider", getLogin)
 
 module.exports = userRouter

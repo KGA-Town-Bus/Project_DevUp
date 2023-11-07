@@ -39,6 +39,14 @@ class UserController {
     }
   }
 
+  getProfile(req, res, next) {
+    try{
+      res.render("user/profile.html")
+    }catch(e){
+      next(e)
+    }
+  }
+
   async getLogin(req, res, next) {
     try {
       const provider = req.params.provider
