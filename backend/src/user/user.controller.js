@@ -55,7 +55,7 @@ class UserController {
       });
 
 
-      res.redirect(`http://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/`)
+      res.redirect(`http://${process.env.FRONTEND_SERVER_IP}`)
     }catch(e){
       next(e)
     }
