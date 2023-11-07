@@ -3,8 +3,8 @@ const axios = require("axios");
 const SocialLogin = require("./socialLogin")
 
 
-const CLIENT_ID = process.env.GITHUB_CLIENT_ID
-const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET
+const CLIENT_ID = process.env.GI_CLIENT_ID
+const CLIENT_SECRET = process.env.GI_CLIENT_SECRET
 
 class Github extends SocialLogin{
   constructor(code) {

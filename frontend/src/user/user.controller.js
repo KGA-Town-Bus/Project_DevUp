@@ -14,8 +14,8 @@ const ACCESS_TYPE = process.env.ACCESS_TYPE
 // ==
 
 // github
-const GITHUB_AUTHORIZE_URI = process.env.GITHUB_AUTHORIZE_URI
-const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID
+const GITHUB_AUTHORIZE_URI = process.env.GI_AUTHORIZE_URI
+const GITHUB_CLIENT_ID = process.env.GI_CLIENT_ID
 // ==
 
 // naver
