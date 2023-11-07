@@ -1,10 +1,9 @@
-const express = require("express")
-const userRouter = express.Router()
+const express = require('express');
+const userRouter = express.Router();
 
-const {userController} = require("./user.module")
-const postSignup = userController.postSignup.bind(userController)
-const login = userController.login.bind(userController)
-
+const {userController} = require('./user.module');
+const postSignup = userController.postSignup.bind(userController);
+const login = userController.login.bind(userController);
 
 /**
  * @swagger
@@ -48,11 +47,9 @@ const login = userController.login.bind(userController)
  *       400:
  *        description: 실패
  */
-userRouter.post("/", postSignup)
+userRouter.post('/', postSignup);
 
-userRouter.get("/:provider", login)
-userRouter.post("/:provider", login)
+userRouter.get('/:provider', login);
+userRouter.post('/:provider', login);
 
-
-module.exports = userRouter
-
+module.exports = userRouter;
