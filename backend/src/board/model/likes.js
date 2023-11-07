@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'User_uid',
+          key: 'Users_uid',
         },
       },
       Likes_create_at: {
