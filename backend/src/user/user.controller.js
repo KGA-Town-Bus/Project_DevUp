@@ -50,8 +50,10 @@ class UserController {
       res.cookie("authorization", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        domain: `${process.env.FRONTEND_SERVER_IP}`,
+        domain: `.${process.env.FRONTEND_SERVER_IP}`,
         path: "/",
+        sameSite: "none",
+        secure: true
       });
 
 
