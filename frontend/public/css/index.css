@@ -11,6 +11,7 @@ a {
 input {
   border: none;
   outline: none;
+  caret-color: transparent;
   border-radius: 20px;
 }
 
@@ -87,15 +88,14 @@ body {
   height: 18px;
 }
 
-
 input[type='text']:focus,
 input[type='text']::placeholder,
 input[type='password']:focus,
 input[type='password']::placeholder,
 input[type='email']:focus,
-input[type='email']::placeholder{
-  color: #eee;
-  opacity: 0.85;
+input[type='email']::placeholder {
+  color: #171d25;
+  opacity: 0.75;
 }
 
 .buttons {
