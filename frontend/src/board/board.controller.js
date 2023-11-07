@@ -22,10 +22,45 @@ class BoardController {
   }
 
   async getOnePost(req, res, next) {
+    const postUid = req.params.uid;
     try {
-      postUid = req.params.id;
-      const data = await this.boardService.findOnePost(postUid);
-      res.redirect(`/`);
+      const postData = await this.boardService.findOnePost(postUid);
+      await this.boardService.incrementViews(postUid);
+      res.json(postData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async postUpdate(req, res, next) {
+    const postId = req.params.postId;
+    const updateData = req.body;
+
+    try {
+      await this.boardService.updatePost(postId, updateData);
+      res.redirect(`/posts/${postId}`);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async postDelete(req, res, next) {
+    const postId = req.params.postId;
+
+    try {
+      await this.boardService.deletePost(postId);
+      res.redirect('/');
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async postLike(req, res, next) {
+    const postId = req.params.postId;
+
+    try {
+      await this.boardService.likePost(postId);
+      res.status(204).send();
     } catch (e) {
       next(e);
     }

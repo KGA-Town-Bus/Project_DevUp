@@ -1,6 +1,7 @@
-const express = require("express")
-const router = express.Router()
-const userRouter = require("./user/user.router")
+const express = require('express');
+const router = express.Router();
+const userRouter = require('./user/user.router');
+const boardRouter = require('./board/board.route');
 
 // 참고 용도
 /**
@@ -23,13 +24,10 @@ const userRouter = require("./user/user.router")
  *       400:
  *        description: 실패
  */
-router.get("/", (req, res, next) => {
-  res.send("Swagger Test")
-})
-router.use("/users",userRouter)
+router.get('/', (req, res, next) => {
+  res.send('Swagger Test');
+});
+router.use('/users', userRouter);
+router.use('/posts', boardRouter);
 
-module.exports = router
-
-
-
-
+module.exports = router;
