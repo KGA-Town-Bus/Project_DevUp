@@ -1,61 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>DEVUP Homepage</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>DEVUP Homepage</title>
 
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="stylesheet" href="/css/user/login.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/user/login.css" />
+  </head>
+  <body>
+    <div class="header bs">
+      <a href="/"
+        ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
+      /></a>
+      <div class="text-set ts">
+        <span>Feed</span>
+        <span>Stats</span>
+        <span>Admin</span>
+        <span>Public Chat</span>
+      </div>
+      <div class="search">
+        <span class="search-icon">🔍</span>
+        <input
+          spellcheck="false"
+          type="text"
+          class="search-bar bs"
+          placeholder="Search..."
+        />
+      </div>
+      <div class="buttons">
+        <a href="/users"><button class="signup bs">Sign Up</button></a>
+        <a href="/users/login"><button class="signin bs">Sign In</button></a>
+      </div>
+    </div>
 
-<div class="header bs">
-  <a href="/"
-  ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
-  /></a>
-  <div class="text-set ts">
-    <span>Feed</span>
-    <span>Stats</span>
-    <span>Admin</span>
-    <span>Public Chat</span>
-  </div>
-  <div class="search">
-    <span class="search-icon">🔍</span>
-    <input type="text" class="search-bar bs" placeholder="Search..." />
-  </div>
-  <div class="buttons">
-    <a href="/users"><button class="signup bs">Sign Up</button></a>
-    <a href="/users/login"><button class="signin bs">Sign In</button></a>
-  </div>
-</div>
+    <div class="main">
+      <form method="post" action="http://localhost:4000/users/login">
+        <h2>Sign In</h2>
+        <input spellcheck="false" type="text" name="userId" placeholder="ID" />
+        <input
+          spellcheck="false"
+          type="password"
+          name="userPassword"
+          placeholder="Password"
+        />
+        <button spellcheck="false" type="submit">Sign In</button>
+      </form>
 
-
-<div class="main">
-  <form method="post" action="http://localhost:4000/users/login">
-    <h2>Sign In</h2>
-    <input type="text" name="userId" placeholder="ID">
-    <input type="password" name="userPassword" placeholder="Password">
-    <button type="submit">Sign In</button>
-  </form>
-
-  <div class="social-login">
-    <a href="/users/kakao"><img class="kakao" src="/images/login_assets/Kakao/kakao.png"/></a>
-    <a href="/users/google"><img class="google" src="/images/login_assets/Google/dark/web_dark_sq_na@2x.png"/></a>
-    <a href="/users/github"><img class="github" src="/images/login_assets/Github/github-mark/github-mark-white.png"/></a>
-    <a href="/users/naver"><img class="naver" src="/images/login_assets/Naver/btnG_icon_square.png"/></a>
-  </div>
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-</body>
+      <div class="social-login">
+        <a href="/users/kakao"
+          ><img class="kakao" src="/images/login_assets/Kakao/kakao.png"
+        /></a>
+        <a href="/users/google"
+          ><img
+            class="google"
+            src="/images/login_assets/Google/dark/web_dark_sq_na@2x.png"
+        /></a>
+        <a href="/users/github"
+          ><img
+            class="github"
+            src="/images/login_assets/Github/github-mark/github-mark-white.png"
+        /></a>
+        <a href="/users/naver"
+          ><img
+            class="naver"
+            src="/images/login_assets/Naver/btnG_icon_square.png"
+        /></a>
+      </div>
+    </div>
+  </body>
 </html>

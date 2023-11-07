@@ -13,6 +13,12 @@ input {
   outline: none;
   caret-color: transparent;
   border-radius: 20px;
+  color: #171d25;
+}
+
+input::selection {
+  color: white;
+  background: #374151;
 }
 
 @font-face {
@@ -80,7 +86,6 @@ body {
   height: 30px;
   padding-left: 30px;
   background-color: #374151;
-  /* border-radius: 20px; */
 }
 
 .search-logo {
@@ -88,14 +93,22 @@ body {
   height: 18px;
 }
 
-input[type='text']:focus,
 input[type='text']::placeholder,
-input[type='password']:focus,
 input[type='password']::placeholder,
-input[type='email']:focus,
 input[type='email']::placeholder {
   color: #171d25;
   opacity: 0.75;
+}
+
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='email']:focus {
+  /* color: #6ba7ce; */
+  opacity: 0.8;
+}
+
+.search > input::placeholder {
+  color: #eee;
 }
 
 .buttons {
