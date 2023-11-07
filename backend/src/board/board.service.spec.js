@@ -13,6 +13,9 @@ const {
 jest.mock('../lib/db');
 
 describe('BoardService', () => {
+  // beforeEach(()=>{
+  //   mockPost
+  // })
   afterEach(() => {
     jest.clearAllMocks();
   });

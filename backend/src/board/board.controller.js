@@ -3,11 +3,6 @@ const {
   PostReadRequestDTO,
   PostUpdateRequestDTO,
   PostDeleteRequestDTO,
-  CommentCreateRequestDTO,
-  CommentUpdateRequestDTO,
-  CommentDeleteRequestDTO,
-  IncrementHitRequestDTO,
-  LikeRequestDTO,
 } = require('./dto/board.dto');
 
 class BoardController {

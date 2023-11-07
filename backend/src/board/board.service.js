@@ -132,14 +132,25 @@ class BoardService {
         throw new Error('이미 좋아요를 눌렀습니다.');
       }
 
-      await db.Likes.create({
+      const createdLike = await db.Likes.create({
         Post_uid: postUid,
         User_uid: userUid,
       });
 
-      await db.Posts.increment('Posts_like', {
+      if (!createdLike) {
+        throw new Error('좋아요 추가에 실패했습니다.');
+      }
+
+      const incrementedPost = await db.Posts.increment('Posts_like', {
         where: {Posts_uid: postUid},
       });
+
+      if (!incrementedPost) {
+        await db.Likes.destroy({
+          where: {Post_uid: postUid, User_uid: userUid},
+        });
+        throw new Error('좋아요 수 증가에 실패했습니다.');
+      }
     } catch (e) {
       console.error('Service addLike Error', e);
       throw new Error(e.message);
@@ -154,6 +165,14 @@ class BoardService {
       await db.Posts.decrement('Posts_like', {
         where: {Posts_uid: postUid},
       });
+    } catch (e) {
+      console.error('Service removeLike Error', e);
+      throw new Error(e.message);
+    }
+  }
+
+  async addComment() {
+    try {
     } catch (e) {
       console.error('Service removeLike Error', e);
       throw new Error(e.message);
