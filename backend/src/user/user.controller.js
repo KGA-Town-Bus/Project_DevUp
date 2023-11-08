@@ -4,10 +4,17 @@ const {BadRequest} = require("../lib/customException");
 const {Created} = require("../lib/customMessage");
 const axios = require("axios");
 const {UserProfileRequestDTO} = require("./dto/user.profile.request.dto");
+const JWT = require("../lib/jwt")
+const jwt = new JWT()
 
 
 require("dotenv").config()
 const ENV = process.env.ENV
+
+
+let domain
+if (ENV === "develop") domain = `localhost`
+if (ENV === "production") domain = `.hyunjun.kr`
 
 
 class UserController {
@@ -50,9 +57,7 @@ class UserController {
 
       const token = await this.service.login(provider, code, state, userLoginRequestDTO);
 
-      let domain
-      if (ENV === "develop") domain = `localhost`
-      if (ENV === "production") domain = `.hyunjun.kr`
+
 
       res.cookie("authorization", token, {
         maxAge: 60 * 60 * 1000,
@@ -77,17 +82,34 @@ class UserController {
       const userProfileRequestDTO = new UserProfileRequestDTO(req)
 
       const result = await this.service.profileUpload(userProfileRequestDTO)
+      req.user.Users_profile = result
+      const token = setJWTToken(req.user)
+
+      res.cookie("authorization", token, {
+        maxAge: 60 * 60 * 1000,
+        httpOnly: true,
+        domain: domain,
+        path: "/",
+        sameSite: "none",
+        secure: true
+      });c
 
       res.status(201).json(new Created(result))
 
 
     }catch(e){
-
+      next(e)
     }
 
   }
 
 
+}
+
+const setJWTToken = (data) => {
+  const jwtPayload = data;
+  const token = jwt.sign(jwtPayload)
+  return token
 }
 
 
