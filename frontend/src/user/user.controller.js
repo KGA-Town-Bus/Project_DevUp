@@ -14,6 +14,7 @@ const ACCESS_TYPE = process.env.ACCESS_TYPE
 // github
 const GITHUB_AUTHORIZE_URI = process.env.GI_AUTHORIZE_URI
 const GITHUB_CLIENT_ID = process.env.GI_CLIENT_ID
+const GITHUB_REDIRECT_URI = process.env.GI_REDIRECT_URI
 
 // naver
 const NAVER_AUTHORIZE_URI = process.env.NAVER_AUTHORIZE_URI
@@ -71,7 +72,7 @@ class UserController {
 
       if (provider === "kakao") redirectURI = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
       if (provider === "google") redirectURI = `${GOOGLE_AUTHORIZE_URI}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&redirect_uri=${GOOGLE_REDIRECT_URI}&scope=${SCOPE}&access_type=${ACCESS_TYPE}`
-      if (provider === "github") redirectURI = `${GITHUB_AUTHORIZE_URI}?client_id=${GITHUB_CLIENT_ID}`
+      if (provider === "github") redirectURI = `${GITHUB_AUTHORIZE_URI}?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URI}`
       if (provider === "naver") redirectURI = `${NAVER_AUTHORIZE_URI}?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=RAMDOM_STATE`
       if (provider === "login") return res.render("user/login.html")
       res.redirect(redirectURI)
