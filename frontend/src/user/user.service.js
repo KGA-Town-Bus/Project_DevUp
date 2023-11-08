@@ -7,7 +7,7 @@ class UserService {
 
   async signup (body)  {
     try{
-      const {data} = await axios.post(`http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/users`,body)
+      const {data} = await axios.post(`https://${BACKEND_SERVER_IP}/users`,body)
 
       return data
 

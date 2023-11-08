@@ -50,12 +50,14 @@ class UserController {
       res.cookie("authorization", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        domain: `${process.env.BACKEND_SERVER_IP}`,
+        domain: `.hyunjun.kr`,
         path: "/",
+        sameSite: "none",
+        secure: true
       });
 
 
-      res.redirect(`http://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/`)
+      res.redirect(`http://${process.env.FRONTEND_SERVER_IP}`)
     }catch(e){
       next(e)
     }
