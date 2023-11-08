@@ -24,8 +24,8 @@ class BoardController {
   async getAllPost(req, res, next) {
     console.log('getAllPost function start');
     try {
-      const getAllRequestDTO = new PostReadRequestDTO(req.body);
-      const data = await this.boardService.findAllPost(getAllRequestDTO);
+      const data = await this.boardService.findAllPost();
+
       res.status(201).json(data);
     } catch (e) {
       console.error('getAllPost Error', e);
@@ -35,11 +35,12 @@ class BoardController {
 
   async getPost(req, res, next) {
     try {
-      const postUid = req.params.uid;
+      const postUid = Number(req.params.postUid);
+      console.log(postUid);
       await this.boardService.incrementHit(postUid); // 조회수 증가 로직 호출
       const postReadRequestDTO = new PostReadRequestDTO({postUid});
       const data = await this.boardService.findOnePost(postReadRequestDTO);
-
+      console.log('@@', data);
       res.status(201).json(data);
     } catch (e) {
       console.error('postCreate Error', e);
@@ -50,7 +51,7 @@ class BoardController {
   async putUpdatePost(req, res, next) {
     try {
       const postUpdateRequestDTO = new PostUpdateRequestDTO({
-        postUid: req.params.uid,
+        postUid: Number(req.params.postUid),
         ...req.body,
       });
       const data = await this.boardService.updatePost(postUpdateRequestDTO);
@@ -65,7 +66,7 @@ class BoardController {
   async deletePost(req, res, next) {
     try {
       const postDeleteRequestDTO = new PostDeleteRequestDTO({
-        postUid: req.params.uid,
+        postUid: Number(req.params.postUid),
       });
       const result = await this.boardService.deletePost(postDeleteRequestDTO);
       res.status(201).json(result);
@@ -78,7 +79,7 @@ class BoardController {
   async postLiked(req, res, next) {
     try {
       const postUid = Number(req.params.uid);
-      const userUid = req.user.uid;
+      const userUid = req.user.userUid;
 
       await this.boardService.addLike(postUid, userUid);
 
@@ -92,7 +93,7 @@ class BoardController {
   async deleteLiked(req, res, next) {
     try {
       const postUid = Number(req.params.uid);
-      const userUid = req.user.uid;
+      const userUid = req.user.postUid;
 
       await this.boardService.removeLike(postUid, userUid);
       res.status(201).json({message: '좋아요 취소'});

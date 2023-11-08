@@ -13,20 +13,41 @@ const {
 jest.mock('../lib/db');
 
 describe('BoardService', () => {
-  // beforeEach(()=>{
-  //   mockPost
-  // })
+  beforeEach(() => {
+    db.Posts.create = jest.fn().mockResolvedValue({
+      postUid: 1,
+      postTitle: 'Test title',
+      postContent: 'Test content',
+      postWriter: 'Test writer',
+    });
+    db.Posts.create = jest.fn();
+    db.Posts.update = jest.fn();
+    db.Posts.destroy = jest.fn();
+
+    db.Posts.create.mockResolvedValue({});
+
+    db.Posts.update.mockResolvedValue({});
+
+    db.Posts.destroy.mockResolvedValue(1);
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
   describe('createPost', () => {
-    it('createPost and redirect to the created post', async () => {
+    it('createPost 동작 성공', async () => {
       const newPost = {
         postTitle: 'Test title',
         postContent: 'Test content',
         postWriter: 'Test writer',
       };
       const createdPost = {...newPost, postUid: 1};
+
+      const responsePost = {
+        Posts_title: newPost.postTitle,
+        Posts_content: newPost.postContent,
+        Posts_writer: newPost.postWriter,
+      };
       db.Posts.create.mockResolvedValue(createdPost);
 
       const result = await boardService.createPost(
@@ -34,11 +55,9 @@ describe('BoardService', () => {
       );
 
       expect(result).toEqual(new PostCreateResponseDTO(createdPost));
-      expect(db.Posts.create).toHaveBeenCalledWith({
-        Posts_title: newPost.postTitle,
-        Posts_content: newPost.postContent,
-        Posts_writer: newPost.postWriter,
-      });
+
+      expect(db.Posts.create).toHaveBeenCalledWith(responsePost);
+
       expect(result.postUid).toBe(createdPost.postUid);
     });
 

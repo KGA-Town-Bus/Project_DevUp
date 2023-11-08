@@ -1,5 +1,5 @@
-const BaseDTO = require("../../lib/base.dto");
-const { BadRequest } = require("../../lib/customException");
+const BaseDTO = require('../../lib/base.dto');
+const {BadRequest} = require('../../lib/customException');
 
 class PostCreateRequestDTO extends BaseDTO {
   postTitle;
@@ -22,7 +22,7 @@ class PostCreateResponseDTO extends BaseDTO {
   constructor(response) {
     super();
     this.postUid = response.postUid;
-    this.message = "게시물이 성공적으로 생성되었습니다.";
+    this.message = '게시물이 성공적으로 생성되었습니다.';
     this.validate(this, BadRequest);
   }
 }
@@ -60,6 +60,7 @@ class PostReadResponseDTO extends BaseDTO {
   postContent;
   postWriter;
   postCreatedAt;
+  postHit;
 
   constructor(response) {
     super();
@@ -67,6 +68,7 @@ class PostReadResponseDTO extends BaseDTO {
     this.postTitle = response.Posts_title;
     this.postContent = response.Posts_content;
     this.postWriter = response.Posts_writer;
+    this.postHit = response.Posts_hit;
     this.postCreatedAt = this.toDate(response.Posts_created_at);
     this.validate(this, BadRequest);
   }
@@ -99,7 +101,7 @@ class PostUpdateResponseDTO extends BaseDTO {
     this.postTitle = response.Posts_title;
     this.postContent = response.Posts_content;
     this.postCreatedAt = this.toDate(response.Posts_created_at);
-    this.message = "게시물이 성공적으로 수정되었습니다.";
+    this.message = '게시물이 성공적으로 수정되었습니다.';
     this.validate(this, BadRequest);
   }
 }

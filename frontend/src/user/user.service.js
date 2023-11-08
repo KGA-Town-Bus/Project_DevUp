@@ -1,3 +1,4 @@
+
 const axios = require("axios")
 require("dotenv").config()
 const BACKEND_SERVER_IP = process.env.BACKEND_SERVER_IP
@@ -27,9 +28,9 @@ class UserService {
 
     } catch (e) {
       throw new Error(e.message)
+
     }
   }
 }
 
-
-module.exports = UserService
+module.exports = UserService;
