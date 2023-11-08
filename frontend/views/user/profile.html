@@ -66,12 +66,12 @@
     </div>
     </div>
 
-    <form class="form">
-      <input type="text" placeholder="nickname" value="{{userNickname}}">
-      <input type="text" placeholder="name" value="{{userName}}">
-      <input type="email" placeholder="email" value="{{userEmail}}">
-      <input type="password" placeholder="password">
-      <input type="password" placeholder="double-check your pw">
+    <form class="form" action="/users/profile" method="post">
+      <input type="text" name="userNickname" placeholder="nickname" value="{{userNickname}}">
+      <input type="text" name="userName" placeholder="name" value="{{userName}}">
+      <input type="email" name="userEmail" placeholder="email" value="{{userEmail}}">
+      <input type="password" name="userPassword" placeholder="password">
+      <input type="password" name="userPassword" placeholder="double-check your pw">
       <button type="submit">Edit</button>
     </form>
   </div>

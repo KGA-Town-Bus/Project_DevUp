@@ -13,6 +13,7 @@ require("dotenv").config()
 const ENV = process.env.ENV
 const BACKEND_SERVER_IP = process.env.BACKEND_SERVER_IP
 const BACKEND_SERVER_PORT = process.env.BACKEND_SERVER_PORT
+const PROTOCOL = process.env.PROTOCOL
 
 
 
@@ -33,7 +34,6 @@ class UserService {
         Users_created_at: Date.now(),
         Users_account_locked: false,
         Users_email: requestDTO.userEmail,
-        // todo: 기본 이미지 설정
         Users_profile: "__default__",
         Role_authority: "user",
       });
@@ -124,12 +124,10 @@ class UserService {
   async profileUpload(requestDTO) {
     try {
       let domain;
-      if(ENV === "develop"){
-        domain = `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`
-      }
-      if(ENV === "production") {
-        domain = `https://${BACKEND_SERVER_IP}/`
-      }
+
+        domain = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`
+
+
 
       const filePath = domain + requestDTO.profile.filename
 

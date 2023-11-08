@@ -9,7 +9,7 @@ const jwt = new JWT()
 
 
 require("dotenv").config()
-const ENV = process.env.ENV
+const PROTOCOL = process.env.PROTOCOL
 
 
 let domain
@@ -67,9 +67,7 @@ class UserController {
         sameSite: "none",
         secure: true
       });
-
-      if (ENV === "develop") return res.redirect(`http://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}`)
-      if (ENV === "production") return res.redirect(`https://${process.env.FRONTEND_SERVER_IP}`)
+      return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}`)
 
 
     } catch (e) {
@@ -101,6 +99,15 @@ class UserController {
       next(e)
     }
 
+  }
+
+  async putProfile(req, res, next) {
+    try{
+
+
+    }catch(e){
+      next(e)
+    }
   }
 
 

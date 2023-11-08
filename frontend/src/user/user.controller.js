@@ -48,10 +48,18 @@ class UserController {
           userProfile: req.user.Users_profile
         }
       }
-
-
       res.render("user/profile.html", userData)
     } catch (e) {
+      next(e)
+    }
+  }
+
+  async postProfile(req, res, next) {
+    try {
+      const result = await this.service.profileUpdate(req.body)
+
+    } catch (e) {
+      console.log(e)
       next(e)
     }
   }

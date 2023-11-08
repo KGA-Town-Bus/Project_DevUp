@@ -6,7 +6,7 @@ const {userController} = require('./user.module');
 const postSignup = userController.postSignup.bind(userController);
 const login = userController.login.bind(userController);
 const postProfile = userController.postProfile.bind(userController)
-
+const putProfile = userController.putProfile.bind(userController)
 /**
  * @swagger
  *  /users:
@@ -53,6 +53,7 @@ userRouter.post('/', postSignup);
 
 
 userRouter.post("/profile", upload.single("profile"), postProfile)
+userRouter.put("/profile",  putProfile)
 
 
 userRouter.get('/:provider', login);
