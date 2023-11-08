@@ -2,6 +2,7 @@ const axios = require('axios');
 require('dotenv').config();
 const BACKEND_SERVER_IP = process.env.BACKEND_SERVER_IP;
 const BACKEND_SERVER_PORT = process.env.BACKEND_SERVER_PORT;
+const PROTOCOL = process.env.PROTOCOL;
 
 class BoardService {
   constructor() {}
