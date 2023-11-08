@@ -21,7 +21,12 @@
       </div>
       <div class="search">
         <span class="search-icon">🔍</span>
-        <input type="text" class="search-bar bs" placeholder="Search..." />
+        <input
+          spellcheck="false"
+          type="text"
+          class="search-bar bs"
+          placeholder="Search..."
+        />
       </div>
       <div class="buttons">
         <a href="/users"><button class="signup bs">Sign Up</button></a>
@@ -56,7 +61,7 @@
         <div class="user-buttons">
           <button class="post bs">Post</button>
           <button class="chat bs">Chat</button>
-          <button class="profile bs">Profile</button>
+          <a href="/users/profile"><button class="profile bs">Profile</button></a>
         </div>
         <div id="chatroom" class="chatroom">
           <div class="chat-content"></div>

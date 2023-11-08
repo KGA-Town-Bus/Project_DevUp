@@ -1,47 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>DEVUP Homepage</title>
 
-  <link rel="stylesheet" href="/css/index.css">
-  <link rel="stylesheet" href="/css/user/signup.css">
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/user/signup.css" />
+  </head>
+  <body>
+    <div class="header bs">
+      <a href="/"
+        ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
+      /></a>
+      <div class="text-set ts">
+        <span>Feed</span>
+        <span>Stats</span>
+        <span>Admin</span>
+        <span>Public Chat</span>
+      </div>
+      <div class="search">
+        <span class="search-icon">🔍</span>
+        <input
+          spellcheck="false"
+          type="text"
+          class="search-bar bs"
+          placeholder="Search..."
+        />
+      </div>
+      <div class="buttons">
+        <a href="/users"><button class="signup bs">Sign Up</button></a>
+        <a href="/users/login"><button class="signin bs">Sign In</button></a>
+      </div>
+    </div>
 
-</head>
-<body>
-
-
-<div class="header bs">
-  <a href="/"
-  ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
-  /></a>
-  <div class="text-set ts">
-    <span>Feed</span>
-    <span>Stats</span>
-    <span>Admin</span>
-    <span>Public Chat</span>
-  </div>
-  <div class="search">
-    <span class="search-icon">🔍</span>
-    <input type="text" class="search-bar bs" placeholder="Search..." />
-  </div>
-  <div class="buttons">
-    <button class="signup bs">Sign Up</button>
-    <button class="signin bs">Sign In</button>
-  </div>
-</div>
-
-
-<div class="main">
-  <form action="http://localhost:3000/users" method="post">
-    <h2>Sign Up</h2>
-    <input type="text" name="userId" placeholder="Enter your ID">
-    <input type="email" name="userEmail" placeholder="Your Email">
-    <input type="password" name="userPassword" placeholder="Your password">
-    <input type="password" name="userPassword" placeholder="Double-check your password">
-    <button type="submit">Sign Up</button>
-  </form>
-</div>
-
-</body>
+    <div class="main">
+      <form action="https://devup.hyunjun.kr/users" method="post">
+        <h2>Sign Up</h2>
+        <input
+          spellcheck="false"
+          type="text"
+          name="userId"
+          placeholder="Enter your ID"
+        />
+        <input
+          spellcheck="false"
+          type="email"
+          name="userEmail"
+          placeholder="Your Email"
+        />
+        <input
+          spellcheck="false"
+          type="password"
+          name="userPassword"
+          placeholder="Your password"
+        />
+        <input
+          spellcheck="false"
+          type="password"
+          name="userPassword"
+          placeholder="Double-check your password"
+        />
+        <button spellcheck="false" type="submit">Sign Up</button>
+      </form>
+    </div>
+  </body>
 </html>

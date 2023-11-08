@@ -1,0 +1,64 @@
+.main {
+    margin: auto;
+    position: relative;
+    top: 133px;
+    background-color: rgba(0, 0, 0, 25%);
+    border-radius: 30px;
+    width: 700px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+form > h2 {
+    text-align: center;
+    font-size: 56px;
+    color: white;
+    padding-top: 16px;
+    padding-bottom: 14px;
+}
+
+form > input {
+    width: 530px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 30px;
+    text-align: center;
+    color: black;
+}
+
+::placeholder {
+    color: black;
+}
+
+form > button {
+    width: 530px;
+    height: 60px;
+    background-color: #8AB3CF;
+    color: white;
+    border-radius: 15px;
+    font-size: 25px;
+}
+
+.social-login {
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
+    justify-content: center;
+    margin-top: 41px;
+}
+
+.social-login > a > img {
+    width: 50px;
+    height: 50px;
+}
+

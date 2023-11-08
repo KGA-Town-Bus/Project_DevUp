@@ -30,6 +30,7 @@ jobs:
         run: |
           pwd
           touch .env
+          echo ENV=${{ secrets.ENV }} >> .env
           echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo DB_DATABASE=${{ secrets.DB_DATABASE }} >> .env
@@ -39,7 +40,26 @@ jobs:
           echo FRONTEND_SERVER_PORT=${{ secrets.FRONTEND_SERVER_PORT }} >> .env
           echo BACKEND_SERVER_IP=${{ secrets.BACKEND_SERVER_IP }} >> .env
           echo BACKEND_SERVER_PORT=${{ secrets.BACKEND_SERVER_PORT }} >> .env
+          echo REST_API_KEY=${{ secrets.REST_API_KEY }} >> .env
+          echo KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }} >> .env
+          echo KAKAO_REDIRECT_URI=${{ secrets.KAKAO_REDIRECT_URI }} >> .env
+          echo GOOGLE_AUTHORIZE_URI=${{ secrets.GOOGLE_AUTHORIZE_URI }} >> .env
+          echo CLIENT_ID=${{ secrets.CLIENT_ID }} >> .env
+          echo CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} >> .env
+          echo RESPONSE_TYPE=${{ secrets.RESPONSE_TYPE }} >> .env
+          echo GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }} >> .env
+          echo SCOPE=${{ secrets.SCOPE }} >> .env
+          echo ACCESS_TYPE=${{ secrets.ACCESS_TYPE }} >> .env
+          echo GI_AUTHORIZE_URI=${{ secrets.GI_AUTHORIZE_URI }} >> .env
+          echo GI_CLIENT_ID=${{ secrets.GI_CLIENT_ID }} >> .env
+          echo GI_CLIENT_SECRET=${{ secrets.GI_CLIENT_SECRET }} >> .env
+          echo NAVER_AUTHORIZE_URI=${{ secrets.NAVER_AUTHORIZE_URI }} >> .env
+          echo NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} >> .env
+          echo NAVER_CLINET_SECRET=${{ secrets.NAVER_CLINET_SECRET }} >> .env
+          echo NAVER_REDIRECT_URI=${{ secrets.NAVER_REDIRECT_URI }} >> .env
+          echo JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} >> .env
           cat .env
+          
 
       - name: build server files
         working-directory: ./

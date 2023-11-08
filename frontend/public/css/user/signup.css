@@ -11,7 +11,7 @@
 form{
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
 }
 
 form > h2{
@@ -22,19 +22,25 @@ form > h2{
 }
 
 form > input {
-    width: 620px;
+    width: 500px;
     margin: auto;
-    height: 52px;
+    height: 40px;
     border-radius: 10px;
     font-size: 30px;
     text-align: center;
+    color: black;
+}
+
+::placeholder {
+    color: black;
 }
 
 form > button{
-    width: 620px;
-    height: 44px;
+    width: 500px;
+    height: 60px;
     margin: auto;
     background-color: #8D8ACF;
     color: white;
     border-radius: 15px;
+    font-size: 25px;
 }
