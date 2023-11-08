@@ -9,7 +9,7 @@ class BoardService {
   async createPost(body) {
     try {
       const {data} = await axios.post(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`,
+        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`,
         body,
       );
 
@@ -23,7 +23,7 @@ class BoardService {
   async findAllPost() {
     try {
       const {data} = await axios.get(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`,
+        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`,
       );
 
       return data;
@@ -43,7 +43,7 @@ class BoardService {
   async findOnePost(postUid) {
     try {
       const {data} = await axios.get(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
+        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
       );
       console.log(data);
       return data;
@@ -56,7 +56,7 @@ class BoardService {
   async updatePost(postUid, updateData) {
     try {
       const response = await axios.put(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}//${postUid}`,
+        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}//${postUid}`,
         updateData,
       );
       return response.data;
@@ -69,7 +69,7 @@ class BoardService {
   async deletePost(postUid) {
     try {
       await axios.delete(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
+        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
       );
       return {message: 'deleted success'};
     } catch (e) {
@@ -81,7 +81,7 @@ class BoardService {
   async incrementViews(postUid) {
     try {
       const view = await axios.put(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
+        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
       );
       console.log(view);
     } catch (e) {
@@ -93,7 +93,7 @@ class BoardService {
   async likePost(postUid) {
     try {
       await axios.patch(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}/like`,
+        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}/like`,
       );
     } catch (e) {
       console.error('Error in likePost:', e);
