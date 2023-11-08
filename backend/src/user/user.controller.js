@@ -10,7 +10,7 @@ const jwt = new JWT()
 
 require("dotenv").config()
 const PROTOCOL = process.env.PROTOCOL
-
+const ENV = process.env.ENV
 
 let domain
 if (ENV === "develop") domain = `localhost`
