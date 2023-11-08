@@ -5,7 +5,8 @@ document.getElementById("profile-input").addEventListener("change",async (e)=>{
 
 
   const {data} = await axios.post(
-      "http://localhost:4000/users/profile",
+      "https://api-devup.hyunjun.kr/users/profile",
+      // "http://localhost:4000/users/profile",
       formData,
       {
         withCredentials: true
