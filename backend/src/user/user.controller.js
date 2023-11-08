@@ -3,18 +3,18 @@ const {UserLoginRequestDTO} = require("./dto/user.login.request.dto");
 const {BadRequest} = require("../lib/customException");
 const {Created} = require("../lib/customMessage");
 const axios = require("axios");
-const {UserProfileRequestDTO} = require("./dto/user.profile.request.dto");
+const {UserProfileImageRequestDTO} = require("./dto/userProfileImageRequestDTO");
 const JWT = require("../lib/jwt")
+const {UserProfileFormRequestDTO} = require("./dto/userProfileFormRequestDTO");
 const jwt = new JWT()
 
 
 require("dotenv").config()
 const PROTOCOL = process.env.PROTOCOL
 const ENV = process.env.ENV
+const DOMAIN = process.env.DOMAIN
 
-let domain
-if (ENV === "develop") domain = `localhost`
-if (ENV === "production") domain = `.hyunjun.kr`
+
 
 
 class UserController {
@@ -62,7 +62,7 @@ class UserController {
       res.cookie("authorization", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        domain: domain,
+        domain: DOMAIN,
         path: "/",
         sameSite: "none",
         secure: true
@@ -77,16 +77,16 @@ class UserController {
 
   async postProfile(req, res, next) {
     try{
-      const userProfileRequestDTO = new UserProfileRequestDTO(req)
+      const userProfileImageRequestDTO = new UserProfileImageRequestDTO(req)
 
-      const result = await this.service.profileUpload(userProfileRequestDTO)
+      const result = await this.service.profileUpload(userProfileImageRequestDTO)
       req.user.Users_profile = result
       const token = setJWTToken(req.user)
 
       res.cookie("authorization", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
-        domain: domain,
+        domain: DOMAIN,
         path: "/",
         sameSite: "none",
         secure: true
@@ -104,6 +104,21 @@ class UserController {
   async putProfile(req, res, next) {
     try{
 
+      if (req.body.userPassword[0] !== req.body.userPassword[1]) throw new BadRequest("비밀번호가 일치하지 않습니다.")
+
+      const userProfileFormRequestDTO = new UserProfileFormRequestDTO(req)
+     const result = this.service.userInfoUpdate(userProfileFormRequestDTO)
+
+
+      req.user.Users_nickname = userProfileFormRequestDTO.userNickname
+      req.user.Users_name = userProfileFormRequestDTO.userName
+      req.user.Users_email = userProfileFormRequestDTO.userEmail
+
+      const token = setJWTToken(req.user)
+
+
+
+      res.status(201).json(new Created(token))
 
     }catch(e){
       next(e)

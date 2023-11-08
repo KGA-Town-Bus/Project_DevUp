@@ -5,8 +5,6 @@ const db = require("./db")
 require("dotenv").config();
 
 exports.auth = async (req, res, next) => {
-  console.log(req.originalUrl)
-
   try {
     if (req.headers.authorization) await headerLogic(req, res, next)
     if (req.headers.cookie) await cookieLogic(req, res, next)
@@ -15,13 +13,10 @@ exports.auth = async (req, res, next) => {
   } catch (e) {
     next();
   }
-
-
 }
 
 const headerLogic = async (req, res, next) => {
   // 헤더로 JWT 토큰을 보낼 경우
-
   const {authorization} = req.headers;
   const token = authorization.split("Bearer ")[1]
 

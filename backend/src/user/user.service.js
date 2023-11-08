@@ -5,7 +5,7 @@ const Github = require("./socialLogin/github")
 const Naver = require("./socialLogin/naver")
 const JWT = require("../lib/jwt")
 const jwt = new JWT()
-const {Op} = require('sequelize');
+const {Op, where} = require('sequelize');
 const {UserSignupResponseDTO} = require("./dto/user.signup.response.dto");
 
 require("dotenv").config()
@@ -124,10 +124,7 @@ class UserService {
   async profileUpload(requestDTO) {
     try {
       let domain;
-
         domain = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`
-
-
 
       const filePath = domain + requestDTO.profile.filename
 
@@ -139,13 +136,35 @@ class UserService {
             }
           }
       )
-
-
       return filePath
     } catch (e) {
-      throw new Error(e.message);
+      throw e;
     }
+  }
 
+  async userInfoUpdate(requestDTO) {
+    try{
+
+
+      const result = await this.userRepository.update(
+          {
+            Users_nickname: requestDTO.userNickname,
+            Users_name: requestDTO.userName,
+            Users_email : requestDTO.userEmail,
+            Users_password : requestDTO.userPassword
+          },
+      {
+        where:{
+          Users_uid : requestDTO.userUid
+        }
+      },
+      )
+
+      return result
+
+    }catch(e){
+      throw e
+    }
 
   }
 }

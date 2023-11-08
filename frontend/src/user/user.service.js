@@ -18,9 +18,18 @@ class UserService {
     }
   }
 
-  async profileUpdate(body) {
+  async profileUpdate(req) {
     try {
-      const {data} = await axios.put(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/users/profile`, body)
+
+      const {authorization} = req.cookies;
+      const {data} = await axios.put(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/users/profile`, req.body,
+          {headers:{
+            Authorization: `Bearer ${authorization}`
+            },withCredentials:true
+          })
+
+
+
       return data
 
 

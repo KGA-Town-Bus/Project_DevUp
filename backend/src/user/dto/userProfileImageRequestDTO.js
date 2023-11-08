@@ -2,7 +2,7 @@ const baseDTO = require("../../lib/base.dto")
 const {BadRequest} = require("../../lib/customException");
 
 
-class UserProfileRequestDTO extends baseDTO {
+class UserProfileImageRequestDTO extends baseDTO {
   profile
   userUid
 
@@ -16,5 +16,5 @@ class UserProfileRequestDTO extends baseDTO {
 
 
 module.exports = {
-  UserProfileRequestDTO
+  UserProfileImageRequestDTO
 }
