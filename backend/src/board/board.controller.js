@@ -22,7 +22,6 @@ class BoardController {
   }
 
   async getAllPost(req, res, next) {
-    console.log('getAllPost function start');
     try {
       const data = await this.boardService.findAllPost();
 
@@ -36,11 +35,9 @@ class BoardController {
   async getPost(req, res, next) {
     try {
       const postUid = Number(req.params.postUid);
-      console.log(postUid);
       await this.boardService.incrementHit(postUid); // 조회수 증가 로직 호출
       const postReadRequestDTO = new PostReadRequestDTO({postUid});
       const data = await this.boardService.findOnePost(postReadRequestDTO);
-      console.log('@@', data);
       res.status(201).json(data);
     } catch (e) {
       console.error('postCreate Error', e);

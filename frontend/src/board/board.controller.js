@@ -18,8 +18,8 @@ class BoardController {
 
   async getPosts(req, res, next) {
     try {
+      console.log(req.params);
       const posts = await this.boardService.findAllPost();
-      console.log(posts);
       res.render('index', {posts});
     } catch (e) {
       next(e);
@@ -42,7 +42,7 @@ class BoardController {
     res.render('board/modify');
   }
 
-  async postUpdate(req, res, next) {
+  async putUpdate(req, res, next) {
     const postUid = req.params.postUid;
     const updateData = req.body;
 
