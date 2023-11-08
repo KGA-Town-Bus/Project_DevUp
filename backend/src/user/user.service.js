@@ -5,8 +5,15 @@ const Github = require("./socialLogin/github")
 const Naver = require("./socialLogin/naver")
 const JWT = require("../lib/jwt")
 const jwt = new JWT()
-const { Op } = require('sequelize');
+const {Op} = require('sequelize');
 const {UserSignupResponseDTO} = require("./dto/user.signup.response.dto");
+
+require("dotenv").config()
+
+const ENV = process.env.ENV
+const BACKEND_SERVER_IP = process.env.BACKEND_SERVER_IP
+const BACKEND_SERVER_PORT = process.env.BACKEND_SERVER_PORT
+
 
 
 class UserService {
@@ -66,17 +73,17 @@ class UserService {
         user = this.userRepository.build(github.buildUser(userInfo))
       }
 
-      if (provider == "naver"){
+      if (provider == "naver") {
         const naver = new Naver(code, state)
         userInfo = await naver.getSocialUserInfo()
         user = this.userRepository.build(naver.buildUser(userInfo))
       }
 
-      if(provider == "login"){
+      if (provider == "login") {
         const {dataValues: user} = await this.userRepository.findOne({
           where: {
             [Op.and]: [
-              {Users_id : userLoginRequestDTO.userId},
+              {Users_id: userLoginRequestDTO.userId},
               {Users_password: userLoginRequestDTO.userPassword},
               {Users_provider: "service"}
             ]
@@ -110,6 +117,37 @@ class UserService {
     } catch (e) {
       throw e
     }
+
+  }
+
+
+  async profileUpload(requestDTO) {
+    try {
+      let domain;
+      if(ENV === "develop"){
+        domain = `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`
+      }
+      if(ENV === "production") {
+        domain = `https://${BACKEND_SERVER_IP}/`
+      }
+
+      const filePath = domain + requestDTO.profile.filename
+
+      const [result] = await this.userRepository.update(
+          {Users_profile: filePath},
+          {
+            where: {
+              Users_uid: requestDTO.userUid
+            }
+          }
+      )
+
+
+      return filePath
+    } catch (e) {
+      throw new Error(e.message);
+    }
+
 
   }
 }
