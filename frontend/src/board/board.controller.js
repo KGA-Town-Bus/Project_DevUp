@@ -3,10 +3,14 @@ class BoardController {
     this.boardService = boardService;
   }
 
+  getCreate(req, res) {
+    res.render('board/create');
+  }
+
   async postCreate(req, res, next) {
     try {
       const postUid = await this.boardService.createPost(req.body);
-      res.redirect(`/${postUid}`);
+      res.redirect(`/posts/${postUid}`);
     } catch (e) {
       next(e);
     }
@@ -14,41 +18,47 @@ class BoardController {
 
   async getPosts(req, res, next) {
     try {
-      await this.boardService.findAllPost();
-      res.redirect('/');
+      const posts = await this.boardService.findAllPost();
+      console.log(posts);
+      res.render('index', {posts});
     } catch (e) {
       next(e);
     }
   }
 
   async getOnePost(req, res, next) {
-    const postUid = req.params.uid;
+    const postUid = Number(req.params.postUid);
     try {
       const postData = await this.boardService.findOnePost(postUid);
-      await this.boardService.incrementViews(postUid);
-      res.json(postData);
+      // await this.boardService.incrementViews(postUid);
+
+      res.render('board/view', {post: postData});
     } catch (e) {
       next(e);
     }
   }
 
+  getModify(req, res) {
+    res.render('board/modify');
+  }
+
   async postUpdate(req, res, next) {
-    const postId = req.params.postId;
+    const postUid = req.params.postUid;
     const updateData = req.body;
 
     try {
-      await this.boardService.updatePost(postId, updateData);
-      res.redirect(`/posts/${postId}`);
+      await this.boardService.updatePost(postUid, updateData);
+      res.redirect(`/posts/${postUid}`);
     } catch (e) {
       next(e);
     }
   }
 
   async postDelete(req, res, next) {
-    const postId = req.params.postId;
+    const postUid = req.params.postUid;
 
     try {
-      await this.boardService.deletePost(postId);
+      await this.boardService.deletePost(postUid);
       res.redirect('/');
     } catch (e) {
       next(e);
@@ -56,10 +66,10 @@ class BoardController {
   }
 
   async postLike(req, res, next) {
-    const postId = req.params.postId;
+    const postUid = req.params.postUid;
 
     try {
-      await this.boardService.likePost(postId);
+      await this.boardService.likePost(postUid);
       res.status(204).send();
     } catch (e) {
       next(e);

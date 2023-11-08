@@ -9,46 +9,54 @@ class BoardService {
   async createPost(body) {
     try {
       const {data} = await axios.post(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts`,
+        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`,
         body,
       );
 
       return data;
     } catch (e) {
       console.error('Error in createPost:', e);
-      throw new Error(e.message);
+      throw e;
     }
   }
 
   async findAllPost() {
     try {
       const {data} = await axios.get(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts`,
+        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`,
       );
+
       return data;
-    } catch (e) {
-      console.error('Error in findAllPost:', e);
-      throw new Error(e.message);
+    } catch (error) {
+      if (error.response) {
+        // 서버가 보낸 응답을 로깅한다
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else {
+        // 서버 응답이 없는 다른 오류를 처리한다
+        console.log('Error', error.message);
+      }
     }
   }
 
   async findOnePost(postUid) {
     try {
       const {data} = await axios.get(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`,
-        postUid,
+        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
       );
+      console.log(data);
       return data;
     } catch (e) {
       console.error('Error in findOnePost:', e);
-      throw new Error(e.message);
+      throw e;
     }
   }
 
   async updatePost(postUid, updateData) {
     try {
       const response = await axios.put(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`,
+        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}//${postUid}`,
         updateData,
       );
       return response.data;
@@ -61,9 +69,9 @@ class BoardService {
   async deletePost(postUid) {
     try {
       await axios.delete(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`,
+        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
       );
-      return {message: 'Post deleted successfully.'};
+      return {message: 'deleted success'};
     } catch (e) {
       console.error('Error in deletePost:', e);
       throw e;
@@ -72,10 +80,10 @@ class BoardService {
 
   async incrementViews(postUid) {
     try {
-      await axios.patch(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}/views`,
+      const view = await axios.put(
+        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
       );
-      return {message: 'Views incremented.'};
+      console.log(view);
     } catch (e) {
       console.error('Error in incrementViews:', e);
       throw e;
@@ -85,9 +93,8 @@ class BoardService {
   async likePost(postUid) {
     try {
       await axios.patch(
-        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}/like`,
+        `http://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}/like`,
       );
-      return {message: 'Post liked.'};
     } catch (e) {
       console.error('Error in likePost:', e);
       throw e;

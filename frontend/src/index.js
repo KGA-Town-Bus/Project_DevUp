@@ -24,11 +24,11 @@ const boardRouter = require('./board/board.router');
  *       400:
  *        description: 실패
  */
-router.get('/', (req, res, next) => {
-  res.render('index.html');
-});
+// router.get('/', (req, res, next) => {
+//   res.render('index.html');
+// });
 
 router.use('/users', userRouter);
-router.use('/posts', boardRouter);
+router.use('/', boardRouter);
 
 module.exports = router;

@@ -12,10 +12,10 @@ const deleteLiked = boardController.deleteLiked.bind(boardController);
 
 boardRouter.post('/', postCreate);
 boardRouter.get('/', getAllPost);
-boardRouter.get('/:uid', getPost);
-boardRouter.put('/:uid', putUpdatePost);
-boardRouter.delete('/:uid', deletePost);
-boardRouter.post('/:uid/like', postLiked);
-boardRouter.delete('/:uid/like', deleteLiked);
+boardRouter.get('/:postUid', getPost);
+boardRouter.put('/:postUid', putUpdatePost);
+boardRouter.delete('/:postUid', deletePost);
+boardRouter.post('/:postUid/like', postLiked);
+boardRouter.delete('/:postUid/like', deleteLiked);
 
 module.exports = boardRouter;

@@ -39,16 +39,18 @@ class BoardService {
   async findAllPost() {
     try {
       const posts = await db.Posts.findAll();
-      return posts.map(
-        post =>
-          new PostReadAllResponseDTO({
-            postUid: post.postUid,
-            postTitle: post.postTitle,
-            postContent: post.postContent,
-            postWriter: post.postWriter,
-            postCreatedAt: post.postCreatedAt,
-          }),
-      );
+
+      return posts.map(post => {
+        const data = {
+          Posts_uid: post.dataValues.Posts_uid,
+          Posts_title: post.dataValues.Posts_title,
+          Posts_content: post.dataValues.Posts_content,
+          Posts_writer: post.dataValues.Posts_writer,
+          Posts_created_at: post.dataValues.Posts_created_at,
+        };
+
+        return new PostReadAllResponseDTO(data);
+      });
     } catch (e) {
       console.error('Service findAllPost Error', e);
       throw new Error(e.message);
@@ -67,7 +69,7 @@ class BoardService {
       if (!post) {
         throw new Error('게시물을 찾을 수 없습니다.');
       }
-      return new PostReadResponseDTO(post);
+      return new PostReadResponseDTO(post.dataValues);
     } catch (e) {
       console.error('Service findOnePost Error', e);
       throw new Error(e.message);
@@ -114,7 +116,7 @@ class BoardService {
   }
   async incrementHit(postUid) {
     try {
-      await db.Posts.increment('Posts_hit', {
+      const view = await db.Posts.increment('Posts_hit', {
         where: {Posts_uid: postUid},
       });
     } catch (e) {

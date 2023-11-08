@@ -6,3 +6,5 @@ create table Posts (
     Posts_created_at datetime not null,
     Posts_hit int default 0 not null,
 );
+
+INSERT INTO Posts (Posts_title, Posts_content, Posts_writer) VALUES ('MySQL에서 데이터 삽입하기', 'MySQL INSERT 구문에 대해 배웁니다.', '홍길동');

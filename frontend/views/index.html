@@ -30,16 +30,15 @@
     </div>
     <div class="container">
       <div class="contents">
+        {% for post in posts %}
         <section>
-          <span class="content-title">Title</span>
+          <span class="content-title">{{post.postTitle}}</span>
           <div class="content-user">
             <div class="content-user-pfp">user-pfp</div>
-            <span class="content-username">username</span>
+            <span class="content-username">{{post.postWriter}}</span>
           </div>
           <div class="content-body">
-            <span class="body-text"
-              >This is a sample text, which is a content body.</span
-            >
+            <span class="body-text">{{ post.postContent }}</span>
           </div>
           <div class="icon-set">
             <div class="views-icon">views</div>
@@ -47,6 +46,7 @@
             <div class="comments-icon">comments</div>
           </div>
         </section>
+        {% endfor %}
       </div>
       <div class="user bs">
         <div class="user-info">
