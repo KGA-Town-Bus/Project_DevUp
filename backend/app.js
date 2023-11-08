@@ -2,6 +2,7 @@ const express =require("express")
 const app = express()
 const router = require("./src/index")
 const cors = require("cors")
+const cookieParser = require("cookie-parser")
 
 const {swaggerUi ,backSpecs} = require("./swagger/swagger")
 const {auth} = require("./src/lib/jwtAuthMiddleware");
@@ -15,6 +16,7 @@ app.use(cors({
   method: "GET,POST,OPTIONS,PUT,DELETE,UPDATE",
   credentials: true
 }))
+app.use(cookieParser());
 app.use(auth)
 app.use(router)
 

@@ -14,7 +14,6 @@ exports.auth = async (req, res, next) => {
 
     return next()
   } catch (e) {
-    console.log(e.message)
     res.clearCookie("authorization")
     next()
   }

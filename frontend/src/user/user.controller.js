@@ -21,6 +21,7 @@ const NAVER_AUTHORIZE_URI = process.env.NAVER_AUTHORIZE_URI
 const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID
 const NAVER_REDIRECT_URI = process.env.NAVER_REDIRECT_URI
 
+const DOMAIN = process.env.DOMAIN
 
 class UserController {
   constructor(service) {
@@ -57,10 +58,21 @@ class UserController {
 
   async postProfile(req, res, next) {
     try {
-      const result = await this.service.profileUpdate(req.body)
+      const result = await this.service.profileUpdate(req)
+
+
+      res.cookie("authorization", result.data, {
+        maxAge: 60 * 60 * 1000,
+        httpOnly: true,
+        domain: DOMAIN,
+        path: "/",
+        sameSite: "none",
+        secure: true
+      });
+
+      res.redirect("/")
 
     } catch (e) {
-      console.log(e)
       next(e)
     }
   }
