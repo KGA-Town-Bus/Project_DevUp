@@ -48,24 +48,33 @@
   <div class="profile-wrapper">
   <div class="profile">
     <div class="profile-image">
-    <img src="/images/github%20logo.png"/>
+
+      {% if userProfile %}
+      <img id="profile-img" src="{{userProfile}}"/>
+      {% else %}
+      <img id="profile-img" src="/images/github%20logo.png"/>
+      {% endif %}
 
     <div class="profile-name">
-      <p>USERID: ennjae77</p>
-      <button>Upload an image</button>
+      <p>USERID: {{userId}}</p>
+
+      <form id="profile-form" enctype="multipart/form-data">
+        <input type="file" id="profile-input" name="profile">
+
+      <label for="profile-input">Upload an image</label>
+      </form>
     </div>
     </div>
 
     <form class="form">
-      <input type="text" placeholder="nickname">
-      <input type="text" placeholder="name">
-      <input type="email" placeholder="email">
+      <input type="text" placeholder="nickname" value="{{userNickname}}">
+      <input type="text" placeholder="name" value="{{userName}}">
+      <input type="email" placeholder="email" value="{{userEmail}}">
       <input type="password" placeholder="password">
       <input type="password" placeholder="double-check your pw">
       <button type="submit">Edit</button>
     </form>
   </div>
-
 
   <div class="friends">
     <div class="friends-buttons">
@@ -78,6 +87,7 @@
   </div>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/user/profile.js"></script>
 </body>
 </html>

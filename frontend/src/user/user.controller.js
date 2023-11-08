@@ -18,8 +18,7 @@ const GITHUB_CLIENT_ID = process.env.GI_CLIENT_ID
 // naver
 const NAVER_AUTHORIZE_URI = process.env.NAVER_AUTHORIZE_URI
 const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID
-const NAVER_REDIRECT_URI  = process.env.NAVER_REDIRECT_URI
-
+const NAVER_REDIRECT_URI = process.env.NAVER_REDIRECT_URI
 
 
 class UserController {
@@ -36,13 +35,23 @@ class UserController {
   }
 
   getProfile(req, res, next) {
-    try{
+    try {
 
-      console.log(req.user)
+      let userData
+      if (req.user) {
+        userData = {
+          userUid: req.user.Users_uid,
+          userId: req.user.Users_id,
+          userNickname: req.user.Users_nickname,
+          userName: req.user.Users_name,
+          userEmail: req.user.Users_email,
+          userProfile: req.user.Users_profile
+        }
+      }
 
 
-      res.render("user/profile.html")
-    }catch(e){
+      res.render("user/profile.html", userData)
+    } catch (e) {
       next(e)
     }
   }
@@ -56,7 +65,7 @@ class UserController {
       if (provider === "google") redirectURI = `${GOOGLE_AUTHORIZE_URI}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&redirect_uri=${GOOGLE_REDIRECT_URI}&scope=${SCOPE}&access_type=${ACCESS_TYPE}`
       if (provider === "github") redirectURI = `${GITHUB_AUTHORIZE_URI}?client_id=${GITHUB_CLIENT_ID}`
       if (provider === "naver") redirectURI = `${NAVER_AUTHORIZE_URI}?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=RAMDOM_STATE`
-      if(provider === "login") return res.render("user/login.html")
+      if (provider === "login") return res.render("user/login.html")
       res.redirect(redirectURI)
     } catch (e) {
       next(e)
@@ -64,11 +73,11 @@ class UserController {
   }
 
   async postSignup(req, res, next) {
-    try{
+    try {
       const result = await this.service.signup(req.body)
 
       res.redirect("/")
-    }catch(e){
+    } catch (e) {
       next(e)
     }
   }

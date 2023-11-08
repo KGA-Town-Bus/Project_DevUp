@@ -49,6 +49,11 @@ gap: 62px;
   color: white;
 }
 
+#profile-img{
+  width: 100px;
+  height: 100px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -84,6 +89,18 @@ gap: 62px;
 }
 
 button {
+  background-color: #8D8ACF;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+#profile-input{
+  position: absolute;
+  visibility: hidden;
+}
+
+label{
   background-color: #8D8ACF;
   color: white;
   border-radius: 20px;
