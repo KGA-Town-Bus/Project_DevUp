@@ -92,7 +92,7 @@ class UserController {
         path: "/",
         sameSite: "none",
         secure: true
-      });c
+      });
 
       res.status(201).json(new Created(result))
 
