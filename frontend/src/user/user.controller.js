@@ -2,7 +2,6 @@ require("dotenv").config()
 // kakao
 const REST_API_KEY = process.env.REST_API_KEY;
 const KAKAO_REDIRECT_URI = process.env.KAKAO_REDIRECT_URI;
-// ==
 
 // google
 const GOOGLE_AUTHORIZE_URI = process.env.GOOGLE_AUTHORIZE_URI
@@ -11,18 +10,15 @@ const RESPONSE_TYPE = process.env.RESPONSE_TYPE
 const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI
 const SCOPE = process.env.SCOPE
 const ACCESS_TYPE = process.env.ACCESS_TYPE
-// ==
 
 // github
 const GITHUB_AUTHORIZE_URI = process.env.GI_AUTHORIZE_URI
 const GITHUB_CLIENT_ID = process.env.GI_CLIENT_ID
-// ==
 
 // naver
 const NAVER_AUTHORIZE_URI = process.env.NAVER_AUTHORIZE_URI
 const NAVER_CLIENT_ID = process.env.NAVER_CLIENT_ID
 const NAVER_REDIRECT_URI  = process.env.NAVER_REDIRECT_URI
-// ==
 
 
 
@@ -35,6 +31,18 @@ class UserController {
     try {
       res.render("user/signup.html")
     } catch (e) {
+      next(e)
+    }
+  }
+
+  getProfile(req, res, next) {
+    try{
+
+      console.log(req.user)
+
+
+      res.render("user/profile.html")
+    }catch(e){
       next(e)
     }
   }
