@@ -30,6 +30,7 @@ jobs:
         run: |
           pwd
           touch .env
+          echo PROTOCOL=${{ secrets.PROTOCOL }} >> .env
           echo ENV=${{ secrets.ENV }} >> .env
           echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
@@ -53,6 +54,7 @@ jobs:
           echo GI_AUTHORIZE_URI=${{ secrets.GI_AUTHORIZE_URI }} >> .env
           echo GI_CLIENT_ID=${{ secrets.GI_CLIENT_ID }} >> .env
           echo GI_CLIENT_SECRET=${{ secrets.GI_CLIENT_SECRET }} >> .env
+          echo GI_REDIRECT_URI=${{ secrets.GI_REDIRECT_URI }} >> .env
           echo NAVER_AUTHORIZE_URI=${{ secrets.NAVER_AUTHORIZE_URI }} >> .env
           echo NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} >> .env
           echo NAVER_CLINET_SECRET=${{ secrets.NAVER_CLINET_SECRET }} >> .env
