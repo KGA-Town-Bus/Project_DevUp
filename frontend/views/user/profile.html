@@ -52,13 +52,13 @@
     <div class="profile-image">
 
       {% if user.Users_profile %}
-      <img id="profile-img" src="{{user.Users_profile}}"/>
+      <img id="profile-img" class="user-pfp" src="{{user.Users_profile}}"/>
       {% else %}
-      <img id="profile-img" src="/images/github%20logo.png"/>
+      <img id="profile-img" class="user-pfp" src="/images/github%20logo.png"/>
       {% endif %}
 
     <div class="profile-name">
-      <p>USERID: {{userId}}</p>
+      <p>USERID: {{user.Users_id}}</p>
 
       <form id="profile-form" enctype="multipart/form-data">
         <input type="file" id="profile-input" name="profile">
@@ -67,8 +67,6 @@
       </form>
     </div>
     </div>
-
-
 
     {% if user.Users_provider ===  local %}
     <form class="form" action="/users/profile" method="post">

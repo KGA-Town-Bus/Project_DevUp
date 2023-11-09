@@ -48,8 +48,8 @@ class UserController {
 
   getProfile(req, res, next) {
     try {
-
       const user = req.user ? req.user : undefined
+      if (!user) return res.redirect("/")
 
       res.render("user/profile.html", {user})
     } catch (e) {

@@ -39,6 +39,7 @@ gap: 62px;
 .profile-image {
   display: flex;
   flex-direction: row;
+  gap: 20px;
 }
 
 .profile-name {
@@ -47,11 +48,6 @@ gap: 62px;
   gap: 24px;
   font-size: 24px;
   color: white;
-}
-
-#profile-img{
-  width: 100px;
-  height: 100px;
 }
 
 .form {
@@ -65,6 +61,7 @@ gap: 62px;
   height: 26px;
   font-size: 30px;
   text-align: center;
+  padding: 20px 0;
 }
 
 

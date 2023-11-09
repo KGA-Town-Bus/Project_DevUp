@@ -191,8 +191,9 @@ input[type='email']:focus {
 }
 
 .user-pfp {
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
 }
 
 .username {
