@@ -38,7 +38,7 @@ class UserController {
 
   getLogout(req, res, next) {
     try{
-      res.clearCookie("authorization")
+      res.clearCookie("authorization",{path: "/", domain: DOMAIN})
       res.redirect("/")
     }catch(e){
       next(e)
