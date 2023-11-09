@@ -1,3 +1,4 @@
+const {Created} = require('../lib/customMessage');
 const {
   PostCreateRequestDTO,
   PostReadRequestDTO,
@@ -12,9 +13,9 @@ class BoardController {
   async postCreate(req, res, next) {
     try {
       const createRequestDTO = new PostCreateRequestDTO(req.body);
-      const data = await this.boardService.createPost(createRequestDTO);
-
-      res.status(302).header('Location', `/posts/${data.postUid}`).send();
+      const responseData = await this.boardService.createPost(createRequestDTO);
+      const data = responseData.postUid;
+      res.status(201).json(new Created(data));
     } catch (e) {
       console.error('postCreate Error', e);
       next(e);
@@ -47,13 +48,15 @@ class BoardController {
 
   async putUpdatePost(req, res, next) {
     try {
+      console.log(req.body);
       const postUpdateRequestDTO = new PostUpdateRequestDTO({
         postUid: Number(req.params.postUid),
         ...req.body,
       });
       const data = await this.boardService.updatePost(postUpdateRequestDTO);
+      console.log(data);
 
-      res.status(302).header('Location', `/posts/${data.postUid}`).send();
+      res.json(data);
     } catch (e) {
       console.error('updatePost Error', e);
       next(e);
@@ -62,9 +65,9 @@ class BoardController {
 
   async deletePost(req, res, next) {
     try {
-      const postDeleteRequestDTO = new PostDeleteRequestDTO({
-        postUid: Number(req.params.postUid),
-      });
+      const postUid = Number(req.params.postUid);
+      console.log(postUid);
+      const postDeleteRequestDTO = new PostDeleteRequestDTO(postUid);
       const result = await this.boardService.deletePost(postDeleteRequestDTO);
       res.status(201).json(result);
     } catch (e) {

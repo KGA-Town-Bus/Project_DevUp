@@ -4,25 +4,23 @@ const {BadRequest} = require('../../lib/customException');
 class PostCreateRequestDTO extends BaseDTO {
   postTitle;
   postContent;
-  postWriter;
+  userNickname;
 
   constructor(body) {
     super();
-    this.postTitle = body.postTitle;
-    this.postContent = body.postContent;
-    this.postWriter = body.postWriter;
+    this.postTitle = body.postBody.postTitle;
+    this.postContent = body.postBody.postContent;
+    this.userNickname = body.userNickname;
     this.validate(this, BadRequest);
   }
 }
 
 class PostCreateResponseDTO extends BaseDTO {
   postUid;
-  message;
 
   constructor(response) {
     super();
-    this.postUid = response.postUid;
-    this.message = '게시물이 성공적으로 생성되었습니다.';
+    this.postUid = response.Posts_uid;
     this.validate(this, BadRequest);
   }
 }
@@ -33,6 +31,7 @@ class PostReadRequestDTO extends BaseDTO {
   constructor(body) {
     super();
     this.postUid = body.postUid;
+
     this.validate(this, BadRequest);
   }
 }
@@ -109,9 +108,9 @@ class PostUpdateResponseDTO extends BaseDTO {
 class PostDeleteRequestDTO extends BaseDTO {
   postUid;
 
-  constructor(body) {
+  constructor(postUid) {
     super();
-    this.postUid = body.postUid;
+    this.postUid = postUid;
     this.validate(this, BadRequest);
   }
 }
