@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEVUP Homepage</title>
+    <!-- Testing in Live Server, href, css, images, fonts, js paths must be edited -->
+    <link rel="stylesheet" href="/css/index.css" />
+    <script type="module" src="/js/index.js"></script>
+  </head>
+  <body>
+    <div class="header bs">
+      <a href="/"
+        ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
+      /></a>
+      <div class="text-set ts">
+        <span>Feed</span>
+        <span>Stats</span>
+        <span>Admin</span>
+        <span>Public Chat</span>
+      </div>
+      <div class="search">
+        <span class="search-icon">🔍</span>
+        <input
+          spellcheck="false"
+          type="text"
+          class="search-bar bs"
+          placeholder="Search..."
+        />
+      </div>
+      {% if user %}
+      <div class="buttons">
+        <a href="/users/logout"><button class="logout bs">Logout</button></a>
+      </div>
+      {% else %}
+        <div class="buttons">
+          <a href="/users"><button class="signup bs">Sign Up</button></a>
+          <a href="/users/login"><button class="signin bs">Sign In</button></a>
+        </div>
+      {% endif %}
+    </div>
+    <div class="container">
+      <div class="contents">
+        {% for post in posts %}
+        <section>
+          <span class="content-title">{{post.postTitle}}</span>
+          <div class="content-user">
+            <div class="content-user-pfp">user-pfp</div>
+            <span class="content-username">{{post.postWriter}}</span>
+          </div>
+          <div class="content-body">
+            <span class="body-text">{{ post.postContent }}</span>
+          </div>
+          <div class="icon-set">
+            <div class="views-icon">views</div>
+            <div class="likes-icon">likes</div>
+            <div class="comments-icon">comments</div>
+          </div>
+        </section>
+        {% endfor %}
+      </div>
+
+
+
+      {% if user %}
+      <div class="user bs">
+        <div class="user-info">
+          <img class="user-pfp" src="{{user.Users_profile}}" alt="" />
+          <span class="username ts">Welcome, {{user.Users_name}}</span>
+        </div>
+        <div class="user-buttons">
+          <button class="post bs">Post</button>
+          <button class="chat bs">Chat</button>
+          <a href="/users/profile"><button class="profile bs">Profile</button></a>
+        </div>
+        <div id="chatroom" class="chatroom">
+          <div class="chat-content"></div>
+          <div class="chat-content"></div>
+          <div class="chat-content"></div>
+          <input type="text" class="chat-input" />
+        </div>
+      </div>
+      {% else %}
+      <div class="user bs">
+        <div class="user-info">
+          <img class="user-pfp" src="/images/github%20logo.png" alt="" />
+          <span class="username ts">Plesase, Sing In</span>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
