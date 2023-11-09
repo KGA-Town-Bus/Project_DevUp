@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DEVUP Homepage</title>
-    <!-- Testing in Live Server, href, css, images, fonts, js paths must be edited -->
     <link rel="stylesheet" href="/css/index.css" />
     <script type="module" src="/js/index.js"></script>
   </head>
@@ -35,10 +34,10 @@
         <a href="/users/logout"><button class="logout bs">Logout</button></a>
       </div>
       {% else %}
-        <div class="buttons">
-          <a href="/users"><button class="signup bs">Sign Up</button></a>
-          <a href="/users/login"><button class="signin bs">Sign In</button></a>
-        </div>
+      <div class="buttons">
+        <a href="/users"><button class="signup bs">Sign Up</button></a>
+        <a href="/users/login"><button class="signin bs">Sign In</button></a>
+      </div>
       {% endif %}
     </div>
     <div class="container">
@@ -60,9 +59,49 @@
           </div>
         </section>
         {% endfor %}
+        <!-- Style Testing Section -->
+        <section>
+          <div class="content-header">
+            <span class="content-title"
+              >asdfadfasfassdfasdfassdfasdasdfasdfsadfasdfasdfasdfasfdsasdfasdffasdfasdf</span
+            >
+            <div class="content-user">
+              <div class="content-user-pfp"></div>
+              <span class="content-username">Eunjae Lee</span>
+            </div>
+          </div>
+          <div class="content-body">
+            <span class="body-text"
+              >Lorem ipsum dolor sit amet, consectetur adipsicing elist, sed do
+              deuimodt tempor incididumnt ut labore lorem strata incantatum
+              amore siLorem ipsum dolor sit amet, consectetur adipsicing elist,
+              sed do deuimodt tempor incididumnt ut labore lorem strata
+              incantatum amore siuimodt tempor incididumnt ut labore lorem
+              strata incantatum amore siLorem ipsum dolor sit amet, consectetur
+              adipsicing elist, sed do deuimodt tempor incididumnt ut labore
+              lorem strata incantatum amore siuimodt tempor incididumnt ut
+              labore lorem strata incantatum amore siLorem ipsum dolor sit amet,
+              consectetur adipsicing elist, sed do deuimodt tempor incididumnt
+              ut labore lorem strata incantatum amore simodt tempor incididumnt
+              ut labore lorem strata incantatum amore siLorem ipsum dolor sit
+              amet, consectetur adipsicing elist, sed do deuimodt tempor
+              incididumnt ut labore lorem strata incantatum amore siuimodt
+              tempor incididumnt ut labore lorem strata incantatum amore siLorem
+              ipsum dolor sit amet, consectetur adipsicing elist, sed do
+              deuimodt tempor incididumnt ut labore lorem strata incantatum
+              amore si</span
+            >
+          </div>
+          <div class="content-footer">
+            <div class="content-date">2023-11-08</div>
+            <div class="icon-set">
+              <img src="images/Hit Icon.svg" alt="" /> <span>50</span>
+              <img src="images/Like Icon.svg" alt="" /> <span>50</span>
+              <img src="images/Comment Icon.svg" alt="" /> <span>50</span>
+            </div>
+          </div>
+        </section>
       </div>
-
-
 
       {% if user %}
       <div class="user bs">
@@ -71,9 +110,13 @@
           <span class="username ts">Welcome, {{user.Users_name}}</span>
         </div>
         <div class="user-buttons">
-          <button class="post bs">Post</button>
+          <form action="/create">
+            <button class="post bs">Post</button>
+          </form>
           <button class="chat bs">Chat</button>
-          <a href="/users/profile"><button class="profile bs">Profile</button></a>
+          <a href="/users/profile"
+            ><button class="profile bs">Profile</button></a
+          >
         </div>
         <div id="chatroom" class="chatroom">
           <div class="chat-content"></div>
@@ -86,7 +129,7 @@
       <div class="user bs">
         <div class="user-info">
           <img class="user-pfp" src="/images/github%20logo.png" alt="" />
-          <span class="username ts">Plesase, Sign In</span>
+          <span class="username ts">Please sign in...</span>
         </div>
       </div>
       {% endif %}

@@ -6,9 +6,13 @@
     <title>create</title>
   </head>
   <body>
-    <input type="text" />
-    <input type="text" />
-    <button type="submit">저장</button>
-    <a href="/">목록으로</a>
+    <form action="/create" method="post">
+      <p>title :</p>
+      <input type="text" name="postTitle" required />
+      <p>content :</p>
+      <textarea name="postContent"></textarea>
+      <button type="submit">저장</button>
+    </form>
+    <a href="/">❌</a>
   </body>
 </html>

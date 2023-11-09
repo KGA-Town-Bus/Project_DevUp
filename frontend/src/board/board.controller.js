@@ -9,7 +9,14 @@ class BoardController {
 
   async postCreate(req, res, next) {
     try {
-      const postUid = await this.boardService.createPost(req.body);
+      const postBody = req.body;
+      const userNickname = req.user.Users_nickname;
+      const responseData = await this.boardService.createPost(
+        postBody,
+        userNickname,
+      );
+      const postUid = responseData.data;
+      console.log(postUid);
       res.redirect(`/posts/${postUid}`);
     } catch (e) {
       next(e);
@@ -18,7 +25,6 @@ class BoardController {
 
   async getPosts(req, res, next) {
     try {
-
       const error = req.error ? req.error : undefined
       const user = req.user ? req.user : undefined
       const posts = await this.boardService.findAllPost();
@@ -31,13 +37,11 @@ class BoardController {
       next(e);
     }
   }
-
   async getOnePost(req, res, next) {
     const postUid = Number(req.params.postUid);
     try {
       const postData = await this.boardService.findOnePost(postUid);
       // await this.boardService.incrementViews(postUid);
-
       res.render('board/view', {post: postData});
     } catch (e) {
       next(e);
@@ -45,19 +49,8 @@ class BoardController {
   }
 
   getModify(req, res) {
-    res.render('board/modify');
-  }
-
-  async putUpdate(req, res, next) {
-    const postUid = req.params.postUid;
-    const updateData = req.body;
-
-    try {
-      await this.boardService.updatePost(postUid, updateData);
-      res.redirect(`/posts/${postUid}`);
-    } catch (e) {
-      next(e);
-    }
+    const id = req.params.postUid;
+    res.render('board/modify', {id});
   }
 
   async postDelete(req, res, next) {
@@ -73,6 +66,7 @@ class BoardController {
 
   async postLike(req, res, next) {
     const postUid = req.params.postUid;
+    console.log(postUid);
 
     try {
       await this.boardService.likePost(postUid);

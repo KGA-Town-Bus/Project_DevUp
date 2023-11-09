@@ -23,12 +23,13 @@ class BoardService {
       if (!(createRequestDTO instanceof PostCreateRequestDTO)) {
         throw new Error('Invalid request DTO');
       }
-      const {postTitle, postContent, postWriter} = createRequestDTO;
-      const createdPost = await db.Posts.create({
+      const {postTitle, postContent, userNickname} = createRequestDTO;
+      const createdValues = await db.Posts.create({
         Posts_title: postTitle,
         Posts_content: postContent,
-        Posts_writer: postWriter,
+        Posts_writer: userNickname,
       });
+      const createdPost = createdValues.dataValues;
       return new PostCreateResponseDTO(createdPost);
     } catch (e) {
       console.error('Service createPost Error', e);
@@ -63,13 +64,15 @@ class BoardService {
         throw new Error('Invalid request DTO');
       }
       const {postUid} = postReadRequestDTO;
-      const post = await db.Posts.findOne({
+      const responseData = await db.Posts.findOne({
         where: {Posts_uid: postUid},
       });
+      const post = responseData.dataValues;
+      console.log(post);
       if (!post) {
         throw new Error('게시물을 찾을 수 없습니다.');
       }
-      return new PostReadResponseDTO(post.dataValues);
+      return new PostReadResponseDTO(post);
     } catch (e) {
       console.error('Service findOnePost Error', e);
       throw new Error(e.message);

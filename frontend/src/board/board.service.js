@@ -1,19 +1,14 @@
 const axios = require('axios');
-require('dotenv').config();
-const BACKEND_SERVER_IP = process.env.BACKEND_SERVER_IP;
-const BACKEND_SERVER_PORT = process.env.BACKEND_SERVER_PORT;
-const PROTOCOL = process.env.PROTOCOL;
 
 class BoardService {
   constructor() {}
 
-  async createPost(body) {
+  async createPost(postBody, userNickname) {
     try {
-      const {data} = await axios.post(
-        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`,
-        body,
-      );
-
+      const {data} = await axios.post(`http://localhost:4000/create`, {
+        postBody,
+        userNickname,
+      });
       return data;
     } catch (e) {
       console.error('Error in createPost:', e);
@@ -23,10 +18,7 @@ class BoardService {
 
   async findAllPost() {
     try {
-      const {data} = await axios.get(
-        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`,
-      );
-
+      const {data} = await axios.get(`http://localhost:4000/`);
       return data;
     } catch (error) {
       if (error.response) {
@@ -43,9 +35,7 @@ class BoardService {
 
   async findOnePost(postUid) {
     try {
-      const {data} = await axios.get(
-        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
-      );
+      const {data} = await axios.get(`http://localhost:4000/${postUid}`);
       return data;
     } catch (e) {
       console.error('Error in findOnePost:', e);
@@ -53,24 +43,9 @@ class BoardService {
     }
   }
 
-  async updatePost(postUid, updateData) {
-    try {
-      const response = await axios.put(
-        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}//${postUid}`,
-        updateData,
-      );
-      return response.data;
-    } catch (e) {
-      console.error('Error in updatePost:', e);
-      throw e;
-    }
-  }
-
   async deletePost(postUid) {
     try {
-      await axios.delete(
-        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
-      );
+      await axios.delete(`http://localhost:4000/${postUid}`);
       return {message: 'deleted success'};
     } catch (e) {
       console.error('Error in deletePost:', e);
@@ -80,9 +55,7 @@ class BoardService {
 
   async incrementViews(postUid) {
     try {
-      const view = await axios.put(
-        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
-      );
+      const view = await axios.put(`http://localhost:4000/${postUid}`);
       console.log(view);
     } catch (e) {
       console.error('Error in incrementViews:', e);
@@ -92,9 +65,7 @@ class BoardService {
 
   async likePost(postUid) {
     try {
-      await axios.patch(
-        `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}/like`,
-      );
+      await axios.patch(`http://localhost:4000/${postUid}/like`);
     } catch (e) {
       console.error('Error in likePost:', e);
       throw e;

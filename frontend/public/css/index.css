@@ -162,11 +162,75 @@ input[type='email']:focus {
 
 .contents > section {
   width: 800px;
-  height: 200px;
+  height: auto;
+  padding: 30px;
   border-radius: 20px;
   background: rgba(0, 0, 0, 0.35);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #eee;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+  row-gap: 30px;
+}
+
+section > .content-header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-self: center;
+  width: 700px;
+}
+
+.content-title {
+  font-size: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+}
+
+.content-user {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 20px;
+  align-items: center;
+}
+
+.content-user-pfp {
+  min-width: 40px;
+  min-height: 40px;
+  background-color: #d9d9d9;
+}
+
+.content-body {
+  width: 700px;
+  align-self: center;
+  height: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.content-footer {
+  padding-top: 5px;
+  align-self: center;
+  width: 700px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-set {
+  min-height: 40px;
+  margin: 0 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-set > img {
+  padding-top: 8px;
 }
 
 .user {
@@ -179,7 +243,6 @@ input[type='email']:focus {
   border-radius: 20px;
   display: flex;
   flex-flow: column wrap;
-  /* row-gap: 30px; */
   justify-content: space-around;
 }
 
