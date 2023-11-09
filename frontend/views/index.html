@@ -8,7 +8,6 @@
     <script type="module" src="/js/index.js"></script>
   </head>
 
-
   <body>
     <div class="header bs">
       <a href="/"
@@ -102,7 +101,6 @@
           </div>
         </section>
       </div>
-
       {% if user %}
       <div class="user bs">
         <div class="user-info">
@@ -125,6 +123,22 @@
           <input type="text" class="chat-input" />
         </div>
       </div>
+      <!-- post modal -->
+      <div class="post-modal">
+        <div class="modal-header">
+          <span>Title</span>
+          <input type="text" name="postTitle" />
+        </div>
+        <div class="modal-body">
+          <span>Content</span>
+          <textarea name="postContent"> </textarea>
+        </div>
+        <div class="modal-footer">
+          <button>upload</button>
+          <button>cancel</button>
+          <button>post</button>
+        </div>
+      </div>
       {% else %}
       <div class="user bs">
         <div class="user-info">
@@ -137,13 +151,13 @@
   </body>
 
   <script>
-    const queryString = window.location.search
-    const params = new URLSearchParams(queryString)
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
 
-    const error = params.get("error")
-    if(error) {
-      alert(error)
-      location.href ="/"
+    const error = params.get('error');
+    if (error) {
+      alert(error);
+      location.href = '/';
     }
   </script>
 </html>
