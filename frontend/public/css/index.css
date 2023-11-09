@@ -133,6 +133,10 @@ input[type='email']:focus {
   background: #8ab3cf;
 }
 
+.logout {
+  background: #cf8a94;
+}
+
 .container {
   min-width: 1210px;
   max-width: 1280px;

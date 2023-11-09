@@ -28,10 +28,16 @@
           placeholder="Search..."
         />
       </div>
+      {% if user %}
       <div class="buttons">
-        <a href="/users"><button class="signup bs">Sign Up</button></a>
-        <a href="/users/login"><button class="signin bs">Sign In</button></a>
+        <a href="/users/logout"><button class="logout bs">Logout</button></a>
       </div>
+      {% else %}
+        <div class="buttons">
+          <a href="/users"><button class="signup bs">Sign Up</button></a>
+          <a href="/users/login"><button class="signin bs">Sign In</button></a>
+        </div>
+      {% endif %}
     </div>
     <div class="container">
       <div class="contents">
@@ -53,10 +59,14 @@
         </section>
         {% endfor %}
       </div>
+
+
+
+      {% if user %}
       <div class="user bs">
         <div class="user-info">
-          <img class="user-pfp" src="/images/github logo.png" alt="" />
-          <span class="username ts">Welcome, Eunjae Lee</span>
+          <img class="user-pfp" src="{{user.Users_profile}}" alt="" />
+          <span class="username ts">Welcome, {{user.Users_name}}</span>
         </div>
         <div class="user-buttons">
           <button class="post bs">Post</button>
@@ -70,6 +80,14 @@
           <input type="text" class="chat-input" />
         </div>
       </div>
+      {% else %}
+      <div class="user bs">
+        <div class="user-info">
+          <img class="user-pfp" src="/images/github%20logo.png" alt="" />
+          <span class="username ts">Plesase, Sing In</span>
+        </div>
+      </div>
+      {% endif %}
     </div>
   </body>
 </html>

@@ -27,10 +27,16 @@
           placeholder="Search..."
         />
       </div>
+      {% if user %}
+      <div class="buttons">
+        <a href="/users/logout"><button class="logout bs">Logout</button></a>
+      </div>
+      {% else %}
       <div class="buttons">
         <a href="/users"><button class="signup bs">Sign Up</button></a>
         <a href="/users/login"><button class="signin bs">Sign In</button></a>
       </div>
+      {% endif %}
     </div>
 
     <div class="main">
