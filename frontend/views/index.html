@@ -83,7 +83,6 @@
         </section>
         {% endfor %}
       </div>
-
       {% if user %}
       <div class="user bs">
         <div class="user-info">
@@ -104,6 +103,22 @@
           <div class="chat-content"></div>
           <div class="chat-content"></div>
           <input type="text" class="chat-input" />
+        </div>
+      </div>
+      <!-- post modal -->
+      <div class="post-modal">
+        <div class="modal-header">
+          <span>Title</span>
+          <input type="text" name="postTitle" />
+        </div>
+        <div class="modal-body">
+          <span>Content</span>
+          <textarea name="postContent"> </textarea>
+        </div>
+        <div class="modal-footer">
+          <button>upload</button>
+          <button>cancel</button>
+          <button>post</button>
         </div>
       </div>
       {% else %}
