@@ -31,12 +31,12 @@ class Kakao extends SocialLogin{
   buildUser(userInfo) {
     return {
       Users_suid: userInfo.id,
-      Users_id: "kakao",
-      Users_password: "kakao",
-      Users_name: "kakao",
+      Users_id: "id",
+      Users_password: "password",
+      Users_name: "name",
       Users_nickname: userInfo.properties.nickname,
       Users_provider: "kakao",
-      Users_email: "kakao",
+      Users_email: "email",
       Users_profile: userInfo.properties.profile_image,
       Role_authority: "user"
     }

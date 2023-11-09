@@ -34,9 +34,9 @@ class Google extends SocialLogin{
     return {
       Users_suid: userInfo.id,
       Users_id: userInfo.email,
-      Users_password: "google",
+      Users_password: "password",
       Users_name: userInfo.name,
-      Users_nickname: "google",
+      Users_nickname: "nickname",
       Users_provider: "google",
       Users_email: userInfo.email,
       Users_profile: userInfo.picture,
