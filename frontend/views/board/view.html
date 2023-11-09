@@ -16,7 +16,7 @@
       <button type="submit">삭제</button>
     </form>
     <a href="/">❌</a>
-    <form method="/posts/{{post.postUid}}/like">
+    <form method="/posts/{{post.postUid}}/like" id="like">
       <button type="submit">❤️</button>
       <p>{{post.postLike}}</p>
     </form>
@@ -24,7 +24,8 @@
       document.querySelector('#delete').addEventListener('submit', async e => {
         e.preventDefault();
         const {data: response} = await axios.delete(
-          'http://localhost:4000/posts/{{post.postUid}}',
+          // 'http://localhost:4000/posts/{{post.postUid}}',
+          'https://api-devup.hyunjun.kr/posts/{{post.postUid}}',
           {
             withCredentials: true,
           },
