@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DEVUP Homepage</title>
-    <!-- Testing in Live Server, href, css, images, fonts, js paths must be edited -->
     <link rel="stylesheet" href="/css/index.css" />
     <script type="module" src="/js/index.js"></script>
   </head>
@@ -58,6 +57,21 @@
           </div>
         </section>
         {% endfor %}
+        <section>
+          <span class="content-title">title</span>
+          <div class="content-user">
+            <div class="content-user-pfp">user-pfp</div>
+            <span class="content-username">post writer</span>
+          </div>
+          <div class="content-body">
+            <span class="body-text">post content</span>
+          </div>
+          <div class="icon-set">
+            <div class="views-icon">views</div>
+            <div class="likes-icon">likes</div>
+            <div class="comments-icon">comments</div>
+          </div>
+        </section>
       </div>
 
 
@@ -71,7 +85,9 @@
         <div class="user-buttons">
           <button class="post bs">Post</button>
           <button class="chat bs">Chat</button>
-          <a href="/users/profile"><button class="profile bs">Profile</button></a>
+          <a href="/users/profile"
+            ><button class="profile bs">Profile</button></a
+          >
         </div>
         <div id="chatroom" class="chatroom">
           <div class="chat-content"></div>
