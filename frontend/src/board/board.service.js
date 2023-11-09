@@ -21,15 +21,8 @@ class BoardService {
       const {data} = await axios.get(`http://localhost:4000/`);
       return data;
     } catch (error) {
-      if (error.response) {
-        // 서버가 보낸 응답을 로깅한다
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else {
-        // 서버 응답이 없는 다른 오류를 처리한다
-        console.log('Error', error.message);
-      }
+      console.error('Error in findAllPost:', e);
+      throw e;
     }
   }
 
