@@ -15,11 +15,10 @@ const ENV = process.env.ENV
 const DOMAIN = process.env.DOMAIN
 
 
-
-
 class UserController {
-  constructor(service) {
+  constructor(service, emailService) {
     this.service = service
+    this.emailService = emailService
   }
 
   async postSignup(req, res, next) {
@@ -28,6 +27,8 @@ class UserController {
 
       const userSignupRequestDTO = new UserSignupRequestDTO(req.body)
       const userSignupResponseDTO = await this.service.signup(userSignupRequestDTO)
+
+      await this.emailService.mailSend(userSignupResponseDTO)
 
       res.status(201).json(new Created(userSignupResponseDTO))
     } catch (e) {
@@ -57,8 +58,6 @@ class UserController {
 
       const token = await this.service.login(provider, code, state, userLoginRequestDTO);
 
-
-
       res.cookie("authorization", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
@@ -71,12 +70,14 @@ class UserController {
 
 
     } catch (e) {
+      if(e.errorMessage === "이메일 인증을 진행해 주세요.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=email인증을진행해주세요.`)
+
       next(e)
     }
   }
 
   async postProfile(req, res, next) {
-    try{
+    try {
       const userProfileImageRequestDTO = new UserProfileImageRequestDTO(req)
 
       const result = await this.service.profileUpload(userProfileImageRequestDTO)
@@ -95,19 +96,19 @@ class UserController {
       res.status(201).json(new Created(result))
 
 
-    }catch(e){
+    } catch (e) {
       next(e)
     }
 
   }
 
   async putProfile(req, res, next) {
-    try{
+    try {
 
       if (req.body.userPassword[0] !== req.body.userPassword[1]) throw new BadRequest("비밀번호가 일치하지 않습니다.")
 
       const userProfileFormRequestDTO = new UserProfileFormRequestDTO(req)
-     const result = this.service.userInfoUpdate(userProfileFormRequestDTO)
+      const result = this.service.userInfoUpdate(userProfileFormRequestDTO)
 
 
       req.user.Users_nickname = userProfileFormRequestDTO.userNickname
@@ -117,10 +118,9 @@ class UserController {
       const token = setJWTToken(req.user)
 
 
-
       res.status(201).json(new Created(token))
 
-    }catch(e){
+    } catch (e) {
       next(e)
     }
   }

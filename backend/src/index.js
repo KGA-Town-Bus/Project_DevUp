@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userRouter = require('./user/user.router');
 const boardRouter = require('./board/board.router');
+const emailRouter = require("./email/email.router")
 
 // 참고 용도
 /**
@@ -26,5 +27,6 @@ const boardRouter = require('./board/board.router');
  */
 router.use('/', boardRouter);
 router.use('/users', userRouter);
+router.use("/email", emailRouter)
 
 module.exports = router;
