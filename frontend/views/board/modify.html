@@ -6,9 +6,11 @@
     <title>modify</title>
   </head>
   <body>
-    <input type="text" />
-    <input type="text" value="{{ post.postContent }}" />
-    <button type="submit">저장</button>
+    <form action="/modify" method="post">
+      <input type="text" />
+      <input type="text" value="{{ post.postContent }}" />
+      <button type="submit">저장</button>
+    </form>
     <a href="/">목록으로</a>
   </body>
 </html>

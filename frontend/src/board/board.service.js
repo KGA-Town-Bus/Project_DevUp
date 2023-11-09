@@ -46,7 +46,6 @@ class BoardService {
       const {data} = await axios.get(
         `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/${postUid}`,
       );
-      console.log(data);
       return data;
     } catch (e) {
       console.error('Error in findOnePost:', e);

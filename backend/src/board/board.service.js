@@ -116,7 +116,7 @@ class BoardService {
   }
   async incrementHit(postUid) {
     try {
-      const view = await db.Posts.increment('Posts_hit', {
+      await db.Posts.increment('Posts_hit', {
         where: {Posts_uid: postUid},
       });
     } catch (e) {

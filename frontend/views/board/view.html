@@ -10,7 +10,11 @@
     <p>{{post.postWriter}}</p>
     <p>{{ post.postContent }}</p>
     <p>조회수: {{ post.postHit }}</p>
+    <a href="/modify/{{ post.postUid }}">수정</a>
     <button type="submit">삭제</button>
     <a href="/">목록으로</a>
+    <form action="/posts/{{ post.postUid }}/like">
+      <button type="submit">❤️</button>
+    </form>
   </body>
 </html>
