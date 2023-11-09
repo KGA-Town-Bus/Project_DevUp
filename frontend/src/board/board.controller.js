@@ -26,10 +26,7 @@ class BoardController {
   async getPosts(req, res, next) {
     try {
       const posts = await this.boardService.findAllPost();
-      res.render('index', {
-        posts,
-        user
-      });
+      res.render('index', {posts});
     } catch (e) {
       next(e);
     }
@@ -40,7 +37,6 @@ class BoardController {
     try {
       const postData = await this.boardService.findOnePost(postUid);
       // await this.boardService.incrementViews(postUid);
-      console.log(postData);
       res.render('board/view', {post: postData});
     } catch (e) {
       next(e);
@@ -65,6 +61,7 @@ class BoardController {
 
   async postLike(req, res, next) {
     const postUid = req.params.postUid;
+    console.log(postUid);
 
     try {
       await this.boardService.likePost(postUid);
