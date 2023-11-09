@@ -61,8 +61,10 @@ jobs:
           echo NAVER_CLINET_SECRET=${{ secrets.NAVER_CLINET_SECRET }} >> .env
           echo NAVER_REDIRECT_URI=${{ secrets.NAVER_REDIRECT_URI }} >> .env
           echo JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} >> .env
+          echo EMAIL_USER=${{ secrets.EMAIL_USER }} >> .env
+          echo EMAIL_PASS=${{ secrets.EMAIL_PASS }} >> .env
           cat .env
-          
+        
 
       - name: build server files
         working-directory: ./

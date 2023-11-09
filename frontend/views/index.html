@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/css/index.css" />
     <script type="module" src="/js/index.js"></script>
   </head>
+
+
   <body>
     <div class="header bs">
       <a href="/"
@@ -90,4 +92,15 @@
       {% endif %}
     </div>
   </body>
+
+  <script>
+    const queryString = window.location.search
+    const params = new URLSearchParams(queryString)
+
+    const error = params.get("error")
+    if(error) {
+      alert(error)
+      location.href ="/"
+    }
+  </script>
 </html>

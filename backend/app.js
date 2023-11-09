@@ -11,11 +11,13 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static("backend/uploads"))
 
 const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:3000", "https://devup.hyunjun.kr"]
+
 app.use(cors({
   origin: allowedOrigins,
   method: "GET,POST,OPTIONS,PUT,DELETE,UPDATE",
   credentials: true
 }))
+
 app.use(cookieParser());
 app.use(auth)
 app.use(router)

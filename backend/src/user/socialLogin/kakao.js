@@ -36,7 +36,7 @@ class Kakao extends SocialLogin{
       Users_name: "name",
       Users_nickname: userInfo.properties.nickname,
       Users_provider: "kakao",
-      Users_email: "email",
+      Users_email: userInfo.kakao_account.email,
       Users_profile: userInfo.properties.profile_image,
       Role_authority: "user"
     }

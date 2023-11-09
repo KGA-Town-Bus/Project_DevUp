@@ -18,11 +18,14 @@ class BoardController {
 
   async getPosts(req, res, next) {
     try {
+
+      const error = req.error ? req.error : undefined
       const user = req.user ? req.user : undefined
       const posts = await this.boardService.findAllPost();
       res.render('index', {
         posts,
-        user
+        user,
+        error
       });
     } catch (e) {
       next(e);

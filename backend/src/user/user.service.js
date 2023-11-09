@@ -7,6 +7,8 @@ const JWT = require("../lib/jwt")
 const jwt = new JWT()
 const {Op, where} = require('sequelize');
 const {UserSignupResponseDTO} = require("./dto/user.signup.response.dto");
+const mailer = require("../lib/mail")
+const {BadRequest} = require("../lib/customException");
 
 require("dotenv").config()
 
@@ -32,7 +34,7 @@ class UserService {
         Users_nickname: "nickname",
         Users_provider: "local",
         Users_created_at: Date.now(),
-        Users_account_locked: false,
+        Users_account_locked: true,
         Users_email: requestDTO.userEmail,
         Users_profile: "/images/github%20logo.png",
         Role_authority: "user",
@@ -44,8 +46,7 @@ class UserService {
 
       return responseDTO
     } catch (e) {
-      console.log(e.message)
-      throw new Error(e.message)
+      throw e
     }
   }
 
@@ -90,6 +91,8 @@ class UserService {
           }
         })
         delete user.Users_password
+
+        if(user.Users_account_locked === true) throw new BadRequest("이메일 인증을 진행해 주세요.")
 
         return setJWTToken(user)
       }
