@@ -42,6 +42,7 @@ class PostReadAllResponseDTO extends BaseDTO {
   postContent;
   postWriter;
   postCreatedAt;
+  postHit;
 
   constructor(response) {
     super();
@@ -50,6 +51,7 @@ class PostReadAllResponseDTO extends BaseDTO {
     this.postContent = response.Posts_content;
     this.postWriter = response.Posts_writer;
     this.postCreatedAt = this.toDate(response.Posts_created_at);
+    this.postHit = response.Posts_hit;
   }
 }
 

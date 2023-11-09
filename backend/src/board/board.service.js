@@ -48,6 +48,7 @@ class BoardService {
           Posts_content: post.dataValues.Posts_content,
           Posts_writer: post.dataValues.Posts_writer,
           Posts_created_at: post.dataValues.Posts_created_at,
+          Posts_hit: post.dataValues.Posts_hit,
         };
 
         return new PostReadAllResponseDTO(data);
