@@ -27,14 +27,22 @@
           placeholder="Search..."
         />
       </div>
+      {% if user %}
+      <div class="buttons">
+        <a href="/users/logout"><button class="logout bs">Logout</button></a>
+      </div>
+      {% else %}
       <div class="buttons">
         <a href="/users"><button class="signup bs">Sign Up</button></a>
         <a href="/users/login"><button class="signin bs">Sign In</button></a>
       </div>
+      {% endif %}
     </div>
 
     <div class="main">
       <form method="post" action="https://api-devup.hyunjun.kr/users/login">
+<!--        <form method="post" action="http://localhost:4000/users/login">-->
+
         <h2>Sign In</h2>
         <input spellcheck="false" type="text" name="userId" placeholder="ID" />
         <input

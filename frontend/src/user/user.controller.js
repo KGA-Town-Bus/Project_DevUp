@@ -36,21 +36,22 @@ class UserController {
     }
   }
 
+  getLogout(req, res, next) {
+    try{
+      res.clearCookie("authorization",{path: "/", domain: DOMAIN})
+      res.redirect("/")
+    }catch(e){
+      next(e)
+    }
+  }
+
+
   getProfile(req, res, next) {
     try {
 
-      let userData
-      if (req.user) {
-        userData = {
-          userUid: req.user.Users_uid,
-          userId: req.user.Users_id,
-          userNickname: req.user.Users_nickname,
-          userName: req.user.Users_name,
-          userEmail: req.user.Users_email,
-          userProfile: req.user.Users_profile
-        }
-      }
-      res.render("user/profile.html", userData)
+      const user = req.user ? req.user : undefined
+
+      res.render("user/profile.html", {user})
     } catch (e) {
       next(e)
     }

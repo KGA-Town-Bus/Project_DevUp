@@ -30,14 +30,16 @@
             placeholder="Search..."
     />
   </div>
+  {% if user %}
   <div class="buttons">
-    <a href="/users">
-      <button class="signup bs">Sign Up</button>
-    </a>
-    <a href="/users/login">
-      <button class="signin bs">Sign In</button>
-    </a>
+    <a href="/users/logout"><button class="logout bs">Logout</button></a>
   </div>
+  {% else %}
+  <div class="buttons">
+    <a href="/users"><button class="signup bs">Sign Up</button></a>
+    <a href="/users/login"><button class="signin bs">Sign In</button></a>
+  </div>
+  {% endif %}
 </div>
 
 
@@ -49,8 +51,8 @@
   <div class="profile">
     <div class="profile-image">
 
-      {% if userProfile %}
-      <img id="profile-img" src="{{userProfile}}"/>
+      {% if user.Users_profile %}
+      <img id="profile-img" src="{{user.Users_profile}}"/>
       {% else %}
       <img id="profile-img" src="/images/github%20logo.png"/>
       {% endif %}
@@ -66,14 +68,26 @@
     </div>
     </div>
 
+
+
+    {% if user.Users_provider ===  local %}
     <form class="form" action="/users/profile" method="post">
-      <input type="text" name="userNickname" placeholder="nickname" value="{{userNickname}}">
-      <input type="text" name="userName" placeholder="name" value="{{userName}}">
-      <input type="email" name="userEmail" placeholder="email" value="{{userEmail}}">
+      <input type="text" name="userNickname" placeholder="nickname" value="{{user.Users_nickname}}">
+      <input type="text" name="userName" placeholder="name" value="{{user.Users_name}}">
+      <input type="email" name="userEmail" placeholder="email" value="{{user.Users_email}}">
       <input type="password" name="userPassword" placeholder="password">
       <input type="password" name="userPassword" placeholder="double-check your pw">
       <button type="submit">Edit</button>
     </form>
+    {% else %}
+    <form class="form" action="/users/profile" method="post">
+      <input type="text" name="userNickname" placeholder="nickname" value="{{user.Users_nickname}}">
+      <input type="text" name="userName" placeholder="name" value="{{user.Users_name}}">
+      <input type="email" name="userEmail" placeholder="email" value="{{user.Users_email}}">
+      <button type="submit">Edit</button>
+    </form>
+    {% endif %}
+
   </div>
 
   <div class="friends">
