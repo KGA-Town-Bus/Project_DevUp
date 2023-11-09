@@ -30,7 +30,7 @@ class UserService {
         Users_password: requestDTO.userPassword,
         Users_name: "__default__",
         Users_nickname: "__default__",
-        Users_provider: "service",
+        Users_provider: "local",
         Users_created_at: Date.now(),
         Users_account_locked: false,
         Users_email: requestDTO.userEmail,

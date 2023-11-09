@@ -68,6 +68,9 @@
     </div>
     </div>
 
+
+
+    {% if user.Users_provider ===  local %}
     <form class="form" action="/users/profile" method="post">
       <input type="text" name="userNickname" placeholder="nickname" value="{{user.Users_nickname}}">
       <input type="text" name="userName" placeholder="name" value="{{user.Users_name}}">
@@ -76,6 +79,15 @@
       <input type="password" name="userPassword" placeholder="double-check your pw">
       <button type="submit">Edit</button>
     </form>
+    {% else %}
+    <form class="form" action="/users/profile" method="post">
+      <input type="text" name="userNickname" placeholder="nickname" value="{{user.Users_nickname}}">
+      <input type="text" name="userName" placeholder="name" value="{{user.Users_name}}">
+      <input type="email" name="userEmail" placeholder="email" value="{{user.Users_email}}">
+      <button type="submit">Edit</button>
+    </form>
+    {% endif %}
+
   </div>
 
   <div class="friends">
