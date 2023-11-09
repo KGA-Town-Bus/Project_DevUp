@@ -36,9 +36,9 @@ class Github extends SocialLogin{
     return {
       Users_suid: userInfo.id,
       Users_id: userInfo.login,
-      Users_password: "github",
-      Users_name: "github",
-      Users_nickname: "github",
+      Users_password: "password",
+      Users_name: "name",
+      Users_nickname: "nickname",
       Users_provider: "github",
       Users_email: userInfo.email,
       Users_profile: userInfo.avatar_url,

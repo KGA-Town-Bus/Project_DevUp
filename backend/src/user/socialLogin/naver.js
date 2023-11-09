@@ -43,8 +43,8 @@ class Naver extends SocialLogin{
   buildUser(userInfo) {
     return {
       Users_suid: userInfo.id,
-      Users_id: "naver",
-      Users_password: "naver",
+      Users_id: "id",
+      Users_password: "password",
       Users_name: userInfo.name,
       Users_nickname: userInfo.nickname,
       Users_provider: "naver",

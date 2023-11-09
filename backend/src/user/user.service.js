@@ -28,13 +28,13 @@ class UserService {
       const userEntity = this.userRepository.build({
         Users_id: requestDTO.userId,
         Users_password: requestDTO.userPassword,
-        Users_name: "__default__",
-        Users_nickname: "__default__",
-        Users_provider: "service",
+        Users_name: "name",
+        Users_nickname: "nickname",
+        Users_provider: "local",
         Users_created_at: Date.now(),
         Users_account_locked: false,
         Users_email: requestDTO.userEmail,
-        Users_profile: "__default__",
+        Users_profile: "/images/github%20logo.png",
         Role_authority: "user",
       });
 
@@ -85,7 +85,7 @@ class UserService {
             [Op.and]: [
               {Users_id: userLoginRequestDTO.userId},
               {Users_password: userLoginRequestDTO.userPassword},
-              {Users_provider: "service"}
+              {Users_provider: "local"}
             ]
           }
         })
