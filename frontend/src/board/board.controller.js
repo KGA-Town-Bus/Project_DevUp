@@ -64,7 +64,7 @@ class BoardController {
     try {
       const postData = await this.boardService.findOnePost(postUid);
       // await this.boardService.incrementViews(postUid);
-      res.render('board/view', {post: postData});
+      res.render('board/view', {post: postData, backServer});
     } catch (e) {
       next(e);
     }
