@@ -4,13 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>modify</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <form action="/modify" method="post">
-      <input type="text" />
-      <input type="text" value="{{ post.postContent }}" />
+    <form>
+      <p>title :</p>
+      <input type="text" name="postTitle" required />
+      <p>content :</p>
+      <textarea name="postContent"></textarea>
       <button type="submit">저장</button>
     </form>
-    <a href="/">목록으로</a>
+    <a href="/">❌</a>
+    <script>
+      document.querySelector('form').addEventListener('submit', async e => {
+        e.preventDefault();
+        const body = {
+          postTitle: e.target.postTitle.value,
+          postContent: e.target.postContent.value,
+        };
+        const {data: response} = await axios.put(
+          'http://localhost:4000/posts/{{id}}',
+          body,
+          {
+            withCredentials: true,
+          },
+        );
+
+        location.href = `http://localhost:3000/posts/${response.postUid}`;
+      });
+    </script>
   </body>
 </html>
