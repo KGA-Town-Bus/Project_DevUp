@@ -23,6 +23,25 @@ const NAVER_REDIRECT_URI = process.env.NAVER_REDIRECT_URI
 
 const DOMAIN = process.env.DOMAIN
 
+const BACKEND_SERVER_IP = process.env.BACKEND_SERVER_IP
+const BACKEND_SERVER_PORT = process.env.BACKEND_SERVER_PORT
+const PROTOCOL = process.env.PROTOCOL
+
+const backServer = {
+  PROTOCOL,
+  BACKEND_SERVER_IP,
+  BACKEND_SERVER_PORT
+}
+
+const FRONTEND_SERVER_IP = process.env.FRONTEND_SERVER_IP
+const FRONTEND_SERVER_PORT = process.env.FRONTEND_SERVER_PORT
+
+const frontServer = {
+  PROTOCOL,
+  FRONTEND_SERVER_IP,
+  FRONTEND_SERVER_PORT
+}
+
 class UserController {
   constructor(service) {
     this.service = service
@@ -30,7 +49,9 @@ class UserController {
 
   getSignup(req, res, next) {
     try {
-      res.render("user/signup.html")
+      res.render("user/signup.html", {
+        frontServer
+      })
     } catch (e) {
       next(e)
     }
@@ -87,7 +108,9 @@ class UserController {
       if (provider === "google") redirectURI = `${GOOGLE_AUTHORIZE_URI}?client_id=${CLIENT_ID}&response_type=${RESPONSE_TYPE}&redirect_uri=${GOOGLE_REDIRECT_URI}&scope=${SCOPE}&access_type=${ACCESS_TYPE}`
       if (provider === "github") redirectURI = `${GITHUB_AUTHORIZE_URI}?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URI}`
       if (provider === "naver") redirectURI = `${NAVER_AUTHORIZE_URI}?response_type=code&client_id=${NAVER_CLIENT_ID}&redirect_uri=${NAVER_REDIRECT_URI}&state=RAMDOM_STATE`
-      if (provider === "login") return res.render("user/login.html")
+      if (provider === "login") return res.render("user/login.html", {
+        backServer
+      })
       res.redirect(redirectURI)
     } catch (e) {
       next(e)
