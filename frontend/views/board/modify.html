@@ -23,7 +23,8 @@
           postContent: e.target.postContent.value,
         };
         const {data: response} = await axios.put(
-          'http://localhost:4000/posts/{{id}}',
+          'https://api-devup.hyunjun.kr/posts/{{id}}',
+          // 'http://localhost:4000/posts/{{id}}',
           body,
           {
             withCredentials: true,
