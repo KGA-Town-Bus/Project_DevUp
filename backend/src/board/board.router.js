@@ -8,14 +8,12 @@ const getPost = boardController.getPost.bind(boardController);
 const putUpdatePost = boardController.putUpdatePost.bind(boardController);
 const deletePost = boardController.deletePost.bind(boardController);
 const postLiked = boardController.postLiked.bind(boardController);
-const deleteLiked = boardController.deleteLiked.bind(boardController);
 
 boardRouter.post('/create', postCreate);
 boardRouter.get('/', getAllPost);
 boardRouter.get('/:postUid', getPost);
 boardRouter.put('/posts/:postUid', putUpdatePost);
 boardRouter.delete('/posts/:postUid', deletePost);
-boardRouter.post('/:postUid/like', postLiked);
-boardRouter.delete('/:postUid/like', deleteLiked);
+boardRouter.post('/posts/:postUid/like', postLiked);
 
 module.exports = boardRouter;

@@ -325,7 +325,7 @@ section > .content-header {
 }
 
 .modal-header {
-  width: 900px;
+  width: 46.875vw;
 }
 
 input[name='postContent'] {

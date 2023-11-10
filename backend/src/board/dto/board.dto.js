@@ -237,12 +237,12 @@ class IncrementHitResponseDTO extends BaseDTO {
 
 class LikeRequestDTO extends BaseDTO {
   postUid;
-  userId;
+  userUid;
 
   constructor(body) {
     super();
     this.postUid = body.postUid;
-    this.userId = body.userId;
+    this.userUid = body.Users_uid;
     this.validate(this, BadRequest);
   }
 }
@@ -250,13 +250,11 @@ class LikeRequestDTO extends BaseDTO {
 class LikeResponseDTO extends BaseDTO {
   postUid;
   userId;
-  likedAt;
 
   constructor(response) {
     super();
     this.postUid = response.Post_uid;
     this.userId = response.User_id;
-    this.likedAt = this.toDate(response.Liked_at);
     this.validate(this, BadRequest);
   }
 }
