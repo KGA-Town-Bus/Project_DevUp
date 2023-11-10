@@ -1,4 +1,5 @@
 let page = 1
+
 const infiniteScroll = async () => {
 
   document.addEventListener("scroll", debounceScroll)
@@ -16,7 +17,8 @@ const debounceScroll = _.debounce(function() {
 
 
 const postByPage = async (page) => {
-  const {data: postList} = await axios.get(`http://localhost:4000/?page=${page}`)
+
+  const {data: postList} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}`)
 
   const contents = document.getElementById("contents")
   postList.forEach((post) => {

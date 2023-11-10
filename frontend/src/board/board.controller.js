@@ -53,6 +53,7 @@ class BoardController {
         // posts,
         user,
         error,
+        backServer
       });
     } catch (e) {
       next(e);
