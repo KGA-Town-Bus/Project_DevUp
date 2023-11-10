@@ -68,10 +68,7 @@ class UserController {
       });
       return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}`)
 
-
     } catch (e) {
-      if(e.errorMessage === "이메일 인증을 진행해 주세요.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=email인증을진행해주세요.`)
-
       next(e)
     }
   }

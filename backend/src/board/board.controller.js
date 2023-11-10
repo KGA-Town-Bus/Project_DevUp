@@ -13,8 +13,9 @@ class BoardController {
   }
   async postCreate(req, res, next) {
     try {
+      const userUid = req.user.Users_uid
       const createRequestDTO = new PostCreateRequestDTO(req.body);
-      const responseData = await this.boardService.createPost(createRequestDTO);
+      const responseData = await this.boardService.createPost(createRequestDTO, userUid);
       const data = responseData.postUid;
       res.status(201).json(new Created(data));
     } catch (e) {
@@ -25,7 +26,9 @@ class BoardController {
 
   async getAllPost(req, res, next) {
     try {
-      const data = await this.boardService.findAllPost();
+      const {page} = req.query
+
+      const data = await this.boardService.findAllPost(parseInt(page));
 
       res.status(201).json(data);
     } catch (e) {

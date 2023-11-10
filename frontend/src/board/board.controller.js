@@ -33,32 +33,33 @@ class BoardController {
       const postBody = req.body;
       const userNickname = req.user.Users_nickname;
       const responseData = await this.boardService.createPost(
-        postBody,
-        userNickname,
+          postBody,
+          userNickname,
+          req
       );
       const postUid = responseData.data;
-      console.log(postUid);
       res.redirect(`/posts/${postUid}`);
     } catch (e) {
       next(e);
     }
   }
 
-  async getPosts(req, res, next) {
+  async getMainPage(req, res, next) {
     try {
       const error = req.error ? req.error : undefined;
       const user = req.user ? req.user : undefined;
-      const posts = await this.boardService.findAllPost();
+      // const posts = await this.boardService.findAllPost();
       res.render('index', {
-        posts,
+        // posts,
         user,
         error,
+        backServer
       });
-      console.log(posts);
     } catch (e) {
       next(e);
     }
   }
+
   async getOnePost(req, res, next) {
     const userUid = req.user.Users_uid;
     const postUid = Number(req.params.postUid);
