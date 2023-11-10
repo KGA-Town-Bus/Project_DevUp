@@ -61,11 +61,11 @@ class BoardController {
   }
 
   async getOnePost(req, res, next) {
+    const userUid = req.user.Users_uid;
     const postUid = Number(req.params.postUid);
     try {
       const postData = await this.boardService.findOnePost(postUid);
-      // await this.boardService.incrementViews(postUid);
-      res.render('board/view', {post: postData, backServer});
+      res.render('board/view', {post: postData, userUid, backServer});
     } catch (e) {
       next(e);
     }
