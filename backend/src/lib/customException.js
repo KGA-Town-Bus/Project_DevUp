@@ -13,7 +13,7 @@ class HttpException extends Error {
 class BadRequest extends HttpException {
   constructor(errorMessage) {
     super();
-    this.statusCode = "400";
+    this.statusCode = 400;
     this.error = "Bad Request";
     this.errorMessage = errorMessage;
   }
@@ -22,7 +22,7 @@ class BadRequest extends HttpException {
 class Unauthorized extends HttpException {
   constructor(errorMessage) {
     super();
-    this.statusCode = "401";
+    this.statusCode = 401;
     this.error = "Unauthorized";
     this.errorMessage = errorMessage;
   }
@@ -30,7 +30,7 @@ class Unauthorized extends HttpException {
 class InternalServerError extends HttpException {
   constructor(errorMessage) {
     super();
-    this.statusCode = "500";
+    this.statusCode = 500;
     this.error = "Internal Server Error";
     this.errorMessage = errorMessage;
   }

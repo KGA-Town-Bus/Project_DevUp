@@ -132,14 +132,5 @@
     </div>
   </body>
 
-  <script>
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
 
-    const error = params.get('error');
-    if (error) {
-      alert(error);
-      location.href = '/';
-    }
-  </script>
 </html>
