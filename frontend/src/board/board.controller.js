@@ -33,9 +33,9 @@ class BoardController {
       const postBody = req.body;
       const userNickname = req.user.Users_nickname;
       const responseData = await this.boardService.createPost(
-          postBody,
-          userNickname,
-          req
+        postBody,
+        userNickname,
+        req,
       );
       const postUid = responseData.data;
       res.redirect(`/posts/${postUid}`);
@@ -53,7 +53,7 @@ class BoardController {
         // posts,
         user,
         error,
-        backServer
+        backServer,
       });
     } catch (e) {
       next(e);
@@ -65,7 +65,7 @@ class BoardController {
     const postUid = Number(req.params.postUid);
     try {
       const postData = await this.boardService.findOnePost(postUid);
-      res.render('board/view', {post: postData, userUid, backServer});
+      res.render('board/view', {post: postData, userUid, backServer, like: 0});
     } catch (e) {
       next(e);
     }
