@@ -56,7 +56,6 @@ class BoardService {
   async incrementViews(postUid) {
     try {
       const view = await axios.put(`http://localhost:4000/${postUid}`);
-      console.log(view);
     } catch (e) {
       console.error('Error in incrementViews:', e);
       throw e;

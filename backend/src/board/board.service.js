@@ -28,7 +28,7 @@ class BoardService {
         Posts_title: postTitle,
         Posts_content: postContent,
         Posts_writer: userNickname,
-        Users_uid: userUid
+        Users_uid: userUid,
       });
       const createdPost = createdValues.dataValues;
       return new PostCreateResponseDTO(createdPost);
@@ -44,14 +44,10 @@ class BoardService {
       const offset = (page - 1) * pageSize
 
       const posts = await db.Posts.findAll({
-        include: [
-          {model: db.Users},
-          {model: db.Likes},
-        ],
+        include: [{model: db.Users}, {model: db.Likes}],
         offset: offset,
         limit: pageSize,
       });
-
 
       return posts.map(post => {
         const data = {
@@ -61,7 +57,7 @@ class BoardService {
           Posts_writer: post.dataValues.Posts_writer,
           Posts_created_at: post.dataValues.Posts_created_at,
           Posts_hit: post.dataValues.Posts_hit,
-          Users_profile: post.dataValues.User.dataValues.Users_profile
+          Users_profile: post.dataValues.User.dataValues.Users_profile,
         };
 
         return new PostReadAllResponseDTO(data);
@@ -82,7 +78,6 @@ class BoardService {
         where: {Posts_uid: postUid},
       });
       const post = responseData.dataValues;
-      console.log(post);
       if (!post) {
         throw new Error('게시물을 찾을 수 없습니다.');
       }
@@ -142,50 +137,50 @@ class BoardService {
     }
   }
 
-  async addLike(postUid, userUid) {
+  async toggleLike(postLikedRequestDTO) {
     try {
-      const overLike = await db.Likes.findOne({
-        where: {Post_uid: postUid, User_uid: userUid},
-      });
-      if (overLike) {
-        throw new Error('이미 좋아요를 눌렀습니다.');
-      }
-
-      const createdLike = await db.Likes.create({
-        Post_uid: postUid,
-        User_uid: userUid,
+      const {postUid, userUid} = postLikedRequestDTO;
+      const existingLike = await db.Likes.findOne({
+        where: {Posts_uid: postUid, Users_uid: userUid},
       });
 
-      if (!createdLike) {
-        throw new Error('좋아요 추가에 실패했습니다.');
-      }
-
-      const incrementedPost = await db.Posts.increment('Posts_like', {
-        where: {Posts_uid: postUid},
-      });
-
-      if (!incrementedPost) {
+      if (existingLike) {
         await db.Likes.destroy({
-          where: {Post_uid: postUid, User_uid: userUid},
+          where: {Posts_uid: postUid, Users_uid: userUid},
         });
-        throw new Error('좋아요 수 증가에 실패했습니다.');
+
+        await db.Posts.decrement('Posts_like', {
+          where: {Posts_uid: postUid},
+        });
+
+        return '좋아요 취소';
+      } else {
+        await db.Likes.create({
+          Posts_uid: postUid,
+          Users_uid: userUid,
+        });
+
+        await db.Posts.increment('Posts_like', {
+          where: {Posts_uid: postUid},
+        });
+
+        return '좋아요 추가';
       }
     } catch (e) {
-      console.error('Service addLike Error', e);
+      console.error('Service toggleLike Error', e);
       throw new Error(e.message);
     }
   }
 
-  async removeLike(postUid, userUid) {
+  async likedCount(postLikedRequestDTO) {
     try {
-      await db.Likes.destroy({
-        where: {Post_uid: postUid, User_uid: userUid},
-      });
-      await db.Posts.decrement('Posts_like', {
+      const {postUid} = postLikedRequestDTO;
+      const likedCount = await db.Likes.count({
         where: {Posts_uid: postUid},
       });
+      return likedCount;
     } catch (e) {
-      console.error('Service removeLike Error', e);
+      console.error('Service likedCount Error', e);
       throw new Error(e.message);
     }
   }
