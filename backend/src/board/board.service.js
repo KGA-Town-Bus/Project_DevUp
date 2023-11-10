@@ -40,7 +40,7 @@ class BoardService {
 
   async findAllPost(page) {
     try {
-      const pageSize = 30;
+      const pageSize = 20;
       const offset = (page - 1) * pageSize
 
       const posts = await db.Posts.findAll({
