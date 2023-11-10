@@ -1,19 +1,41 @@
 let page = 1
 
 const infiniteScroll = async () => {
-
   document.addEventListener("scroll", debounceScroll)
   await postByPage(page)
 }
 
-const debounceScroll = _.debounce(function() {
+const debounceScroll = _.debounce(function () {
   const nowHeight = window.scrollY || document.documentElement.scrollTop;
-  const targetHeight = document.documentElement.offsetHeight / 1.4
-  if (nowHeight >= targetHeight){
-    page++;
-    postByPage(page)
+
+  const loadingTargetHeight = (document.documentElement.offsetHeight / 1.5) - 300
+  const targetHeight = document.documentElement.offsetHeight / 1.5
+
+  if (nowHeight >= loadingTargetHeight) loading.start()
+
+  if (nowHeight >= targetHeight) {
+    setTimeout(() => {
+      page++;
+      postByPage(page)
+      loading.end()
+    },1000)
   }
 }, 600);
+
+const loading = {
+  start: () => {
+    const loading = `<div id="spinner-wrapper" style="display: flex; align-items: center" >
+  <img id="spinner" class="spinner" src="/images/loading.png">
+</div>`
+    const contents = document.getElementById("contents")
+    contents.innerHTML = contents.innerHTML + loading
+  },
+
+  end: () => {
+    const loading = document.querySelector("#spinner-wrapper")
+    loading.remove()
+  }
+}
 
 
 const postByPage = async (page) => {
@@ -22,12 +44,11 @@ const postByPage = async (page) => {
 
   const contents = document.getElementById("contents")
   postList.forEach((post) => {
-
     const template = `<section>
       <div class="content-header">
         <span class="content-title" id="postTitle">${post.postTitle}</span>
         <div class="content-user">
-          <img class="user-pfp" id="userProfile" src=${post.userProfile}>
+          <img class="content-user-pfp" id="userProfile" src=${post.userProfile}>
           <span class="content-username" id="postWriter">${post.postWriter}</span>
         </div>
       </div>
