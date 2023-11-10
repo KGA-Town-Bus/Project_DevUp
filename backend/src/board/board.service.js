@@ -18,7 +18,7 @@ class BoardService {
     }
     return instance;
   }
-  async createPost(createRequestDTO) {
+  async createPost(createRequestDTO, userUid) {
     try {
       if (!(createRequestDTO instanceof PostCreateRequestDTO)) {
         throw new Error('Invalid request DTO');
@@ -28,6 +28,7 @@ class BoardService {
         Posts_title: postTitle,
         Posts_content: postContent,
         Posts_writer: userNickname,
+        Users_uid: userUid
       });
       const createdPost = createdValues.dataValues;
       return new PostCreateResponseDTO(createdPost);
@@ -37,9 +38,20 @@ class BoardService {
     }
   }
 
-  async findAllPost() {
+  async findAllPost(page) {
     try {
-      const posts = await db.Posts.findAll();
+      const pageSize = 10;
+      const offset = (page - 1) * pageSize
+
+      const posts = await db.Posts.findAll({
+        include: [
+          {model: db.Users},
+          {model: db.Likes},
+        ],
+        offset: offset,
+        limit: 10,
+      });
+
 
       return posts.map(post => {
         const data = {
@@ -49,6 +61,7 @@ class BoardService {
           Posts_writer: post.dataValues.Posts_writer,
           Posts_created_at: post.dataValues.Posts_created_at,
           Posts_hit: post.dataValues.Posts_hit,
+          Users_profile: post.dataValues.User.dataValues.Users_profile
         };
 
         return new PostReadAllResponseDTO(data);
