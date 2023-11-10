@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const {upgrade} = require("nodemailer/.ncurc");
+const {upgrade} = require('nodemailer/.ncurc');
 require('dotenv').config();
 const db = {};
 
@@ -17,7 +17,7 @@ const sequelize = new Sequelize(
 
 const entityList = [
   `../user/user`,
-    `../email/email`,
+  `../email/email`,
   `../board/model/board`,
   // `../board/model/comments`,
   `../board/model/likes`,
@@ -28,37 +28,33 @@ entityList.forEach((entity, index) => {
   db[model.name] = model;
 });
 
-
 db.Users.hasOne(db.Mail, {
-  foreignKey: "Users_uid"
-})
+  foreignKey: 'Users_uid',
+});
 db.Mail.belongsTo(db.Users, {
-  foreignKey: "Users_uid"
-})
+  foreignKey: 'Users_uid',
+});
 
-db.Users.hasMany(db.Posts,{
-  foreignKey: "Users_uid"
-})
+db.Users.hasMany(db.Posts, {
+  foreignKey: 'Users_uid',
+});
 db.Posts.belongsTo(db.Users, {
-  foreignKey: "Users_uid"
-})
+  foreignKey: 'Users_uid',
+});
 
-db.Posts.hasMany(db.Likes,{
-  foreignKey: "Posts_uid"
-})
+db.Posts.hasMany(db.Likes, {
+  foreignKey: 'Posts_uid',
+});
 db.Likes.belongsTo(db.Posts, {
-  foreignKey: "Posts_uid"
-})
+  foreignKey: 'Posts_uid',
+});
 
-db.Posts.hasMany(db.Likes,{
-  foreignKey: "Users_uid"
-})
-db.Likes.belongsTo(db.Posts, {
-  foreignKey: "Users_uid"
-})
-
-
-
+db.Users.hasMany(db.Likes, {
+  foreignKey: 'Users_uid',
+});
+db.Likes.belongsTo(db.Users, {
+  foreignKey: 'Users_uid',
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

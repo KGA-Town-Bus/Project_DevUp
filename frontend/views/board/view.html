@@ -18,7 +18,7 @@
     <a href="/">❌</a>
     <form method="/posts/{{post.postUid}}/like" id="like">
       <button type="submit">❤️</button>
-      <p id="likeCount"></p>
+      <p id="likeCount">{{post.postLike}}</p>
     </form>
     <script>
       document.querySelector('#delete').addEventListener('submit', async e => {

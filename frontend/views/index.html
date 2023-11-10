@@ -1,115 +1,108 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DEVUP Homepage</title>
-  <link rel="stylesheet" href="/css/index.css"/>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEVUP Homepage</title>
+    <link rel="stylesheet" href="/css/index.css" />
 
-  <script>
-    const PROTOCOL = "{{backServer.PROTOCOL}}"
-    const BACKEND_SERVER_IP = "{{backServer.BACKEND_SERVER_IP}}"
-    const BACKEND_SERVER_PORT = {{backServer.BACKEND_SERVER_PORT}}
-  </script>
+    <script>
+      const PROTOCOL = "{{backServer.PROTOCOL}}"
+      const BACKEND_SERVER_IP = "{{backServer.BACKEND_SERVER_IP}}"
+      const BACKEND_SERVER_PORT = {{backServer.BACKEND_SERVER_PORT}}
+    </script>
 
-  <script type="module" src="/js/index.js"></script>
-</head>
+    <script type="module" src="/js/index.js"></script>
+  </head>
 
-<body>
-<div class="header bs">
-  <a href="/"
-  ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
-  /></a>
-  <div class="text-set ts">
-    <span>Feed</span>
-    <span>Stats</span>
-    <span>Admin</span>
-    <span>Public Chat</span>
-  </div>
-  <div class="search">
-    <span class="search-icon">🔍</span>
-    <input
-            spellcheck="false"
-            type="text"
-            class="search-bar bs"
-            placeholder="Search..."
-    />
-  </div>
-  {% if user %}
-  <div class="buttons">
-    <a href="/users/logout">
-      <button class="logout bs">Logout</button>
-    </a>
-  </div>
-  {% else %}
-  <div class="buttons">
-    <a href="/users">
-      <button class="signup bs">Sign Up</button>
-    </a>
-    <a href="/users/login">
-      <button class="signin bs">Sign In</button>
-    </a>
-  </div>
-  {% endif %}
-</div>
-<div class="container">
-
-  <div class="contents" id="contents">
-
-  </div>
-
-  {% if user %}
-  <div class="user bs">
-    <div class="user-info">
-      <img class="user-pfp" src="{{user.Users_profile}}" alt=""/>
-      <span class="username ts">Welcome, {{user.Users_name}}</span>
+  <body>
+    <div class="header bs">
+      <a href="/"
+        ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
+      /></a>
+      <div class="text-set ts">
+        <span>Feed</span>
+        <span>Stats</span>
+        <span>Admin</span>
+        <span>Public Chat</span>
+      </div>
+      <div class="search">
+        <span class="search-icon">🔍</span>
+        <input
+          spellcheck="false"
+          type="text"
+          class="search-bar bs"
+          placeholder="Search..."
+        />
+      </div>
+      {% if user %}
+      <div class="buttons">
+        <a href="/users/logout">
+          <button class="logout bs">Logout</button>
+        </a>
+      </div>
+      {% else %}
+      <div class="buttons">
+        <a href="/users">
+          <button class="signup bs">Sign Up</button>
+        </a>
+        <a href="/users/login">
+          <button class="signin bs">Sign In</button>
+        </a>
+      </div>
+      {% endif %}
     </div>
-    <div class="user-buttons">
-      <form action="/create">
-        <button class="post bs">Post</button>
-      </form>
-      <button class="chat bs">Chat</button>
-      <a href="/users/profile"
-      >
-        <button class="profile bs">Profile</button>
-      </a
-      >
-    </div>
-    <div id="chatroom" class="chatroom">
-      <div class="chat-content"></div>
-      <div class="chat-content"></div>
-      <div class="chat-content"></div>
-      <input type="text" class="chat-input"/>
-    </div>
-  </div>
-  <!-- post modal -->
-  <div class="post-modal">
-    <div class="modal-header">
-      <span>Title</span>
-      <input type="text" name="postTitle"/>
-    </div>
-    <div class="modal-body">
-      <span>Content</span>
-      <textarea name="postContent"> </textarea>
-    </div>
-    <div class="modal-footer">
-      <button>upload</button>
-      <button>cancel</button>
-      <button>post</button>
-    </div>
-  </div>
-  {% else %}
-  <div class="user bs">
-    <div class="user-info">
-      <img class="user-pfp" src="/images/github%20logo.png" alt=""/>
-      <span class="username ts">Please sign in...</span>
-    </div>
-  </div>
-  {% endif %}
-</div>
-</body>
+    <div class="container">
+      <div class="contents" id="contents"></div>
 
-
+      {% if user %}
+      <div class="user bs">
+        <div class="user-info">
+          <img class="user-pfp" src="{{user.Users_profile}}" alt="" />
+          <span class="username ts">Welcome, {{user.Users_name}}</span>
+        </div>
+        <div class="user-buttons">
+          <form action="/create">
+            <button class="post bs">Post</button>
+          </form>
+          <button class="chat bs">Chat</button>
+          <a href="/users/profile">
+            <button class="profile bs">Profile</button>
+          </a>
+        </div>
+        <div id="chatroom" class="chatroom">
+          <div class="chat-content"></div>
+          <div class="chat-content"></div>
+          <div class="chat-content"></div>
+          <input type="text" class="chat-input" />
+        </div>
+      </div>
+      <!-- post modal -->
+      <div class="post-modal">
+        <div class="modal-header">
+          <span>Title</span>
+          <input type="text" name="postTitle" />
+        </div>
+        <div class="modal-body">
+          <span>Content</span>
+          <textarea name="postContent"> </textarea>
+        </div>
+        <div class="modal-footer">
+          <button>upload</button>
+          <button>cancel</button>
+          <button>post</button>
+        </div>
+      </div>
+      {% else %}
+      <div class="user bs">
+        <div class="user-info">
+          <img class="user-pfp" src="/images/github%20logo.png" alt="" />
+          <span class="username ts">Please sign in...</span>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </body>
 </html>
