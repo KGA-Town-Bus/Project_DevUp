@@ -10,11 +10,10 @@ class UserService {
   async signup(body) {
     try {
       const {data} = await axios.post(`http://localhost:4000/users`, body)
-      return data
-
+        return data
 
     } catch (e) {
-      throw new Error(e.message)
+      throw e.response.data
     }
   }
 
@@ -28,14 +27,9 @@ class UserService {
             },withCredentials:true
           })
 
-
-
       return data
-
-
     } catch (e) {
-      throw new Error(e.message)
-
+      throw e
     }
   }
 }

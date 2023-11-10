@@ -26,22 +26,25 @@ class UserService {
 
   async signup(requestDTO) {
     try {
+      const [user, isNewRecord] = await this.userRepository.findOrBuild({
+        where: { Users_id : requestDTO.userId},
+      })
 
-      const userEntity = this.userRepository.build({
-        Users_id: requestDTO.userId,
-        Users_password: requestDTO.userPassword,
-        Users_name: "name",
-        Users_nickname: "nickname",
-        Users_provider: "local",
-        Users_created_at: Date.now(),
-        Users_account_locked: true,
-        Users_email: requestDTO.userEmail,
-        Users_profile: "/images/github%20logo.png",
-        Role_authority: "user",
-      });
+      if(!isNewRecord) throw new BadRequest("이미 존재하는 아이디 입니다.")
+
+      user.Users_id = requestDTO.userId;
+      user.Users_password = requestDTO.userPassword
+      user.Users_name = "name"
+      user.Users_nickname = "nickname"
+      user.Users_provider = "local"
+      user.Users_created_at = Date.now()
+      user.Users_account_locked = true
+      user.Users_email = requestDTO.userEmail
+      user.Users_profile = "/images/github%20logo.png"
+      user.Role_authority = "user"
 
 
-      const response = await userEntity.save()
+      const response = await user.save()
       const responseDTO = new UserSignupResponseDTO(response.dataValues)
 
       return responseDTO

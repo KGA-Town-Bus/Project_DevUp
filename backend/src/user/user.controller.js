@@ -68,9 +68,7 @@ class UserController {
       });
       return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}`)
 
-
     } catch (e) {
-
       next(e)
     }
   }
