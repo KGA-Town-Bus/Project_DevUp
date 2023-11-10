@@ -36,6 +36,30 @@ db.Mail.belongsTo(db.Users, {
   foreignKey: "Users_uid"
 })
 
+db.Users.hasMany(db.Posts,{
+  foreignKey: "Users_uid"
+})
+db.Posts.belongsTo(db.Users, {
+  foreignKey: "Users_uid"
+})
+
+db.Posts.hasMany(db.Likes,{
+  foreignKey: "Posts_uid"
+})
+db.Likes.belongsTo(db.Posts, {
+  foreignKey: "Posts_uid"
+})
+
+db.Posts.hasMany(db.Likes,{
+  foreignKey: "Users_uid"
+})
+db.Likes.belongsTo(db.Posts, {
+  foreignKey: "Users_uid"
+})
+
+
+
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
