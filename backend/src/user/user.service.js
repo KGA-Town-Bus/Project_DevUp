@@ -74,14 +74,14 @@ class UserService {
         user = this.userRepository.build(github.buildUser(userInfo))
       }
 
-      if (provider == "naver") {
+      if (provider === "naver") {
         const naver = new Naver(code, state)
         userInfo = await naver.getSocialUserInfo()
         user = this.userRepository.build(naver.buildUser(userInfo))
       }
 
-      if (provider == "login") {
-        const {dataValues: user} = await this.userRepository.findOne({
+      if (provider === "login") {
+        const result = await this.userRepository.findOne({
           where: {
             [Op.and]: [
               {Users_id: userLoginRequestDTO.userId},
@@ -90,9 +90,10 @@ class UserService {
             ]
           }
         })
-        delete user.Users_password
-
+        if(result === null) throw new BadRequest("입력 값을 확인해 주세요.")
+        const {dataValues: user} = result
         if(user.Users_account_locked === true) throw new BadRequest("이메일 인증을 진행해 주세요.")
+        delete user.Users_password
 
         return setJWTToken(user)
       }
