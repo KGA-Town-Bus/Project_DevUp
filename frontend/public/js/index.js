@@ -1,35 +1,48 @@
 let page = 1
+let loadingState = false
+let loadingEnd = false;
 
 const infiniteScroll = async () => {
   document.addEventListener("scroll", debounceScroll)
   await postByPage(page)
 }
 
-const debounceScroll = _.debounce(function () {
+const debounceScroll = _.debounce(async function () {
   const nowHeight = window.scrollY || document.documentElement.scrollTop;
 
-  const loadingTargetHeight = (document.documentElement.offsetHeight / 1.5) - 300
-  const targetHeight = document.documentElement.offsetHeight / 1.5
+  const targetHeight = document.documentElement.offsetHeight / 1.6
 
-  if (nowHeight >= loadingTargetHeight) loading.start()
+  console.log(nowHeight)
+  console.log(targetHeight)
 
+  if (nowHeight >= targetHeight && loadingState === false && loadingEnd === false) {
 
-  if (nowHeight >= targetHeight) {
-    setTimeout(() => {
+    loadingState = true
+    loading.start()
+    setTimeout(async() => {
       page++;
-      postByPage(page)
+      await postByPage(page)
       loading.end()
-    },1000)
+      loadingState = false
+    },2000)
   }
 }, 400);
 
 const loading = {
   start: () => {
-    const loading = `<div id="spinner-wrapper" style="display: flex; align-items: center" >
-  <img id="spinner" class="spinner" src="/images/loading.png">
-</div>`
+    const spinnerWrapper = document.createElement("div")
+    spinnerWrapper.id = "spinner-wrapper"
+    spinnerWrapper.style.display = "flex"
+    spinnerWrapper.style.alignItems = "center"
+
+    const spinner = document.createElement("img")
+    spinner.id = "spinner"
+    spinner.className = "spinner"
+    spinner.src = "/images/loading.png"
+    spinnerWrapper.appendChild(spinner)
+
     const contents = document.getElementById("contents")
-    contents.innerHTML = contents.innerHTML + loading
+    contents.appendChild(spinnerWrapper)
   },
 
   end: () => {
@@ -40,12 +53,17 @@ const loading = {
 
 
 const postByPage = async (page) => {
+  const contents = document.getElementById("contents")
 
   const {data: postList} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}`)
 
-  const contents = document.getElementById("contents")
-  postList.forEach((post) => {
-    const template = `<section>
+  if (postList.length === 0) {
+    loadingEnd = true;
+    return
+  }
+
+    postList.forEach((post) => {
+      const template = `<section>
       <div class="content-header">
         <span class="content-title" id="postTitle">${post.postTitle}</span>
         <div class="content-user">
@@ -69,8 +87,11 @@ const postByPage = async (page) => {
       </div>
     </section>`
 
-    contents.innerHTML = contents.innerHTML + template
-  })
+      contents.innerHTML = contents.innerHTML + template
+    })
+
+
+
 }
 
 
