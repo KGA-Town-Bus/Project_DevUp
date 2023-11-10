@@ -4,6 +4,7 @@ const {
   PostReadRequestDTO,
   PostUpdateRequestDTO,
   PostDeleteRequestDTO,
+  LikeRequestDTO,
 } = require('./dto/board.dto');
 
 class BoardController {
@@ -12,8 +13,9 @@ class BoardController {
   }
   async postCreate(req, res, next) {
     try {
+      const userUid = req.user.Users_uid
       const createRequestDTO = new PostCreateRequestDTO(req.body);
-      const responseData = await this.boardService.createPost(createRequestDTO);
+      const responseData = await this.boardService.createPost(createRequestDTO, userUid);
       const data = responseData.postUid;
       res.status(201).json(new Created(data));
     } catch (e) {
@@ -24,7 +26,9 @@ class BoardController {
 
   async getAllPost(req, res, next) {
     try {
-      const data = await this.boardService.findAllPost();
+      const {page} = req.query
+
+      const data = await this.boardService.findAllPost(parseInt(page));
 
       res.status(201).json(data);
     } catch (e) {
@@ -48,13 +52,11 @@ class BoardController {
 
   async putUpdatePost(req, res, next) {
     try {
-      console.log(req.body);
       const postUpdateRequestDTO = new PostUpdateRequestDTO({
         postUid: Number(req.params.postUid),
         ...req.body,
       });
       const data = await this.boardService.updatePost(postUpdateRequestDTO);
-      console.log(data);
 
       res.json(data);
     } catch (e) {
@@ -66,7 +68,6 @@ class BoardController {
   async deletePost(req, res, next) {
     try {
       const postUid = Number(req.params.postUid);
-      console.log(postUid);
       const postDeleteRequestDTO = new PostDeleteRequestDTO(postUid);
       const result = await this.boardService.deletePost(postDeleteRequestDTO);
       res.status(201).json(result);
@@ -78,27 +79,19 @@ class BoardController {
 
   async postLiked(req, res, next) {
     try {
-      const postUid = Number(req.params.uid);
-      const userUid = req.user.userUid;
-
-      await this.boardService.addLike(postUid, userUid);
-
-      res.status(201).json({message: '좋아요 추가'});
+      const postUid = Number(req.params.postUid);
+      const userUid = Number(req.user.Users_uid);
+      const postLikedRequestDTO = new LikeRequestDTO({
+        postUid,
+        Users_uid: userUid,
+      });
+      const addLike = await this.boardService.toggleLike(postLikedRequestDTO);
+      const likedCount =
+        await this.boardService.likedCount(postLikedRequestDTO);
+      console.log({addLike, likedCount});
+      res.status(200).json({addLike, likedCount});
     } catch (e) {
       console.error('postLiked Error', e);
-      next(e);
-    }
-  }
-
-  async deleteLiked(req, res, next) {
-    try {
-      const postUid = Number(req.params.uid);
-      const userUid = req.user.postUid;
-
-      await this.boardService.removeLike(postUid, userUid);
-      res.status(201).json({message: '좋아요 취소'});
-    } catch (e) {
-      console.error('deleteLiked Error', e);
       next(e);
     }
   }
