@@ -5,31 +5,14 @@ const infiniteScroll = async () => {
   await postByPage(page)
 }
 
-
-
 const debounceScroll = _.debounce(function() {
   const nowHeight = window.scrollY || document.documentElement.scrollTop;
-  console.log('현재 스크롤 위치:', nowHeight);
-
-
   const targetHeight = document.documentElement.offsetHeight / 1.4
-  console.log("타겟 Height:", targetHeight)
-
-
-
   if (nowHeight >= targetHeight){
     page++;
     postByPage(page)
   }
-
-
-}, 600); // 200ms 디바운싱
-
-
-
-
-
-
+}, 600);
 
 
 const postByPage = async (page) => {
