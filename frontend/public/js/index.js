@@ -1,24 +1,24 @@
-let page = 1
+let page = 1;
 
 const infiniteScroll = async () => {
-  document.addEventListener("scroll", debounceScroll)
-  await postByPage(page)
-}
+  document.addEventListener('scroll', debounceScroll);
+  await postByPage(page);
+};
 
 const debounceScroll = _.debounce(function () {
   const nowHeight = window.scrollY || document.documentElement.scrollTop;
 
-  const loadingTargetHeight = (document.documentElement.offsetHeight / 1.5) - 300
-  const targetHeight = document.documentElement.offsetHeight / 1.5
+  const loadingTargetHeight = document.documentElement.offsetHeight / 1.5 - 300;
+  const targetHeight = document.documentElement.offsetHeight / 1.5;
 
-  if (nowHeight >= loadingTargetHeight) loading.start()
+  if (nowHeight >= loadingTargetHeight) loading.start();
 
   if (nowHeight >= targetHeight) {
     setTimeout(() => {
       page++;
-      postByPage(page)
-      loading.end()
-    },1000)
+      postByPage(page);
+      loading.end();
+    }, 1000);
   }
 }, 600);
 
@@ -26,24 +26,24 @@ const loading = {
   start: () => {
     const loading = `<div id="spinner-wrapper" style="display: flex; align-items: center" >
   <img id="spinner" class="spinner" src="/images/loading.png">
-</div>`
-    const contents = document.getElementById("contents")
-    contents.innerHTML = contents.innerHTML + loading
+</div>`;
+    const contents = document.getElementById('contents');
+    contents.innerHTML = contents.innerHTML + loading;
   },
 
   end: () => {
-    const loading = document.querySelector("#spinner-wrapper")
-    loading.remove()
-  }
-}
+    const loading = document.querySelector('#spinner-wrapper');
+    loading.remove();
+  },
+};
 
+const postByPage = async page => {
+  const {data: postList} = await axios.get(
+    `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}`,
+  );
 
-const postByPage = async (page) => {
-
-  const {data: postList} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}`)
-
-  const contents = document.getElementById("contents")
-  postList.forEach((post) => {
+  const contents = document.getElementById('contents');
+  postList.forEach(post => {
     const template = `<section>
       <div class="content-header">
         <span class="content-title" id="postTitle">${post.postTitle}</span>
@@ -66,15 +66,13 @@ const postByPage = async (page) => {
           <span>50</span>
         </div>
       </div>
-    </section>`
+    </section>`;
 
-    contents.innerHTML = contents.innerHTML + template
-  })
-}
+    contents.innerHTML = contents.innerHTML + template;
+  });
+};
 
-
-infiniteScroll()
-
+infiniteScroll();
 
 const errorCheck = () => {
   const queryString = window.location.search;
@@ -83,11 +81,11 @@ const errorCheck = () => {
   if (error) {
     alert(error);
     location.href = '/';
-
   }
-}
-errorCheck()
+};
+errorCheck();
 
+// index buttons
 
 const chatButton = document.querySelector('.chat'); // The button to open chat
 const chatRoom = document.getElementById('chatroom'); // The chat room box
@@ -101,5 +99,37 @@ chatButton.addEventListener('click', function () {
   }
 });
 
+const postButton = document.querySelector('.post');
+const postModal = document.querySelector('.modal');
 
+postButton.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (postModal.style.display === 'none' || postModal.style.display === '') {
+    postModal.style.display = 'flex';
+  } else {
+    postModal.style.display = 'none';
+  }
+});
 
+const closeButton = document.querySelector('.close-button');
+
+closeButton.addEventListener('click', function () {
+  postModal.style.display = 'none';
+});
+
+const publishButton = document.querySelector('.publish-button');
+
+publishButton.addEventListener('click', async function () {
+  const postTitle = document.querySelector(`input[name='postTitle']`);
+  const postContent = document.querySelector(`textarea[name='postContent']`);
+
+  const response = await axios.post(
+    `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/create`,
+    {postTitle: postTitle.value, postContent: postContent.value},
+    {
+      withCredentials: true,
+    },
+  );
+
+  console.log(response);
+});
