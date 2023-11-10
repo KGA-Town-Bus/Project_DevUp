@@ -13,6 +13,7 @@ const debounceScroll = _.debounce(function () {
 
   if (nowHeight >= loadingTargetHeight) loading.start()
 
+
   if (nowHeight >= targetHeight) {
     setTimeout(() => {
       page++;
@@ -20,7 +21,7 @@ const debounceScroll = _.debounce(function () {
       loading.end()
     },1000)
   }
-}, 600);
+}, 400);
 
 const loading = {
   start: () => {
