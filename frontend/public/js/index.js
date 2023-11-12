@@ -9,11 +9,7 @@ const infiniteScroll = async () => {
 
 const debounceScroll = _.debounce(async function () {
   const nowHeight = window.scrollY || document.documentElement.scrollTop;
-
   const targetHeight = document.documentElement.offsetHeight / 1.6
-
-  console.log(nowHeight)
-  console.log(targetHeight)
 
   if (nowHeight >= targetHeight && loadingState === false && loadingEnd === false) {
 
