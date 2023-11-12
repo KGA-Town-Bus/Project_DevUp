@@ -3,10 +3,13 @@
   <head>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DEVUP Homepage</title>
     <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/board/modal.css" />
 
     <script defer src="/js/lib/search.js"></script>
 
@@ -83,14 +86,18 @@
       <!-- post modal -->
       <div class="modal">
         <div class="modal-header">
-          <input type="text" name="postTitle" placeholder="Write a title..." />
+          <input
+            type="text"
+            name="postTitle"
+            placeholder="Write a title..."
+            class="post-title"
+          />
         </div>
         <div class="modal-body">
-          <textarea
-            name="postContent"
-            placeholder="Boast your writing skills..."
-          ></textarea>
+          <div id="editor"></div>
+          <!-- CKEditor를 초기화할 요소 -->
         </div>
+
         <div class="modal-footer">
           <button class="upload-button">
             <svg
@@ -176,5 +183,7 @@
       {% endif %}
     </div>
   </body>
+  <script src="/js/board/modal.js"></script>
+
   <script src="/js/lib/messageCheck.js"></script>
 </html>

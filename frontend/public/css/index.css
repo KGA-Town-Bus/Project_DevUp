@@ -337,6 +337,7 @@ section > .content-header {
   border-radius: 30px;
   z-index: 3;
   position: fixed;
+  display: flex;
   left: 20vw;
   display: none;
   flex-flow: column nowrap;
@@ -347,6 +348,10 @@ section > .content-header {
 .modal-header,
 .modal-body {
   width: 700px;
+}
+
+.modal-body {
+  height: 350px;
 }
 
 .modal-header {
