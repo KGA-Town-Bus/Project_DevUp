@@ -4,7 +4,6 @@
   padding: 0;
 }
 
-
 a {
   text-decoration: none;
 }
@@ -301,35 +300,6 @@ section > .content-header {
   border: none;
 }
 
-.chatroom {
-  display: none; /* Hide by default, toggle to flex */
-  flex-flow: column nowrap;
-  justify-content: space-around;
-  position: absolute;
-  top: 100%; /* Position directly below the user box */
-  left: 0;
-  min-width: 300px; /* Or however wide you want it */
-  height: 50vh;
-  background: linear-gradient(rgba(23, 29, 37, 0.35), #374151);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-  z-index: 2; /* Ensure it's above other content */
-  margin-top: 30px;
-}
-
-.chat-content {
-  width: 100px;
-  height: 100px;
-  border: 1px solid black;
-  background: beige;
-}
-
-.chat-input {
-  width: 75%;
-  align-self: center;
-  justify-self: flex-end;
-}
-
 .modal {
   width: 650px;
   height: 550px;
@@ -415,4 +385,29 @@ textarea {
   right: 5px;
   background: rgba(0, 0, 0, 0);
   border: none;
+}
+
+.chatroom {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position directly below the user box */
+  left: 0;
+  min-width: 300px;
+  height: 50vh;
+  background: linear-gradient(rgba(23, 29, 37, 0.35), #374151);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+  margin-top: 30px;
+}
+
+.chat-content {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  background: beige;
+}
+
+.chat-input {
+  width: 75%;
 }
