@@ -1,12 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
+
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DEVUP Homepage</title>
   <link rel="stylesheet" href="/css/index.css"/>
+
+  <script defer src="/js/lib/search.js"></script>
 
   <script>
     const PROTOCOL = "{{backServer.PROTOCOL}}"
@@ -34,6 +37,7 @@
             type="text"
             class="search-bar bs"
             placeholder="Search..."
+            id="search"
     />
   </div>
   {% if user %}

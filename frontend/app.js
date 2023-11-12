@@ -27,7 +27,12 @@ app.use(
 );
 
 app.use((error, req, res, next) => {
+
   if(error.errorMessage === '이미 존재하는 아이디 입니다.') return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users?error=이미 존재하는 아이디 입니다.`)
+  if(error.errorMessage === '비밀번호가 일치하지 않습니다.') return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/profile?error=비밀번호가 일치하지 않습니다.`)
+  if(error.errorMessage === "userPassword 속성이 비어있습니다.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/profile?error=userPassword 속성이 비어있습니다.`)
+
+
 })
 
 module.exports = app;

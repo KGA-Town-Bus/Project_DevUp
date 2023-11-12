@@ -38,7 +38,7 @@ class BoardService {
     }
   }
 
-  async findAllPost(page) {
+  async findAllPost(page, search) {
     try {
       const pageSize = 10;
       const offset = (page - 1) * pageSize
