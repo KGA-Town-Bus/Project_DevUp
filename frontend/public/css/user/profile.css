@@ -1,7 +1,9 @@
 .main {
   margin: auto;
-  position: relative;
-  top: 120px;
+  position: fixed;
+  bottom: 45%;
+  left: 50%;
+  transform: translate(-50%, 50%);
   background-color: rgba(0, 0, 0, 25%);
   border-radius: 30px;
   width: 845px;

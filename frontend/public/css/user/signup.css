@@ -1,46 +1,48 @@
 .main {
-    margin: auto;
-    position: relative;
-    top: 133px;
-    background-color: rgba(0,0,0,25%);
-    border-radius: 30px;
-    width: 700px;
-    height: 500px;
+  margin: auto;
+  position: fixed;
+  bottom: 45%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  background-color: rgba(0, 0, 0, 25%);
+  border-radius: 30px;
+  width: 700px;
+  height: 500px;
 }
 
-form{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-form > h2{
-    text-align: center;
-    padding:30px 0px;
-    font-size: 56px;
-    color: white;
+form > h2 {
+  text-align: center;
+  padding: 30px 0px;
+  font-size: 56px;
+  color: white;
 }
 
 form > input {
-    width: 500px;
-    margin: auto;
-    height: 40px;
-    border-radius: 10px;
-    font-size: 30px;
-    text-align: center;
-    color: black;
+  width: 500px;
+  margin: auto;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 30px;
+  text-align: center;
+  color: black;
 }
 
 ::placeholder {
-    color: black;
+  color: black;
 }
 
-form > button{
-    width: 500px;
-    height: 60px;
-    margin: auto;
-    background-color: #8D8ACF;
-    color: white;
-    border-radius: 15px;
-    font-size: 25px;
+form > button {
+  width: 500px;
+  height: 60px;
+  margin: auto;
+  background-color: #8d8acf;
+  color: white;
+  border-radius: 15px;
+  font-size: 25px;
 }

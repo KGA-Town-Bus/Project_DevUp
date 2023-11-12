@@ -314,8 +314,9 @@ section > .content-header {
   border-radius: 30px;
   z-index: 3;
   position: fixed;
-  display: flex;
-  left: 20vw;
+  bottom: 45%;
+  left: 50%;
+  transform: translate(-50%, 50%);
   display: none;
   flex-flow: column nowrap;
   align-items: center;
@@ -406,18 +407,19 @@ textarea::placeholder {
   position: absolute;
   top: 100%; /* Position directly below the user box */
   left: 0;
-  width: 300px;
+  width: 310px;
   height: 55vh;
   background: linear-gradient(rgba(23, 29, 37, 0.35), #374151);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   z-index: 2;
   margin-top: 30px;
+  padding: 10px;
 }
 
 .chat-contents {
   width: 300px;
-  height: 50vh;
+  height: 49vh;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -445,6 +447,7 @@ textarea::placeholder {
 }
 
 .chat-input {
+  padding-left: 10px;
   width: 85%;
   height: 2.5vh;
 }
