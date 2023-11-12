@@ -301,7 +301,7 @@ section > .content-header {
 }
 
 .modal {
-  width: 650px;
+  width: 600px;
   height: 550px;
   padding-top: 40px;
   background: rgba(0, 0, 0, 0.75);
@@ -354,6 +354,10 @@ textarea {
   background: #374151;
   padding: 10px;
   color: white;
+}
+
+textarea::placeholder {
+  color: #eee;
 }
 
 .modal-footer {
