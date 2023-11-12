@@ -29,7 +29,7 @@ class UserService {
 
       return data
     } catch (e) {
-      throw e
+      throw e.response.data
     }
   }
 }

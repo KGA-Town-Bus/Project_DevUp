@@ -30,10 +30,10 @@ gap: 62px;
 }
 
 .profile {
-  width: 50%;
+  width: 47%;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 30px;
 }
 
 .profile-image {
@@ -61,7 +61,14 @@ gap: 62px;
   height: 26px;
   font-size: 30px;
   text-align: center;
-  padding: 20px 0;
+  padding: 10px 0;
+}
+
+.form > button {
+  width: 95px;
+  height: 30px;
+  border: none;
+  align-self: end;
 }
 
 
@@ -75,6 +82,13 @@ gap: 62px;
 .friends-buttons {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+}
+
+.friends-buttons > button {
+  width: 100px;
+  height: 30px;
+  border: none;
 }
 
 .friends-view {
@@ -102,4 +116,6 @@ label{
   color: white;
   border-radius: 20px;
   font-size: 14px;
+  padding: 8px;
+  cursor: pointer;
 }
