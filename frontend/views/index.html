@@ -26,10 +26,9 @@
         ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
       /></a>
       <div class="text-set ts">
-        <span>Feed</span>
+        <span>Public Chat</span>
         <span>Stats</span>
         <span>Admin</span>
-        <span>Public Chat</span>
       </div>
       <div class="search">
         <span class="search-icon">🔍</span>
@@ -75,10 +74,59 @@
           </a>
         </div>
         <div id="chatroom" class="chatroom">
-          <div class="chat-content"></div>
-          <div class="chat-content"></div>
-          <div class="chat-content"></div>
-          <input type="text" class="chat-input" />
+          <div class="chat-contents">
+            <div class="chat-content"></div>
+            <div class="chat-content"></div>
+            <div class="chat-content"></div>
+            <div class="chat-content"></div>
+            <div class="chat-content"></div>
+            <div class="chat-content"></div>
+            <div class="chat-content"></div>
+            <div class="chat-content"></div>
+          </div>
+          <form class="chat-sendbox" action="#">
+            <input type="text" class="chat-input" />
+            <button class="send-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="36"
+                height="35"
+                viewBox="0 0 36 35"
+                fill="none"
+              >
+                <mask
+                  id="mask0_151_11"
+                  style="mask-type: luminance"
+                  maskUnits="userSpaceOnUse"
+                  x="0"
+                  y="0"
+                  width="36"
+                  height="35"
+                >
+                  <path
+                    d="M35.4317 0.934082H0.767578V34.9718H35.4317V0.934082Z"
+                    fill="white"
+                  />
+                </mask>
+                <g mask="url(#mask0_151_11)">
+                  <path
+                    d="M32.7642 5.97314L16.9122 30.7231L14.4996 18.5311L3.65723 12.135L32.7642 5.97314Z"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M14.4243 18.5818L32.7628 5.97314"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </g>
+              </svg>
+            </button>
+          </form>
         </div>
       </div>
       <!-- post modal -->
@@ -182,7 +230,9 @@
       {% endif %}
     </div>
   </body>
+
   <script src="/js/board/editor.js"></script>
+
 
   <script src="/js/lib/messageCheck.js"></script>
 </html>
