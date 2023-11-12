@@ -65,14 +65,14 @@ body {
 }
 
 .text-set {
-  min-width: 400px;
+  min-width: 350px;
   display: flex;
   justify-content: space-between;
 }
 
 .text-set span {
   color: #eee;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .search {
@@ -406,13 +406,28 @@ textarea::placeholder {
   position: absolute;
   top: 100%; /* Position directly below the user box */
   left: 0;
-  min-width: 300px;
-  height: 50vh;
+  width: 300px;
+  height: 55vh;
   background: linear-gradient(rgba(23, 29, 37, 0.35), #374151);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   z-index: 2;
   margin-top: 30px;
+}
+
+.chat-contents {
+  width: 300px;
+  height: 50vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.chat-contents::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat-contents::-webkit-scrollbar-thumb {
+  background: #888;
 }
 
 .chat-content {
@@ -422,6 +437,25 @@ textarea::placeholder {
   background: beige;
 }
 
+.chat-sendbox {
+  height: 5vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .chat-input {
-  width: 75%;
+  width: 85%;
+  height: 2.5vh;
+}
+
+.send-button {
+  width: 27.5px;
+  height: 27.5px;
+  background: none;
+}
+
+.send-button svg {
+  width: 100%;
+  padding-bottom: 10px;
 }
