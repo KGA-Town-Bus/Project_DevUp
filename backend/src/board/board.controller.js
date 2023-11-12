@@ -15,8 +15,6 @@ class BoardController {
     try {
       const userUid = req.user.Users_uid;
       const createRequestDTO = new PostCreateRequestDTO(req.body);
-      console.log(userUid);
-      console.log(createRequestDTO);
       const responseData = await this.boardService.createPost(
         createRequestDTO,
         userUid,
@@ -31,8 +29,9 @@ class BoardController {
 
   async getAllPost(req, res, next) {
     try {
-      const {page, search} = req.query;
-      const data = await this.boardService.findAllPost(parseInt(page), search);
+      const {page} = req.query;
+
+      const data = await this.boardService.findAllPost(parseInt(page));
 
       res.status(201).json(data);
     } catch (e) {
