@@ -232,7 +232,6 @@ section > .content-header {
   width: 40px;
   height: 40px;
   animation: spin 1s infinite linear;
-  filter: invert(52%) sepia(64%) saturate(4197%) hue-rotate(194deg) brightness(102%) contrast(88%);
 
 
 }

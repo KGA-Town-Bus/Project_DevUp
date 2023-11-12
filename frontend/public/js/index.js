@@ -24,7 +24,7 @@ const debounceScroll = _.debounce(async function () {
       await postByPage(page)
       loading.end()
       loadingState = false
-    },2000)
+    },1000)
   }
 }, 400);
 
