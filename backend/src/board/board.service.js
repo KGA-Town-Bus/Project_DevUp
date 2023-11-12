@@ -59,6 +59,8 @@ class BoardService {
         order: [["Posts_created_at", "DESC"]],
       });
 
+
+
       return posts.map(post => {
         const data = {
           Posts_uid: post.dataValues.Posts_uid,
@@ -68,6 +70,7 @@ class BoardService {
           Posts_created_at: post.dataValues.Posts_created_at,
           Posts_hit: post.dataValues.Posts_hit,
           Users_profile: post.dataValues.User.dataValues.Users_profile,
+          Posts_like: post.dataValues.Posts_like
         };
 
         return new PostReadAllResponseDTO(data);
