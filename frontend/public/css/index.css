@@ -17,7 +17,7 @@ input {
 
 input::selection {
   color: white;
-  background: #374151;
+  background-color: #8d8acf;
 }
 
 button {
@@ -189,6 +189,7 @@ section > .content-header {
 
 .content-title {
   font-size: 24px;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 400px;
@@ -211,9 +212,13 @@ section > .content-header {
 .content-body {
   width: 700px;
   align-self: center;
-  height: 120px;
+  height: 100px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+}
+
+.content-body span {
+  line-height: 1.5;
 }
 
 .content-footer {
@@ -332,7 +337,7 @@ input[name='postTitle'] {
   height: 35px;
   background: #374151;
   padding: 5px 15px 5px 10px;
-  color: white;
+  color: #eee;
 }
 
 input[name='postTitle']::placeholder {
@@ -353,7 +358,7 @@ textarea {
   border-radius: 20px;
   background: #374151;
   padding: 10px;
-  color: white;
+  color: #eee;
 }
 
 textarea::placeholder {
