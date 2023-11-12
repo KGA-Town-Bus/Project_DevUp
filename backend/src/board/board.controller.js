@@ -29,8 +29,6 @@ class BoardController {
       const {page, search} = req.query
       const data = await this.boardService.findAllPost(parseInt(page), search);
 
-      console.log(data)
-
       res.status(201).json(data);
     } catch (e) {
       console.error('getAllPost Error', e);
