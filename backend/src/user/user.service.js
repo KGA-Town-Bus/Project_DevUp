@@ -164,14 +164,14 @@ class UserService {
 
   async userInfoUpdate(requestDTO) {
     try{
-
+      const salt = bcrypt.genSaltSync(10)
 
       const result = await this.userRepository.update(
           {
             Users_nickname: requestDTO.userNickname,
             Users_name: requestDTO.userName,
             Users_email : requestDTO.userEmail,
-            Users_password : requestDTO.userPassword
+            Users_password : requestDTO.userPassword ? bcrypt.hashSync(requestDTO.userPassword, salt) : "password"
           },
       {
         where:{

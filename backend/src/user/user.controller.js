@@ -101,20 +101,14 @@ class UserController {
 
   async putProfile(req, res, next) {
     try {
-
-      if (req.body.userPassword[0] !== req.body.userPassword[1]) throw new BadRequest("비밀번호가 일치하지 않습니다.")
-
       const userProfileFormRequestDTO = new UserProfileFormRequestDTO(req)
       const result = this.service.userInfoUpdate(userProfileFormRequestDTO)
-
-
       req.user.Users_nickname = userProfileFormRequestDTO.userNickname
       req.user.Users_name = userProfileFormRequestDTO.userName
       req.user.Users_email = userProfileFormRequestDTO.userEmail
 
+
       const token = setJWTToken(req.user)
-
-
       res.status(201).json(new Created(token))
 
     } catch (e) {
