@@ -121,7 +121,7 @@ class UserController {
     try {
       const result = await this.service.signup(req.body)
 
-      res.redirect("/")
+      res.redirect("/?message=이메일이 전송되었습니다. 이메일 인증을 진행해주세요.")
     } catch (e) {
       next(e)
     }
