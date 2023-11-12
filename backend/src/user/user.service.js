@@ -9,6 +9,7 @@ const {Op, where} = require('sequelize');
 const {UserSignupResponseDTO} = require("./dto/user.signup.response.dto");
 const mailer = require("../lib/mail")
 const {BadRequest} = require("../lib/customException");
+const bcrypt = require("bcryptjs")
 
 require("dotenv").config()
 
@@ -33,7 +34,10 @@ class UserService {
       if(!isNewRecord) throw new BadRequest("이미 존재하는 아이디 입니다.")
 
       user.Users_id = requestDTO.userId;
-      user.Users_password = requestDTO.userPassword
+
+      const salt = bcrypt.genSaltSync(10)
+      const hash = bcrypt.hashSync(requestDTO.userPassword, salt)
+      user.Users_password = hash
       user.Users_name = "name"
       user.Users_nickname = "nickname"
       user.Users_provider = "local"
@@ -84,16 +88,25 @@ class UserService {
       }
 
       if (provider === "login") {
+
         const result = await this.userRepository.findOne({
           where: {
             [Op.and]: [
               {Users_id: userLoginRequestDTO.userId},
-              {Users_password: userLoginRequestDTO.userPassword},
               {Users_provider: "local"}
             ]
           }
         })
-        if(result === null) throw new BadRequest("입력 값을 확인해 주세요.")
+        if(result === null) throw new BadRequest("아이디 혹은 비밀번호를 확인해 주세요.")
+
+
+        const isPasswordCorrect = await bcrypt.compare(
+            userLoginRequestDTO.userPassword,
+            result.dataValues.Users_password
+        )
+        if(isPasswordCorrect === false) throw new BadRequest("아이디 혹은 비밀번호를 확인해 주세요.")
+
+
         const {dataValues: user} = result
         if(user.Users_account_locked === true) throw new BadRequest("이메일 인증을 진행해 주세요.")
         delete user.Users_password
