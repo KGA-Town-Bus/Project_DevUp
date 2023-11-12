@@ -30,29 +30,29 @@ closeButton.addEventListener('click', function () {
   postModal.style.display = 'none';
 });
 
-// publish button activation
-const publishButton = document.querySelector('.publish-button');
+// // publish button activation -> handed to CHAMDOM
+// const publishButton = document.querySelector('.publish-button');
 
-publishButton.addEventListener('click', async function () {
-  const postTitle = document.querySelector(`input[name='postTitle']`);
-  const postContent = document.querySelector(`textarea[name='postContent']`);
+// publishButton.addEventListener('click', async function () {
+//   const postTitle = document.querySelector(`input[name='postTitle']`);
+//   const postContent = document.querySelector(`textarea[name='postContent']`);
 
-  // axios communication with backend
-  const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/create`;
-  const axiosBody = {
-    postBody: {
-      postTitle: postTitle.value,
-      postContent: postContent.value,
-    },
-    userNickname: 'test',
-  };
-  const axiosOptions = {
-    withCredentials: true,
-  };
+//   // axios communication with backend
+//   const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/create`;
+//   const axiosBody = {
+//     postBody: {
+//       postTitle: postTitle.value,
+//       postContent: postContent.value,
+//     },
+//     userNickname: 'test',
+//   };
+//   const axiosOptions = {
+//     withCredentials: true,
+//   };
 
-  const response = await axios.post(axiosPath, axiosBody, axiosOptions);
+//   const response = await axios.post(axiosPath, axiosBody, axiosOptions);
 
-  postModal.style.display = 'none';
+//   postModal.style.display = 'none';
 
-  location.href = '/';
-});
+//   location.href = '/';
+// });

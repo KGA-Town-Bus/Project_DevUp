@@ -13,10 +13,9 @@
         ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
       /></a>
       <div class="text-set ts">
-        <span>Feed</span>
+        <span>Public Chat</span>
         <span>Stats</span>
         <span>Admin</span>
-        <span>Public Chat</span>
       </div>
       {% if user %}
       <div class="buttons">
@@ -31,8 +30,10 @@
     </div>
 
     <div class="main">
-      <form method="post" action="{{frontServer.PROTOCOL}}://{{frontServer.FRONTEND_SERVER_IP}}:{{frontServer.FRONTEND_SERVER_PORT}}/users" >
-
+      <form
+        method="post"
+        action="{{frontServer.PROTOCOL}}://{{frontServer.FRONTEND_SERVER_IP}}:{{frontServer.FRONTEND_SERVER_PORT}}/users"
+      >
         <h2>Sign Up</h2>
         <input
           spellcheck="false"
@@ -63,5 +64,4 @@
     </div>
   </body>
   <script src="/js/user/signup.js"></script>
-
 </html>
