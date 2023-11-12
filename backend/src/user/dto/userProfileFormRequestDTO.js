@@ -7,7 +7,7 @@ class UserProfileFormRequestDTO extends baseDTO {
   userNickname
   userName
   userEmail
-  userPassword
+  // userPassword
 
   constructor(req) {
     super()
@@ -15,8 +15,10 @@ class UserProfileFormRequestDTO extends baseDTO {
     this.userNickname = req.body.userNickname
     this.userName = req.body.userName
     this.userEmail = req.body.userEmail
-    this.userPassword = req.body.userPassword[0]
-
+    if(req.user.Users_provider === "local") {
+      if (req.body.userPassword[0] !== req.body.userPassword[1]) throw new BadRequest("비밀번호가 일치하지 않습니다.")
+      this.userPassword = req.body.userPassword[0]
+    }
     this.validate(this, BadRequest)
   }
 }
