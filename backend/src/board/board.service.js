@@ -10,6 +10,8 @@ const {
   PostDeleteRequestDTO,
 } = require('./dto/board.dto');
 let instance = null;
+const { Op } = require('sequelize');
+
 
 class BoardService {
   static getInstance() {
@@ -47,6 +49,14 @@ class BoardService {
         include: [{model: db.Users}, {model: db.Likes}],
         offset: offset,
         limit: pageSize,
+        where:{
+          [Op.or]:[
+            {Posts_title: {[Op.like]: search ? `%${search}%` : "%"}},
+            {Posts_content: {[Op.like]: search ? `%${search}%` : "%" }},
+          ]
+
+        },
+        order: [["Posts_created_at", "DESC"]],
       });
 
       return posts.map(post => {

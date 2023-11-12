@@ -4,6 +4,7 @@
   padding: 0;
 }
 
+
 a {
   text-decoration: none;
 }
@@ -35,6 +36,7 @@ button {
 body {
   background-color: #374151;
   font-family: 'Inria Sans';
+  overflow-y: scroll;
 }
 
 .bs {
