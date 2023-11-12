@@ -30,6 +30,8 @@ closeButton.addEventListener('click', function () {
   postModal.style.display = 'none';
 });
 
+
+
 // // publish button activation -> handed to CHAMDOM
 // const publishButton = document.querySelector('.publish-button');
 
@@ -56,3 +58,4 @@ closeButton.addEventListener('click', function () {
 
 //   location.href = '/';
 // });
+

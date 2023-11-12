@@ -1,85 +1,107 @@
-let page = 1
-let loadingState = false
+let page = 1;
+let loadingState = false;
 let loadingEnd = false;
-let searchString = "";
-const contents = document.getElementById("contents")
-
+let searchString = '';
+const contents = document.getElementById('contents');
 
 const infiniteScroll = async () => {
-  document.addEventListener("scroll", debounceScroll)
-  await postByPage(page)
-}
+  document.addEventListener('scroll', debounceScroll);
+  await postByPage(page);
+
+  const addClickListenerToPosts = () => {
+    const posts = document.querySelectorAll('.post-container');
+    posts.forEach(post => {
+      post.addEventListener('click', e => {
+        // content-footer와 userProfile 영역 클릭 시 이벤트를 트리거하지 않음
+        if (
+          e.target.closest('.content-footer') ||
+          e.target.closest('.content-user-pfp')
+        ) {
+          return;
+        }
+
+        const postUid = post.getAttribute('data-post-id');
+        window.location.href = `/posts/${postUid}`; // 게시물 상세 페이지로 이동
+      });
+    });
+  };
+
+  addClickListenerToPosts();
+};
 
 const debounceScroll = _.debounce(async function () {
   const nowHeight = window.scrollY || document.documentElement.scrollTop;
-  const targetHeight = document.documentElement.offsetHeight / 1.6
+  const targetHeight = document.documentElement.offsetHeight / 1.6;
 
-  if (nowHeight >= targetHeight && loadingState === false && loadingEnd === false) {
-    loadingState = true
-    loading.start()
+  if (
+    nowHeight >= targetHeight &&
+    loadingState === false &&
+    loadingEnd === false
+  ) {
+    loadingState = true;
+    loading.start();
     setTimeout(async () => {
       page++;
-      if (searchString === "") await postByPage(page)
-      else await postByPage(page, searchString)
-      loading.end()
-      loadingState = false
-    }, 1000)
+      if (searchString === '') await postByPage(page);
+      else await postByPage(page, searchString);
+      loading.end();
+      loadingState = false;
+    }, 1000);
   }
 }, 400);
 
 const loading = {
   start: () => {
-    const spinnerWrapper = document.createElement("div")
-    spinnerWrapper.id = "spinner-wrapper"
-    spinnerWrapper.style.display = "flex"
-    spinnerWrapper.style.alignItems = "center"
+    const spinnerWrapper = document.createElement('div');
+    spinnerWrapper.id = 'spinner-wrapper';
+    spinnerWrapper.style.display = 'flex';
+    spinnerWrapper.style.alignItems = 'center';
 
-    const spinner = document.createElement("img")
-    spinner.id = "spinner"
-    spinner.className = "spinner"
-    spinner.src = "/images/loading.png"
-    spinnerWrapper.appendChild(spinner)
+    const spinner = document.createElement('img');
+    spinner.id = 'spinner';
+    spinner.className = 'spinner';
+    spinner.src = '/images/loading.png';
+    spinnerWrapper.appendChild(spinner);
 
-    contents.appendChild(spinnerWrapper)
-
+    contents.appendChild(spinnerWrapper);
   },
 
   end: () => {
-    const loading = document.querySelector("#spinner-wrapper")
-    loading.remove()
-  }
-}
+    const loading = document.querySelector('#spinner-wrapper');
+    loading.remove();
+  },
+};
 
 const debounceInput = _.debounce(async function (e) {
-  contents.innerHTML = ""
+  contents.innerHTML = '';
   loadingEnd = false;
-  page = 1
-  searchString = e.target.value
-  await postByPage(page, searchString)
+  page = 1;
+  searchString = e.target.value;
+  await postByPage(page, searchString);
 }, 400);
-document.getElementById("search").addEventListener("input", debounceInput)
-
-
+document.getElementById('search').addEventListener('input', debounceInput);
 
 const postByPage = async (page, searchString) => {
-
-  let postList
-  if (searchString === "" || searchString === undefined) {
-    const {data} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}`)
-    postList = data
+  let postList;
+  if (searchString === '' || searchString === undefined) {
+    const {data} = await axios.get(
+      `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}`,
+    );
+    postList = data;
   } else {
-    const {data} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}&search=${searchString}`)
-    postList = data
+    const {data} = await axios.get(
+      `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}&search=${searchString}`,
+    );
+    postList = data;
   }
-
 
   if (postList.length === 0) {
     loadingEnd = true;
-    return
+    return;
   }
 
-  postList.forEach((post) => {
-    const template = `<section>
+  postList.forEach(post => {
+    const template = `<section class="post-container" data-post-id="${post.postUid}">
       <div class="content-header">
         <span class="content-title" id="postTitle">${post.postTitle}</span>
         <div class="content-user">
@@ -101,11 +123,10 @@ const postByPage = async (page, searchString) => {
           <span>50</span>
         </div>
       </div>
-    </section>`
+    </section>`;
 
-    contents.innerHTML = contents.innerHTML + template
-  })
-}
+    contents.innerHTML = contents.innerHTML + template;
+  });
+};
 
-
-infiniteScroll()
+infiniteScroll();

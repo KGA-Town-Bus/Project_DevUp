@@ -4,10 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ post.title }}</title>
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/board/view.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <h1>{{ post.postTitle }}</h1>
+    <div class="header bs">
+      <a href="/"
+        ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
+      /></a>
+      <div class="text-set ts">
+        <span>Feed</span>
+        <span>Stats</span>
+        <span>Admin</span>
+        <span>Public Chat</span>
+      </div>
+      <div class="search">
+        <span class="search-icon">🔍</span>
+        <input
+          spellcheck="false"
+          type="text"
+          class="search-bar bs"
+          placeholder="Search..."
+          id="search"
+        />
+      </div>
+      <!-- {% if user %} -->
+      <div class="buttons">
+        <a href="/users/logout">
+          <button class="logout bs">Logout</button>
+        </a>
+      </div>
+      <!-- {% else %} -->
+      <div class="buttons">
+        <a href="/users">
+          <button class="signup bs">Sign Up</button>
+        </a>
+        <a href="/users/login">
+          <button class="signin bs">Sign In</button>
+        </a>
+      </div>
+      <!-- {% endif %} -->
+    </div>
+    <div class="container">
+      <div id="contents" class="contents">
+        <h1>{{ post.postTitle }}</h1>
     <p>{{post.postWriter}}</p>
     <p>{{ post.postContent }}</p>
     <p>조회수: {{ post.postHit }}</p>
@@ -20,6 +61,27 @@
       <button type="submit">❤️</button>
       <p id="likeCount">{{post.postLike}}</p>
     </form>
+    <div class="user bs">
+      <div class="user-info">
+        <img class="user-pfp" src="{{user.Users_profile}}" alt="" />
+        <span class="username ts">Welcome, {{user.Users_name}}</span>
+      </div>
+      <div class="user-buttons">
+        <button class="post bs">Post</button>
+        <button class="chat bs">Chat</button>
+
+        <a href="/users/profile">
+          <button class="profile bs">Profile</button>
+        </a>
+      </div>
+      <div id="chatroom" class="chatroom">
+        <div class="chat-content"></div>
+        <div class="chat-content"></div>
+        <div class="chat-content"></div>
+        <input type="text" class="chat-input" />
+      </div>
+    </div>
+      </div>
     <script src="/js/board/view.js"></script>
   </body>
 </html>
