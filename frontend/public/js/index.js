@@ -1,65 +1,69 @@
-let page = 1
-let loadingState = false
+let page = 1;
+let loadingState = false;
 let loadingEnd = false;
 
 const infiniteScroll = async () => {
-  document.addEventListener("scroll", debounceScroll)
-  await postByPage(page)
-}
+  document.addEventListener('scroll', debounceScroll);
+  await postByPage(page);
+};
 
 const debounceScroll = _.debounce(async function () {
   const nowHeight = window.scrollY || document.documentElement.scrollTop;
-  const targetHeight = document.documentElement.offsetHeight / 1.6
+  const targetHeight = document.documentElement.offsetHeight / 1.6;
 
-  if (nowHeight >= targetHeight && loadingState === false && loadingEnd === false) {
-
-    loadingState = true
-    loading.start()
-    setTimeout(async() => {
+  if (
+    nowHeight >= targetHeight &&
+    loadingState === false &&
+    loadingEnd === false
+  ) {
+    loadingState = true;
+    loading.start();
+    setTimeout(async () => {
       page++;
-      await postByPage(page)
-      loading.end()
-      loadingState = false
-    },1000)
+      await postByPage(page);
+      loading.end();
+      loadingState = false;
+    }, 1000);
   }
 }, 400);
 
 const loading = {
   start: () => {
-    const spinnerWrapper = document.createElement("div")
-    spinnerWrapper.id = "spinner-wrapper"
-    spinnerWrapper.style.display = "flex"
-    spinnerWrapper.style.alignItems = "center"
+    const spinnerWrapper = document.createElement('div');
+    spinnerWrapper.id = 'spinner-wrapper';
+    spinnerWrapper.style.display = 'flex';
+    spinnerWrapper.style.alignItems = 'center';
 
-    const spinner = document.createElement("img")
-    spinner.id = "spinner"
-    spinner.className = "spinner"
-    spinner.src = "/images/loading.png"
-    spinnerWrapper.appendChild(spinner)
+    const spinner = document.createElement('img');
+    spinner.id = 'spinner';
+    spinner.className = 'spinner';
+    spinner.src = '/images/loading.png';
+    spinnerWrapper.appendChild(spinner);
 
-    const contents = document.getElementById("contents")
-    contents.appendChild(spinnerWrapper)
+    const contents = document.getElementById('contents');
+    contents.appendChild(spinnerWrapper);
   },
 
   end: () => {
-    const loading = document.querySelector("#spinner-wrapper")
-    loading.remove()
-  }
-}
+    const loading = document.querySelector('#spinner-wrapper');
+    loading.remove();
+  },
+};
 
+const postByPage = async page => {
+  const contents = document.getElementById('contents');
 
-const postByPage = async (page) => {
-  const contents = document.getElementById("contents")
-
-  const {data: postList} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}`)
+  const {data: postList} = await axios.get(
+    `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/?page=${page}`,
+  );
 
   if (postList.length === 0) {
     loadingEnd = true;
-    return
+    return;
   }
 
-    postList.forEach((post) => {
-      const template = `<section>
+  postList.forEach(post => {
+    const template = `<section>
       <div class="content-header">
         <span class="content-title" id="postTitle">${post.postTitle}</span>
         <div class="content-user">
@@ -81,21 +85,13 @@ const postByPage = async (page) => {
           <span>50</span>
         </div>
       </div>
-    </section>`
+    </section>`;
 
-      contents.innerHTML = contents.innerHTML + template
-    })
+    contents.innerHTML = contents.innerHTML + template;
+  });
+};
 
-
-
-}
-
-
-infiniteScroll()
-
-
-
-
+infiniteScroll();
 
 const chatButton = document.querySelector('.chat'); // The button to open chat
 const chatRoom = document.getElementById('chatroom'); // The chat room box
@@ -109,5 +105,43 @@ chatButton.addEventListener('click', function () {
   }
 });
 
+const postButton = document.querySelector('.post');
+const postModal = document.querySelector('.modal');
 
+postButton.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (postModal.style.display === 'none' || postModal.style.display === '') {
+    postModal.style.display = 'flex';
+  } else {
+    postModal.style.display = 'none';
+  }
+});
 
+const closeButton = document.querySelector('.close-button');
+
+closeButton.addEventListener('click', function () {
+  postModal.style.display = 'none';
+});
+
+const publishButton = document.querySelector('.publish-button');
+
+publishButton.addEventListener('click', async function () {
+  const postTitle = document.querySelector(`input[name='postTitle']`);
+  const postContent = document.querySelector(`textarea[name='postContent']`);
+
+  const response = await axios.post(
+    `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/create`,
+    {
+      postBody: {
+        postTitle: postTitle.value,
+        postContent: postContent.value,
+      },
+      userNickname: 'test',
+    },
+    {
+      withCredentials: true,
+    },
+  );
+
+  console.log(response);
+});

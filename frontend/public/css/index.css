@@ -232,8 +232,6 @@ section > .content-header {
   width: 40px;
   height: 40px;
   animation: spin 1s infinite linear;
-
-
 }
 
 @keyframes spin {
@@ -241,7 +239,6 @@ section > .content-header {
     transform: rotate(360deg);
   }
 }
-
 
 .icon-set {
   min-height: 40px;
@@ -335,12 +332,13 @@ section > .content-header {
   width: 650px;
   height: 550px;
   padding-top: 40px;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.75);
   color: white;
   border-radius: 30px;
   z-index: 3;
   position: fixed;
-  display: flex;
+  left: 20vw;
+  display: none;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: space-around;
@@ -357,13 +355,16 @@ section > .content-header {
   align-items: center;
 }
 
-
-
 input[name='postTitle'] {
-  width: 435px;
+  width: 450px;
   height: 35px;
   background: #374151;
-  padding: 5px;
+  padding: 5px 15px 5px 10px;
+  color: white;
+}
+
+input[name='postTitle']::placeholder {
+  color: #eee;
 }
 
 .modal-body {
@@ -380,10 +381,11 @@ textarea {
   border-radius: 20px;
   background: #374151;
   padding: 10px;
+  color: white;
 }
 
 .modal-footer {
-  width: 600px;
+  width: 500px;
   display: flex;
   justify-content: end;
   align-items: center;
@@ -397,7 +399,7 @@ textarea {
 
 .publish-button {
   width: 120px;
-  height: 40px;
+  height: 35px;
   background: #8d8acf;
   border: none;
   border-radius: 30px;
@@ -405,7 +407,7 @@ textarea {
   font-weight: bold;
 }
 
-.delete-button {
+.close-button {
   position: absolute;
   top: 5px;
   right: 5px;
