@@ -34,7 +34,6 @@ app.use(router)
 app.use("/api-docs", swaggerUi.serveFiles(backSpecs), swaggerUi.setup(backSpecs, {explorer: true}))
 
 
-
 app.use((error, req, res, next) => {
   if(error.errorMessage === "이메일 인증을 진행해 주세요.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=email 인증을 진행해 주세요.`)
   if(error.errorMessage === "아이디 혹은 비밀번호를 확인해 주세요.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/login?error=아이디 혹은 비밀번호를 확인해 주세요.`)

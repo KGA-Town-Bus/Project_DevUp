@@ -28,6 +28,7 @@ const cookieLogic = async (req, res, next) => {
   // 쿠키로 보내는 경우
   const token = req.headers.cookie.split('authorization=')[1];
   const user = await parsing(token);
+
   req.user = user;
   return;
 };
