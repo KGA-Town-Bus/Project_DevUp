@@ -5,7 +5,7 @@
   border-left: none !important;
   border-right: none !important;
   border-bottom: none !important;
-  border-radius: 10px;
+  border-radius: 0 0 20px 20px !important;
 }
 
 .ck-content {
@@ -17,6 +17,7 @@
   background-color: #374151 !important;
   color: white !important;
   border: none !important;
+  border-radius: 20px 20px 0 0 !important;
 }
 
 .ck.ck-button {

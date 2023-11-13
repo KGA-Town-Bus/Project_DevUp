@@ -13,6 +13,12 @@ function initializeEditor() {
           'imageStyle:side',
         ],
       },
+      codeBlock: {
+        languages: [
+          {language: 'css', label: 'CSS'},
+          {language: 'html', label: 'HTML'},
+        ],
+      },
       simpleUpload: {
         uploadUrl: '서버 엔드포인트 URL',
       },
