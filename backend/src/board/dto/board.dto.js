@@ -4,14 +4,16 @@ const {BadRequest} = require('../../lib/customException');
 class PostCreateRequestDTO extends BaseDTO {
   postTitle;
   postContent;
-  userNickname;
+  userUid;
+  userNickName;
 
-  constructor(body) {
+  constructor(body, userUid, userNickName) {
     super();
-    this.postTitle = body.postBody.postTitle;
-    this.postContent = body.postBody.postContent;
-    this.userNickname = body.userNickname;
-    this.validate(this, BadRequest);
+    this.postTitle = body.postTitle;
+    this.postContent = body.postContent;
+    this.userUid = userUid;
+    this.userNickName = userNickName;
+    // this.validate(this, BadRequest);
   }
 }
 
@@ -44,7 +46,7 @@ class PostReadAllResponseDTO extends BaseDTO {
   postCreatedAt;
   postHit;
   userProfile;
-  postLike
+  postLike;
 
   constructor(response) {
     super();

@@ -309,7 +309,7 @@ section > .content-header {
   width: 600px;
   height: 550px;
   padding-top: 40px;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 1);
   color: white;
   border-radius: 30px;
   z-index: 3;
@@ -320,22 +320,23 @@ section > .content-header {
   display: none;
   flex-flow: column nowrap;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .modal-header,
 .modal-body {
-  width: 700px;
+  width: 600px;
 }
 
 .modal-body {
   height: 350px;
+  margin-top: 35px;
 }
 
 .modal-header {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-flow: row nowrap;
+  justify-content: center;
 }
 
 input[name='postTitle'] {
@@ -372,11 +373,12 @@ textarea::placeholder {
 }
 
 .modal-footer {
-  width: 500px;
+  width: 600px;
   display: flex;
-  justify-content: end;
+  flex-flow: row;
   align-items: center;
-  gap: 320px;
+  justify-content: space-evenly;
+  gap: 0 200px;
 }
 
 .upload-button {
