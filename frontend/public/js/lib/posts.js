@@ -7,26 +7,6 @@ const contents = document.getElementById('contents');
 const infiniteScroll = async () => {
   document.addEventListener('scroll', debounceScroll);
   await postByPage(page);
-
-  const addClickListenerToPosts = () => {
-    const posts = document.querySelectorAll('.post-container');
-    posts.forEach(post => {
-      post.addEventListener('click', e => {
-        // content-footer와 userProfile 영역 클릭 시 이벤트를 트리거하지 않음
-        if (
-          e.target.closest('.content-footer') ||
-          e.target.closest('.content-user-pfp')
-        ) {
-          return;
-        }
-
-        const postUid = post.getAttribute('data-post-id');
-        window.location.href = `/posts/${postUid}`; // 게시물 상세 페이지로 이동
-      });
-    });
-  };
-
-  addClickListenerToPosts();
 };
 
 const debounceScroll = _.debounce(async function () {
@@ -78,8 +58,10 @@ const debounceInput = _.debounce(async function (e) {
   page = 1;
   searchString = e.target.value;
   await postByPage(page, searchString);
-}, 400);
+}, 300);
 document.getElementById('search').addEventListener('input', debounceInput);
+
+
 
 const postByPage = async (page, searchString) => {
   let postList;
@@ -127,6 +109,39 @@ const postByPage = async (page, searchString) => {
 
     contents.innerHTML = contents.innerHTML + template;
   });
+
+  addClickListenerToPosts();
+
 };
 
-infiniteScroll();
+
+
+
+const addClickListenerToPosts = () => {
+  const posts = document.querySelectorAll('.post-container');
+  posts.forEach(post => {
+    post.addEventListener('click', e => {
+      // content-footer와 userProfile 영역 클릭 시 이벤트를 트리거하지 않음
+      if (
+          e.target.closest('.content-footer') ||
+          e.target.closest('.content-user-pfp')
+      ) {
+        return;
+      }
+
+      const postUid = post.getAttribute('data-post-id');
+      window.location.href = `/posts/${postUid}`; // 게시물 상세 페이지로 이동
+    });
+  });
+};
+
+
+
+
+
+const init = async() => {
+  await infiniteScroll();
+  addClickListenerToPosts();
+}
+
+init()
