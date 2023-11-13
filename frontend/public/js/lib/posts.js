@@ -114,11 +114,15 @@ const postByPage = async (page, searchString) => {
 const addClickListenerToPosts = () => {
   const posts = document.querySelectorAll('.post-container');
   posts.forEach(post => {
+    post.addEventListener('mouseover', () => {
+      post.style.cursor = 'pointer';
+    });
+
     post.addEventListener('click', e => {
       // content-footer와 userProfile 영역 클릭 시 이벤트를 트리거하지 않음
       if (
         e.target.closest('.content-footer') ||
-        e.target.closest('.content-user-pfp')
+        e.target.closest('.content-user')
       ) {
         return;
       }
