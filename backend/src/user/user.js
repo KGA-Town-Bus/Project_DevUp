@@ -59,8 +59,6 @@ module.exports = (sequelize, DataTypes) => {
           defaultValue: "user"
         }
 
-
-
       },
       {
         freezeTableName: true,

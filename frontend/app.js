@@ -5,6 +5,7 @@ const {swaggerUi, frontSpecs} = require('./swagger/swagger');
 const nunjucks = require('nunjucks');
 const {auth} = require("./src/lib/jwtAuthMiddleware");
 const cookieParser = require("cookie-parser");
+const {BadRequest} = require("./src/lib/customException");
 require("dotenv").config()
 
 app.set('view engine', 'html');
@@ -31,6 +32,10 @@ app.use((error, req, res, next) => {
   if(error.errorMessage === '이미 존재하는 아이디 입니다.') return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users?error=이미 존재하는 아이디 입니다.`)
   if(error.errorMessage === '비밀번호가 일치하지 않습니다.') return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/profile?error=비밀번호가 일치하지 않습니다.`)
   if(error.errorMessage === "userPassword 속성이 비어있습니다.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/profile?error=userPassword 속성이 비어있습니다.`)
+
+  if(error.errorMessage === "로그인을 해주세요.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=로그인을 해주세요.`)
+  if(error.errorMessage === "관리자만 접근 가능합니다.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=관리자만 접근 가능합니다.`)
+
 
 
 })

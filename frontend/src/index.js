@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userRouter = require('./user/user.router');
 const boardRouter = require('./board/board.router');
+const adminRouter = require("./admin/admin.router")
 
 // 참고 용도
 /**
@@ -29,6 +30,7 @@ const boardRouter = require('./board/board.router');
 // });
 
 router.use('/users', userRouter);
+router.use("/admin", adminRouter)
 router.use('/', boardRouter);
 
 module.exports = router;

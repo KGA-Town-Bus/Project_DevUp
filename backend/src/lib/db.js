@@ -17,6 +17,7 @@ const sequelize = new Sequelize(
 
 const entityList = [
   `../user/user`,
+    '../user/role',
   `../email/email`,
   `../board/model/board`,
   // `../board/model/comments`,
@@ -55,6 +56,18 @@ db.Users.hasMany(db.Likes, {
 db.Likes.belongsTo(db.Users, {
   foreignKey: 'Users_uid',
 });
+
+
+
+db.Role.hasMany(db.Users, {
+  foreignKey: "Role_authority"
+})
+
+db.Users.belongsTo(db.Role, {
+  foreignKey: "Role_authority"
+})
+
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
