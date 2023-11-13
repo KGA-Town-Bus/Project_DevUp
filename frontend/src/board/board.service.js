@@ -1,20 +1,24 @@
 const axios = require('axios');
 
 class BoardService {
-  constructor() {
-  }
+  constructor() {}
 
   async createPost(postBody, userNickname, req) {
     try {
       const {authorization} = req.cookies;
-      const {data} = await axios.post(`http://localhost:4000/create`, {
-        postBody,
-        userNickname,
-      }, {
-        headers: {
-          Authorization: `Bearer ${authorization}`
-        }, withCredentials: true
-      });
+      const {data} = await axios.post(
+        `http://localhost:4000/create`,
+        {
+          postBody,
+          userNickname,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authorization}`,
+          },
+          withCredentials: true,
+        },
+      );
 
       return data;
     } catch (e) {
@@ -33,9 +37,16 @@ class BoardService {
     }
   }
 
-  async findOnePost(postUid) {
+  async findOnePost(postUid, req) {
     try {
-      const {data} = await axios.get(`http://localhost:4000/${postUid}`);
+      const {authorization} = req.cookies;
+      const {data} = await axios.get(`http://localhost:4000/${postUid}`, {
+        headers: {
+          Authorization: `Bearer ${authorization}`,
+        },
+        withCredentials: true,
+      });
+
       return data;
     } catch (e) {
       console.error('Error in findOnePost:', e);

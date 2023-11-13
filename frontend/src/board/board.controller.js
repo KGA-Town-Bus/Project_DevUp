@@ -61,10 +61,14 @@ class BoardController {
   }
 
   async getOnePost(req, res, next) {
+    if (!req.user || !req.user.Users_uid) {
+      return res.redirect('/users/login');
+    }
+
     const userUid = req.user.Users_uid;
     const postUid = Number(req.params.postUid);
     try {
-      const postData = await this.boardService.findOnePost(postUid);
+      const postData = await this.boardService.findOnePost(postUid, req);
       res.render('board/view', {post: postData, userUid, backServer, like: 0});
     } catch (e) {
       next(e);
@@ -78,7 +82,6 @@ class BoardController {
 
   async postDelete(req, res, next) {
     const postUid = req.params.postUid;
-
     try {
       await this.boardService.deletePost(postUid);
       res.redirect('/');

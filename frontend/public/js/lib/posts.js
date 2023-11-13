@@ -61,8 +61,6 @@ const debounceInput = _.debounce(async function (e) {
 }, 300);
 document.getElementById('search').addEventListener('input', debounceInput);
 
-
-
 const postByPage = async (page, searchString) => {
   let postList;
   if (searchString === '' || searchString === undefined) {
@@ -111,11 +109,7 @@ const postByPage = async (page, searchString) => {
   });
 
   addClickListenerToPosts();
-
 };
-
-
-
 
 const addClickListenerToPosts = () => {
   const posts = document.querySelectorAll('.post-container');
@@ -123,8 +117,8 @@ const addClickListenerToPosts = () => {
     post.addEventListener('click', e => {
       // content-footer와 userProfile 영역 클릭 시 이벤트를 트리거하지 않음
       if (
-          e.target.closest('.content-footer') ||
-          e.target.closest('.content-user-pfp')
+        e.target.closest('.content-footer') ||
+        e.target.closest('.content-user-pfp')
       ) {
         return;
       }
@@ -135,13 +129,9 @@ const addClickListenerToPosts = () => {
   });
 };
 
-
-
-
-
-const init = async() => {
+const init = async () => {
   await infiniteScroll();
   addClickListenerToPosts();
-}
+};
 
-init()
+init();

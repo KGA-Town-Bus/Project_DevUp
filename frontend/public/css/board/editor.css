@@ -11,6 +11,7 @@
 .ck-content {
   background-color: #374151 !important;
   color: white !important;
+  height: 300px !important;
 }
 
 .ck.ck-toolbar {
