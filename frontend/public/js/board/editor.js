@@ -45,31 +45,31 @@ document.querySelector('.close-button').addEventListener('click', function () {
   }
 });
 
-document
-  .querySelector('.publish-button')
-  .addEventListener('click', async function () {
-    if (editorInstance) {
-      const editorData = editorInstance.getData();
-      const title = document.querySelector('.postTitle').value;
-      const content = editorData.replace(/<[^>]*>/g, '');
+// document
+//   .querySelector('.publish-button')
+//   .addEventListener('click', async function () {
+//     if (editorInstance) {
+//       const editorData = editorInstance.getData();
+//       const title = document.querySelector('.postTitle').value;
+//       const content = editorData.replace(/<[^>]*>/g, '');
 
-      try {
-        const response = await axios.post(
-          `${backServer.PROTOCOL}://${backServer.BACKEND_SERVER_IP}:${backServer.BACKEND_SERVER_PORT}/create`,
-          {
-            // URL 수정
-            postTitle: title,
-            postContent: content,
-          },
-          {
-            withCredentials: true,
-          },
-        );
+//       try {
+//         const response = await axios.post(
+//           `${backServer.PROTOCOL}://${backServer.BACKEND_SERVER_IP}:${backServer.BACKEND_SERVER_PORT}/create`,
+//           {
+//             // URL 수정
+//             postTitle: title,
+//             postContent: content,
+//           },
+//           {
+//             withCredentials: true,
+//           },
+//         );
 
-        console.log('Data sent successfully', response);
-        location.href = '/'; // 서버 응답 후 리다이렉트
-      } catch (error) {
-        console.error('Error sending data', error);
-      }
-    }
-  });
+//         console.log('Data sent successfully', response);
+//         location.href = '/'; // 서버 응답 후 리다이렉트
+//       } catch (error) {
+//         console.error('Error sending data', error);
+//       }
+//     }
+//   });

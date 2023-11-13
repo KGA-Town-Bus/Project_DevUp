@@ -10,8 +10,7 @@ const {
   PostDeleteRequestDTO,
 } = require('./dto/board.dto');
 let instance = null;
-const { Op } = require('sequelize');
-
+const {Op} = require('sequelize');
 
 class BoardService {
   static getInstance() {
@@ -20,18 +19,19 @@ class BoardService {
     }
     return instance;
   }
-  async createPost(createRequestDTO, userUid) {
+  async createPost(createRequestDTO) {
     try {
       if (!(createRequestDTO instanceof PostCreateRequestDTO)) {
         throw new Error('Invalid request DTO');
       }
-      const {postTitle, postContent, userNickname} = createRequestDTO;
+      const {postTitle, postContent, userUid, userNickName} = createRequestDTO;
       const createdValues = await db.Posts.create({
         Posts_title: postTitle,
         Posts_content: postContent,
-        Posts_writer: userNickname,
+        Posts_writer: userNickName,
         Users_uid: userUid,
       });
+      console.log(createdValues);
       const createdPost = createdValues.dataValues;
       return new PostCreateResponseDTO(createdPost);
     } catch (e) {
@@ -43,23 +43,20 @@ class BoardService {
   async findAllPost(page, search) {
     try {
       const pageSize = 10;
-      const offset = (page - 1) * pageSize
+      const offset = (page - 1) * pageSize;
 
       const posts = await db.Posts.findAll({
         include: [{model: db.Users}, {model: db.Likes}],
         offset: offset,
         limit: pageSize,
-        where:{
-          [Op.or]:[
-            {Posts_title: {[Op.like]: search ? `%${search}%` : "%"}},
-            {Posts_content: {[Op.like]: search ? `%${search}%` : "%" }},
-          ]
-
+        where: {
+          [Op.or]: [
+            {Posts_title: {[Op.like]: search ? `%${search}%` : '%'}},
+            {Posts_content: {[Op.like]: search ? `%${search}%` : '%'}},
+          ],
         },
-        order: [["Posts_created_at", "DESC"]],
+        order: [['Posts_created_at', 'DESC']],
       });
-
-
 
       return posts.map(post => {
         const data = {
@@ -70,7 +67,7 @@ class BoardService {
           Posts_created_at: post.dataValues.Posts_created_at,
           Posts_hit: post.dataValues.Posts_hit,
           Users_profile: post.dataValues.User.dataValues.Users_profile,
-          Posts_like: post.dataValues.Posts_like
+          Posts_like: post.dataValues.Posts_like,
         };
 
         return new PostReadAllResponseDTO(data);
