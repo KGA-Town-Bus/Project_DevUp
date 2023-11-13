@@ -35,7 +35,7 @@ class AdminService {
 
       const {dataValues: user} = await this.userRepository.findOne({where: {Users_uid: userUid}})
 
-      await this.userRepository.update(
+      return await this.userRepository.update(
           {
             Users_account_locked: !user.Users_account_locked
           },

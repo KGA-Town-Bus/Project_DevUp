@@ -19,7 +19,9 @@ class AdminController {
   async patchAdmin(req,res,next) {
     try{
 
-      const result = this.service.updateUser(parseInt(req.body.userUid))
+      const [data] = await this.service.updateUser(parseInt(req.body.userUid))
+
+      res.status(200).json(new OK(data))
 
     }catch(e){
       next(e)
