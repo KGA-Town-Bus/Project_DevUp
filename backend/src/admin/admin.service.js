@@ -18,6 +18,9 @@ class AdminService {
         offset: offset,
         limit: pageSize,
         order: [["Users_created_at", "DESC"]],
+        where: {
+          Role_authority: "user"
+        }
       })
 
       const result = userList.map((user) => {
