@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const userRouter = require('./user/user.router');
 const boardRouter = require('./board/board.router');
-const adminRouter = require("./admin/admin.router")
+const adminRouter = require('./admin/admin.router');
+const chatRouter = require('./chat/chat.router');
 
 // 참고 용도
 /**
@@ -29,8 +30,9 @@ const adminRouter = require("./admin/admin.router")
 //   res.render('index.html');
 // });
 
+router.use('/chat', chatRouter);
 router.use('/users', userRouter);
-router.use("/admin", adminRouter)
+router.use('/admin', adminRouter);
 router.use('/', boardRouter);
 
 module.exports = router;
