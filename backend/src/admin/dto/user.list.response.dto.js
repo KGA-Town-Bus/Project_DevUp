@@ -25,7 +25,7 @@ class UserListResponseDTO extends baseDTO {
     this.userEmail = response.Users_email
     this.userProfile = response.Users_profile
     this.userProvider = response.Users_provider
-    this.userCreatedAt= response.Users_created_at
+    this.userCreatedAt= response.Users_created_at.toLocaleDateString() + "  " + response.Users_created_at.toLocaleTimeString()
     this.userAccountLocked = response.Users_account_locked
     this.roleAuthority = response.Role_authority
 
