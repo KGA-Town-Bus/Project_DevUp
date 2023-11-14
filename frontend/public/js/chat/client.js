@@ -1,4 +1,4 @@
-const socket = io('http://localhost:4000/chat');
+const socket = io('http://localhost:4000');
 
 const form = document.querySelector('.chat-form');
 const input = document.querySelector('.chat-input');

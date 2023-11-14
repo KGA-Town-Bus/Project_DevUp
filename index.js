@@ -34,62 +34,62 @@ server.listen(4000, async () => {
   console.log(`Backend START: 4000`);
 });
 
-// io.on('connection', async socket => {
-//   console.log('a user connected');
+io.on('connection', async socket => {
+  console.log('a user connected');
 
-//   if (!socket.recovered) {
-//     try {
-//       const missedMessages = await Messages.findAll();
+  if (!socket.recovered) {
+    try {
+      const missedMessages = await Messages.findAll();
 
-//       missedMessages.forEach(message => {
-//         socket.emit('chat message', message.content, message.id);
-//       });
-//     } catch (e) {}
-//   }
+      missedMessages.forEach(message => {
+        socket.emit('chat message', message.content, message.id);
+      });
+    } catch (e) {}
+  }
 
-//   socket.on('chat message', async msg => {
-//     let result;
-//     try {
-//       result = await Messages.create(
-//         {content: msg},
-//         {
-//           raw: true,
-//         },
-//       );
-//     } catch (e) {
-//       console.error('error saving message:', e);
-//     }
-//     io.emit('chat message', msg);
-//   });
+  socket.on('chat message', async msg => {
+    let result;
+    try {
+      result = await Messages.create(
+        {content: msg},
+        {
+          raw: true,
+        },
+      );
+    } catch (e) {
+      console.error('error saving message:', e);
+    }
+    io.emit('chat message', msg);
+  });
 
-//   // specialized features
+  // specialized features
 
-//   // socket.on("chat message", (msg) => {
-//   //   if (msg === "join") {
-//   //     socket.join("room 1");
-//   //     console.log("you joined room 1");
-//   //   }
-//   // });
+  // socket.on("chat message", (msg) => {
+  //   if (msg === "join") {
+  //     socket.join("room 1");
+  //     console.log("you joined room 1");
+  //   }
+  // });
 
-//   // socket.on("chat message", (msg) => {
-//   //   if (msg.includes("to")) io.to("room 1").emit("roommsg", `you're included`);
-//   // });
+  // socket.on("chat message", (msg) => {
+  //   if (msg.includes("to")) io.to("room 1").emit("roommsg", `you're included`);
+  // });
 
-//   // socket.on("chat message", (msg) => {
-//   //   if (msg.includes("except"))
-//   //     io.except("room 1").emit("excluderoom", `you're not excluded`);
-//   // });
+  // socket.on("chat message", (msg) => {
+  //   if (msg.includes("except"))
+  //     io.except("room 1").emit("excluderoom", `you're not excluded`);
+  // });
 
-//   // socket.on("chat message", (msg) => {
-//   //   if (msg === "leave") {
-//   //     socket.leave("room 1");
-//   //     console.log("A user left the room");
-//   //   }
-//   // });
+  // socket.on("chat message", (msg) => {
+  //   if (msg === "leave") {
+  //     socket.leave("room 1");
+  //     console.log("A user left the room");
+  //   }
+  // });
 
-//   socket.on('disconnect', () => {
-//     console.log('a user disconnected');
-//   });
-// });
+  socket.on('disconnect', () => {
+    console.log('a user disconnected');
+  });
+});
 
 module.exports = io;
