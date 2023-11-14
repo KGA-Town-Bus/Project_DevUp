@@ -66,7 +66,9 @@
               <img class="post-hit-icon" src="/images/Hit Icon.svg" />
               <div>{{post.postHit}}</div>
             </div>
-            <div class="post-content">{{ post.postContent }}</div>
+            <div class="post-content">
+              {{ post.postContent | safe }}
+            </div>
           </div>
           <div class="button-box">
             {% if canEdit %}
