@@ -15,8 +15,8 @@ class AdminService {
       const offset = (page - 1) * pageSize
 
       const userList = await this.userRepository.findAll({
-        offset: offset,
-        limit: pageSize,
+        // offset: offset,
+        // limit: pageSize,
         order: [["Users_created_at", "DESC"]],
         where: {
           Role_authority: "user"
