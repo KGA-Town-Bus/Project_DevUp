@@ -25,7 +25,10 @@ class BoardController {
   }
 
   getCreate(req, res) {
-    res.render('board/create');
+    if (!req.user || !req.user.Users_uid) {
+      return res.redirect('/users/login');
+    }
+    res.render('board/create', {backServer});
   }
 
   async postCreate(req, res, next) {
@@ -65,19 +68,33 @@ class BoardController {
       return res.redirect('/users/login');
     }
 
-    const userUid = req.user.Users_uid;
     const postUid = Number(req.params.postUid);
     try {
       const postData = await this.boardService.findOnePost(postUid, req);
-      res.render('board/view', {post: postData, userUid, backServer, like: 0});
+      const adminRole = req.user.Role_authority;
+      if (adminRole === 'admin') postData.isAuthor = true;
+      res.render('board/view', {
+        post: postData,
+        user: req.user,
+        backServer,
+        like: 0,
+        canEdit: postData.isAuthor,
+      });
     } catch (e) {
       next(e);
     }
   }
 
-  getModify(req, res) {
-    const id = req.params.postUid;
-    res.render('board/modify', {id, backServer});
+  async getModify(req, res) {
+    if (!req.user || !req.user.Users_uid) {
+      return res.redirect('/users/login');
+    }
+    const postUid = req.params.postUid;
+    const {postTitle, postContent} = await this.boardService.findOnePost(
+      postUid,
+      req,
+    );
+    res.render('board/modify', {postUid, backServer, postTitle, postContent});
   }
 
   async postDelete(req, res, next) {

@@ -46,8 +46,7 @@ class BoardService {
         },
         withCredentials: true,
       });
-
-      return data;
+      return {...data};
     } catch (e) {
       console.error('Error in findOnePost:', e);
       throw e;
