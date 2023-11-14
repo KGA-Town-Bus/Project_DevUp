@@ -1,0 +1,13 @@
+.post-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: space-around;
+  width: 70%;
+}
+
+.button-container {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

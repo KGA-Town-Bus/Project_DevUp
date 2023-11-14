@@ -25,6 +25,9 @@ class BoardController {
   }
 
   getCreate(req, res) {
+    if (!req.user || !req.user.Users_uid) {
+      return res.redirect('/users/login');
+    }
     res.render('board/create', {backServer});
   }
 
@@ -82,9 +85,16 @@ class BoardController {
     }
   }
 
-  getModify(req, res) {
-    const id = req.params.postUid;
-    res.render('board/modify', {id, backServer});
+  async getModify(req, res) {
+    if (!req.user || !req.user.Users_uid) {
+      return res.redirect('/users/login');
+    }
+    const postUid = req.params.postUid;
+    const {postTitle, postContent} = await this.boardService.findOnePost(
+      postUid,
+      req,
+    );
+    res.render('board/modify', {postUid, backServer, postTitle, postContent});
   }
 
   async postDelete(req, res, next) {
