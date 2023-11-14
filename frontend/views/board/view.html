@@ -79,24 +79,15 @@
       </div>
 
       <div class="button-box">
-        <button class="post bs">Edit</button>
+        {% if canEdit %}
+        <button class="modify-button" data-postid="{{ post.postUid }}">Edit</button>
         <button class="delete-button">Delete</button>
+        {% endif %}
         <a href="/">Back to List</a>
-        <button>Comments</button>
-
-        <form method="/posts/{{post.postUid}}/like" id="like" class="post-like-form">
-          <button type="submit">❤️</button>
-          <p id="likeCount">{{post.postLike}}</p>
-        </form>
-        
-    {% if canEdit %}
-      <button class="modify-button" data-postid="{{ post.postUid }}">Edit</button>
-      <button class="delete-button">Delete</button>
-    {% endif %}
-      <a href="/">Back to List</a>
-      <button id="like-button">❤️</button>
-      <p id="likeCount">{{post.postLike}}</p>    
+        <button id="like-button">❤️</button>
+        <p id="likeCount">{{post.postLike}}</p>
       </div>
+
     </div>
 
     <div class="comment-wrapper">
@@ -143,8 +134,8 @@
     </div>
     <div class="modal-body">
     </div>
-</div>
-<script src="/js/board/view.js"></script>
+  </div>
+  <script src="/js/board/view.js"></script>
 
-  </body>
+</body>
 </html>

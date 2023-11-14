@@ -132,11 +132,6 @@ textarea::placeholder {
   flex-direction: row;
 }
 
-.post-like-form{
-  display: flex;
-  flex-direction: row;
-}
-
 
 /*comment*/
 .comment-wrapper{
