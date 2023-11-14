@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const publishButton = document.querySelector('.publish-button');
   const deleteButton = document.querySelector('.delete-button');
   const modifyButton = document.querySelector('.modify-button');
+  const postButton = document.querySelector('.post');
+
   if (likeButton) {
     likeButton.addEventListener('click', async function () {
       const url = window.location.pathname;
@@ -67,6 +69,11 @@ document.addEventListener('DOMContentLoaded', function () {
     modifyButton.addEventListener('click', async function () {
       const postUid = this.getAttribute('data-postid');
       window.location.href = `/modify/${postUid}`;
+    });
+  }
+  if (postButton) {
+    postButton.addEventListener('click', function () {
+      window.location.href = '/create';
     });
   }
 });

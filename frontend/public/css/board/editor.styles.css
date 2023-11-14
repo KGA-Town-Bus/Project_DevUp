@@ -33,7 +33,7 @@ main .ck-editor[role='application'] .ck.ck-content,
 }
 
 .ck.ck-editor__editable {
-  background: #fff;
+  background: #926565;
   border: 1px solid hsl(0, 0%, 70%);
   width: 100%;
 }
@@ -57,7 +57,7 @@ main .ck-editor[role='application'] .ck.ck-content,
   width: calc(100% - var(--ck-sample-sidebar-width));
 }
 
-.ck-editor {
+.ck.ck-editor {
   width: 1200px !important;
   border-radius: 25px !important;
   background-color: rgb(40, 40, 40) !important;

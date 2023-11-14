@@ -65,21 +65,25 @@
     </header>
     <div class="container">
       <div class="post-wrapper">
-        <input 
-         type="text"
-         name="postTitle" 
-         value="{{ postTitle }}" 
-         class="postTitle" 
-         required>
-        <textarea 
-        name="postContent" 
-        class="editor">
-        {{ postContent }}
-        </textarea>
+        <input
+          type="text"
+          name="postTitle"
+          value="{{ postTitle }}"
+          class="postTitle"
+          required
+        />
+        <div class="editor-container">
+          <textarea
+            name="postContent"
+            placeholder="Boast your writing skills"
+            class="editor"
+          >
+{{postContent}}</textarea
+          >
+        </div>
         <div class="button-container">
           <button class="list-button">Go List</button>
           <button class="publish-button">Publish</button>
-        </div>  
         </div>
       </div>
     </div>
