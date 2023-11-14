@@ -1,20 +1,92 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>modify</title>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Modify</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/board/editor.styles.css"
+    />
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/board/create.css" />
+    <script>
+      const PROTOCOL = '{{backServer.PROTOCOL}}';
+      const BACKEND_SERVER_IP = '{{backServer.BACKEND_SERVER_IP}}';
+      const BACKEND_SERVER_PORT = {{backServer.BACKEND_SERVER_PORT}}
+    </script>
+    <script src="/js/board/create.js"></script>
   </head>
-  <body>
-    <form>
-      <p>title :</p>
-      <input type="text" name="postTitle" required />
-      <p>content :</p>
-      <textarea name="postContent"></textarea>
-      <button type="submit">저장</button>
-    </form>
-    <a href="/">❌</a>
-    <script></script>
+  <body
+    data-editor="ClassicEditor"
+    data-collaboration="false"
+    data-revision-history="false"
+  >
+    <header>
+      <div class="header bs">
+        <a href="/"
+          ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
+        /></a>
+        <div class="text-set ts">
+          <span>Public Chat</span>
+          <span>Stats</span>
+          <a href="/admin"><span>Admin</span></a>
+        </div>
+        <div class="search">
+          <span class="search-icon">🔍</span>
+          <input
+            spellcheck="false"
+            type="text"
+            class="search-bar bs"
+            placeholder="Search..."
+            id="search"
+          />
+        </div>
+        {% if user %}
+        <div class="buttons">
+          <a href="/users/logout">
+            <button class="logout bs">Logout</button>
+          </a>
+        </div>
+        {% else %}
+        <div class="buttons">
+          <a href="/users">
+            <button class="signup bs">Sign Up</button>
+          </a>
+          <a href="/users/login">
+            <button class="signin bs">Sign In</button>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </header>
+    <div class="container">
+      <div class="post-wrapper">
+        <input
+          type="text"
+          name="postTitle"
+          placeholder="Write a title..."
+          class="postTitle"
+          required
+        />
+        <p>content :</p>
+        <div class="editor-container">
+          <textarea
+            name="postContent"
+            placeholder="Boast your writing skills"
+            class="editor"
+          ></textarea>
+        </div>
+        <div class="button-container">
+          <button class="list-button">Go List</button>
+          <button class="publish-button">Publish</button>
+        </div>
+      </div>
+    </div>
+    <script src="/js/board/ckeditor.js"></script>
+    <script src="/js/board/editor.script.js"></script>
   </body>
 </html>

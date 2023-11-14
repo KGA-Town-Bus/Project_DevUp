@@ -78,7 +78,7 @@ class BoardService {
     }
   }
 
-  async findOnePost(postReadRequestDTO) {
+  async findOnePost(postReadRequestDTO, userUid) {
     try {
       if (!(postReadRequestDTO instanceof PostReadRequestDTO)) {
         throw new Error('Invalid request DTO');
@@ -91,7 +91,7 @@ class BoardService {
       if (!post) {
         throw new Error('게시물을 찾을 수 없습니다.');
       }
-      return new PostReadResponseDTO(post);
+      return new PostReadResponseDTO(post, userUid);
     } catch (e) {
       console.error('Service findOnePost Error', e);
       throw new Error(e.message);

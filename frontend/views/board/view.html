@@ -1,19 +1,20 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ post.title }}</title>
     <link rel="stylesheet" href="/css/index.css" />
     <link rel="stylesheet" href="/css/board/view.css" />
-    <link rel="stylesheet" href="/css/board/editor.css" />
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- <link rel="stylesheet" href="/css/board/editor.css" /> -->
     <script>
       const PROTOCOL = "{{backServer.PROTOCOL}}"
       const BACKEND_SERVER_IP = "{{backServer.BACKEND_SERVER_IP}}"
       const BACKEND_SERVER_PORT = {{backServer.BACKEND_SERVER_PORT}}
     </script>
+    <script defer src="/js/board/view.js"></script>
 
   </head>
   <body>
@@ -37,13 +38,11 @@
           id="search"
         />
       </div>
-      <!-- {% if user %} -->
       <div class="buttons">
         <a href="/users/logout">
           <button class="logout bs">Logout</button>
         </a>
       </div>
-      <!-- {% else %} -->
       <div class="buttons">
         <a href="/users">
           <button class="signup bs">Sign Up</button>
@@ -52,7 +51,6 @@
           <button class="signin bs">Sign In</button>
         </a>
       </div>
-      <!-- {% endif %} -->
     </div>
     <div class="container">
       <div id="contents" class="contents">
@@ -60,13 +58,13 @@
     <p>{{post.postWriter}}</p>
     <p>{{ post.postContent }}</p>
     <p>조회수: {{ post.postHit }}</p>
-    <button class="post bs">수정</button>
+    {% if canEdit %}
+    <button class="modify-button" data-postid="{{ post.postUid }}">수정</button>
       <button class="delete-button">삭제</button>
+      {% endif %}
     <a href="/">❌</a>
-    <form method="/posts/{{post.postUid}}/like" id="like">
-      <button type="submit">❤️</button>
+      <button id="like-button">❤️</button>
       <p id="likeCount">{{post.postLike}}</p>
-    </form>
     <div class="user bs">
       <div class="user-info">
         <img class="user-pfp" src="{{user.Users_profile}}" alt="" />
@@ -88,14 +86,15 @@
       </div>
     </div>
       </div>
-      <div class="modal">
+      <!-- <div class="modal">
         <div class="modal-header">
           <input
             type="text"
             name="postTitle"
             placeholder="Write a title..."
             class="postTitle"
-            value="{{ post.postTitle }}"/>
+            value="{{ post.postTitle }}"
+            />
         </div>
         <div class="modal-body">
           <textarea
@@ -179,8 +178,7 @@
             />
           </svg>
         </button>
-      </div>
-      <script src="/js/board/editor.js"></script>
-    <script src="/js/board/view.js"></script>
+      </div> -->
+      <!-- <script src="/js/board/editor.js"></script> -->
   </body>
 </html>
