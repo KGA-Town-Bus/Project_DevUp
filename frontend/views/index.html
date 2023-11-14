@@ -4,7 +4,7 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script> -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/super-build/ckeditor.js"></script>
+    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/super-build/ckeditor.js"></script> -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DEVUP Homepage</title>
@@ -131,13 +131,14 @@
       </div>
       <!-- post modal -->
       <!-- post modal -->
-      <div class="modal">
+      <!-- <div class="modal">
         <div class="modal-header">
           <input
             type="text"
             name="postTitle"
             placeholder="Write a title..."
             class="postTitle"
+            required
           />
         </div>
         <div class="modal-body">
@@ -222,7 +223,7 @@
             />
           </svg>
         </button>
-      </div>
+      </div> -->
       {% else %}
       <div class="user bs">
         <div class="user-info">
@@ -233,7 +234,6 @@
       {% endif %}
     </div>
   </body>
-  <script src="../../ckeditor/build/ckeditor.js"></script>
   <script src="/js/board/editor.js"></script>
   <script src="/js/lib/messageCheck.js"></script>
 </html>
