@@ -1,6 +1,7 @@
 const db = require('./backend/src/lib/db');
 const frontApp = require('./frontend/app');
 const backApp = require('./backend/app');
+const {parsing: tokenParsing} = require("./backend/src/lib/jwtAuthMiddleware")
 
 const {createServer} = require('node:http');
 
@@ -14,6 +15,18 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
     credentials: true,
   },
+});
+
+io.use(async (socket, next) => {
+  const token = socket.handshake.auth.token;
+  const user = await tokenParsing(token)
+
+  if (user !== null){
+    console.log(user)
+    next()
+  }else{
+    //예외처리
+  }
 });
 
 const Messages = db.Messages;

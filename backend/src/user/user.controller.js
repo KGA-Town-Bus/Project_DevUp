@@ -66,7 +66,7 @@ class UserController {
         sameSite: "none",
         secure: true
       });
-      return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}`)
+      return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?token=${token}`)
 
     } catch (e) {
       next(e)
