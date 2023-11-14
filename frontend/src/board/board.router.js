@@ -1,9 +1,6 @@
 const express = require('express');
 const boardRouter = express.Router();
-const BoardService = require('./board.service');
-const BoardController = require('./board.controller');
-const boardService = new BoardService();
-const boardController = new BoardController(boardService);
+const {boardController} = require('./board.module');
 
 const getMainPage = boardController.getMainPage.bind(boardController);
 const getCreate = boardController.getCreate.bind(boardController);

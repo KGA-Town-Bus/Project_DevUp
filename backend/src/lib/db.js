@@ -17,16 +17,18 @@ const sequelize = new Sequelize(
 
 const entityList = [
   `../user/user`,
-    '../user/role',
+  '../user/role',
   `../email/email`,
   `../board/model/board`,
     '../comment/comment',
   // `../board/model/comments`,
   `../board/model/likes`,
+  `../chat/model/chat`,
 ];
 
 entityList.forEach((entity, index) => {
   const model = require(entityList[index])(sequelize, Sequelize.DataTypes);
+  console.log(model);
   db[model.name] = model;
 });
 
@@ -59,13 +61,13 @@ db.Likes.belongsTo(db.Users, {
 });
 
 db.Role.hasMany(db.Users, {
-  foreignKey: "Role_authority"
-})
+  foreignKey: 'Role_authority',
+});
 
 db.Users.belongsTo(db.Role, {
+
   foreignKey: "Role_authority"
 })
-
 
 db.Comments.belongsTo(db.Posts, {
   foreignKey: "Posts_uid"
