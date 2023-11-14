@@ -69,6 +69,7 @@ class PostReadResponseDTO extends BaseDTO {
   postCreatedAt;
   postHit;
   postLike;
+  userProfile;
 
   constructor(response) {
     super();
@@ -79,6 +80,7 @@ class PostReadResponseDTO extends BaseDTO {
     this.postHit = response.Posts_hit;
     this.postCreatedAt = this.toDate(response.Posts_created_at);
     this.postLike = response.Posts_like;
+    this.userProfile = response.User.dataValues.Users_profile
     this.validate(this, BadRequest);
   }
 }

@@ -64,12 +64,12 @@ class BoardController {
     if (!req.user || !req.user.Users_uid) {
       return res.redirect('/users/login');
     }
-
-    const userUid = req.user.Users_uid;
     const postUid = Number(req.params.postUid);
     try {
       const postData = await this.boardService.findOnePost(postUid, req);
-      res.render('board/view', {post: postData, userUid, backServer, like: 0});
+
+
+      res.render('board/view', {post: postData, user: req.user, backServer, like: 0});
     } catch (e) {
       next(e);
     }
