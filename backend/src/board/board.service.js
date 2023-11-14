@@ -86,9 +86,9 @@ class BoardService {
       const {postUid} = postReadRequestDTO;
       const responseData = await db.Posts.findOne({
         where: {Posts_uid: postUid},
-        include:{
+        include: {
           model: db.Users,
-        }
+        },
       });
 
       const post = responseData.dataValues;
@@ -96,7 +96,7 @@ class BoardService {
         throw new Error('게시물을 찾을 수 없습니다.');
       }
 
-      return new PostReadResponseDTO(post);
+      return new PostReadResponseDTO(post, userUid);
     } catch (e) {
       console.error('Service findOnePost Error', e);
       throw new Error(e.message);
