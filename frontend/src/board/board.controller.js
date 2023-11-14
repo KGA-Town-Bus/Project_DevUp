@@ -28,7 +28,9 @@ class BoardController {
     if (!req.user || !req.user.Users_uid) {
       return res.redirect('/users/login');
     }
-    res.render('board/create', {backServer});
+    const user = req.user ? req.user : undefined;
+
+    res.render('board/create', {user, backServer});
   }
 
   async postCreate(req, res, next) {
@@ -89,12 +91,20 @@ class BoardController {
     if (!req.user || !req.user.Users_uid) {
       return res.redirect('/users/login');
     }
+    const user = req.user ? req.user : undefined;
+
     const postUid = req.params.postUid;
     const {postTitle, postContent} = await this.boardService.findOnePost(
       postUid,
       req,
     );
-    res.render('board/modify', {postUid, backServer, postTitle, postContent});
+    res.render('board/modify', {
+      postUid,
+      user,
+      backServer,
+      postTitle,
+      postContent,
+    });
   }
 
   async postDelete(req, res, next) {
