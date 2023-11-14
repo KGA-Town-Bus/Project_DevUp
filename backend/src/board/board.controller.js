@@ -49,10 +49,7 @@ class BoardController {
       const postUid = Number(req.params.postUid);
       await this.boardService.incrementHit(postUid); // 조회수 증가 로직 호출
       const postReadRequestDTO = new PostReadRequestDTO({postUid});
-      const data = await this.boardService.findOnePost(
-        postReadRequestDTO,
-        userUid,
-      );
+      const data = await this.boardService.findOnePost(postReadRequestDTO);
       res.status(201).json(data);
     } catch (e) {
       console.error('postCreate Error', e);

@@ -4,6 +4,11 @@ const userRouter = require('./user/user.router');
 const boardRouter = require('./board/board.router');
 const emailRouter = require("./email/email.router")
 const adminRouter = require("./admin/admin.router")
+const commentsRouter = require("./comment/comment.router")
+
+
+
+router.use("/comments", commentsRouter)
 
 // 참고 용도
 /**

@@ -65,17 +65,19 @@ class BoardController {
       return res.redirect('/users/login');
     }
 
+
     const postUid = Number(req.params.postUid);
     try {
       const postData = await this.boardService.findOnePost(postUid, req);
       const adminRole = req.user.Role_authority;
       res.render('board/view', {
         post: postData,
-        userUid: req.user.Users_uid,
+        user: req.user,
         backServer,
         like: 0,
         canEdit: postData.isAuthor || adminRole,
       });
+
     } catch (e) {
       next(e);
     }
