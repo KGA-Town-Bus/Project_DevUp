@@ -46,9 +46,7 @@ class BoardService {
         },
         withCredentials: true,
       });
-
-      const isAuthor = req.user && data.authorId === req.user.Users_uid;
-      return {...data, isAuthor};
+      return {...data};
     } catch (e) {
       console.error('Error in findOnePost:', e);
       throw e;
