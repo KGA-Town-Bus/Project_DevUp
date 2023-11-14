@@ -78,7 +78,7 @@ class BoardService {
     }
   }
 
-  async findOnePost(postReadRequestDTO) {
+  async findOnePost(postReadRequestDTO, userUid) {
     try {
       if (!(postReadRequestDTO instanceof PostReadRequestDTO)) {
         throw new Error('Invalid request DTO');

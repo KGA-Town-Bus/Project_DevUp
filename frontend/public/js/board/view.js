@@ -1,80 +1,72 @@
-const postButton = document.querySelector('.post');
-const postModal = document.querySelector('.modal');
+document.addEventListener('DOMContentLoaded', function () {
+  const likeButton = document.querySelector('#like-button');
+  const publishButton = document.querySelector('.publish-button');
+  const deleteButton = document.querySelector('.delete-button');
+  const modifyButton = document.querySelector('.modify-button');
+  if (likeButton) {
+    likeButton.addEventListener('click', async function () {
+      const url = window.location.pathname;
+      const postUid = url.substring(url.lastIndexOf('/') + 1);
+      const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}/like`;
 
-postButton.addEventListener('click', function (e) {
-  e.preventDefault();
-  if (postModal.style.display === 'none' || postModal.style.display === '') {
-    postModal.style.display = 'flex';
-  } else {
-    postModal.style.display = 'none';
+      try {
+        const response = await axios.post(
+          axiosPath,
+          {},
+          {withCredentials: true},
+        );
+        const likedCount = response.data.likedCount;
+        document.getElementById('likeCount').textContent = likedCount;
+      } catch (error) {
+        console.error('Error during like request:', error);
+      }
+    });
   }
-});
 
-// post modal close
-const closeButton = document.querySelector('.close-button');
+  if (publishButton) {
+    publishButton.addEventListener('click', async function () {
+      const postTitle = document.querySelector('.postTitle').value;
+      const postContent = editorInstance.getData().replace(/<[^>]*>/g, '');
+      const url = window.location.pathname;
+      const postUid = url.substring(url.lastIndexOf('/') + 1);
 
-closeButton.addEventListener('click', function () {
-  postModal.style.display = 'none';
-});
+      const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`;
+      const axiosBody = {
+        postTitle,
+        postContent,
+      };
 
-// publish button activation -> handed to CHAMDOM
-const publishButton = document.querySelector('.publish-button');
+      try {
+        const response = await axios.put(axiosPath, axiosBody, {
+          withCredentials: true,
+        });
+        location.href = `/posts/${postUid}`;
+      } catch (error) {
+        console.error('Error during post update:', error);
+      }
+    });
+  }
 
-publishButton.addEventListener('click', async function () {
-  const postTitle = document.querySelector('.postTitle').value;
-  const postContent = editorInstance.getData().replace(/<[^>]*>/g, '');
-  const url = window.location.pathname;
-  const postUid = url.substring(url.lastIndexOf('/') + 1);
+  if (deleteButton) {
+    deleteButton.addEventListener('click', async function () {
+      const url = window.location.pathname;
+      const postUid = url.substring(url.lastIndexOf('/') + 1);
+      console.log(url);
+      console.log(postUid);
+      const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`;
 
-  const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`;
-  const axiosBody = {
-    postTitle,
-    postContent,
-  };
-
-  const axiosOptions = {
-    withCredentials: true,
-  };
-
-  const response = await axios.put(axiosPath, axiosBody, axiosOptions);
-
-  postModal.style.display = 'none';
-
-  location.href = `/posts/${postUid}`;
-});
-
-const deleteButton = document.querySelector('.delete-button');
-
-deleteButton.addEventListener('click', async function () {
-  const url = window.location.pathname;
-  const postUid = url.substring(url.lastIndexOf('/') + 1);
-
-  const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`;
-
-  const axiosOptions = {
-    withCredentials: true,
-  };
-
-  const response = await axios.delete(axiosPath, axiosOptions);
-
-  postModal.style.display = 'none';
-
-  location.href = `/`;
-});
-
-document.querySelector('#like').addEventListener('submit', async e => {
-  e.preventDefault();
-
-  const url = window.location.pathname;
-  const postUid = url.substring(url.lastIndexOf('/') + 1);
-
-  const response = await axios.post(
-    `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}/like`,
-    {},
-    {
-      withCredentials: true,
-    },
-  );
-  const likeCountElement = document.getElementById('likeCount');
-  likeCountElement.textContent = response.data.likedCount;
+      try {
+        const response = await axios.delete(axiosPath, {withCredentials: true});
+        location.href = '/';
+      } catch (error) {
+        console.error('Error during post deletion:', error);
+      }
+    });
+  }
+  if (modifyButton) {
+    modifyButton.addEventListener('click', async function () {
+      const postUid = this.getAttribute('data-postid');
+      window.location.href = `/modify/${postUid}`;
+    });
+  }
 });

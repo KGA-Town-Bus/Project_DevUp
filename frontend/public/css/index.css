@@ -396,6 +396,16 @@ textarea::placeholder {
   font-weight: bold;
 }
 
+.list-button {
+  width: 120px;
+  height: 35px;
+  background: #8d8acf;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-weight: bold;
+}
+
 .close-button {
   position: absolute;
   top: 5px;

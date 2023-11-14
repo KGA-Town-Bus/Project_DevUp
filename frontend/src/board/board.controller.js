@@ -25,7 +25,7 @@ class BoardController {
   }
 
   getCreate(req, res) {
-    res.render('board/create');
+    res.render('board/create', {backServer});
   }
 
   async postCreate(req, res, next) {
@@ -64,12 +64,20 @@ class BoardController {
     if (!req.user || !req.user.Users_uid) {
       return res.redirect('/users/login');
     }
+
+
     const postUid = Number(req.params.postUid);
     try {
       const postData = await this.boardService.findOnePost(postUid, req);
+      const adminRole = req.user.Role_authority;
+      res.render('board/view', {
+        post: postData,
+        user: req.user,
+        backServer,
+        like: 0,
+        canEdit: postData.isAuthor || adminRole,
+      });
 
-
-      res.render('board/view', {post: postData, user: req.user, backServer, like: 0});
     } catch (e) {
       next(e);
     }

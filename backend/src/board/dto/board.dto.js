@@ -70,8 +70,9 @@ class PostReadResponseDTO extends BaseDTO {
   postHit;
   postLike;
   userProfile;
+  isAuthor;
 
-  constructor(response) {
+  constructor(response, userUid) {
     super();
     this.postUid = response.Posts_uid;
     this.postTitle = response.Posts_title;
@@ -81,6 +82,7 @@ class PostReadResponseDTO extends BaseDTO {
     this.postCreatedAt = this.toDate(response.Posts_created_at);
     this.postLike = response.Posts_like;
     this.userProfile = response.User.dataValues.Users_profile
+    this.isAuthor = response.Posts_writer === userUid;
     this.validate(this, BadRequest);
   }
 }
