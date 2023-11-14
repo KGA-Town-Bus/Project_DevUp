@@ -1,4 +1,8 @@
-const socket = io('http://localhost:4000');
+const socket = io('http://localhost:4000',{
+  auth: {
+    token: localStorage.getItem("token")
+  },
+});
 
 const form = document.querySelector('.chat-form');
 const input = document.querySelector('.chat-input');

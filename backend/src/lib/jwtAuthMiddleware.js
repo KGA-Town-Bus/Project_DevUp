@@ -42,3 +42,5 @@ const parsing = async token => {
   delete user.Users_password;
   return user;
 };
+
+module.exports.parsing = parsing
