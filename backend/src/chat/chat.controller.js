@@ -1,1 +1,0 @@
-exports.send = (req, res) => {};
