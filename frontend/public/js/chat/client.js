@@ -1,4 +1,4 @@
-const socket = io('http://localhost:4000', {
+const socket = io(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}`, {
   auth: {
     token: localStorage.getItem('token'),
   },
