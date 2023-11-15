@@ -80,8 +80,6 @@ io.on('connection', async socket => {
         ],
       });
 
-      console.log('kkk', missedMessages);
-
       missedMessages.forEach(message => {
         const userinfo = message.User.dataValues;
 
@@ -113,7 +111,12 @@ io.on('connection', async socket => {
         profile: socket.user.Users_profile,
         nickname: socket.user.Users_nickname,
       };
-      io.emit('chat message', msg, result.createdAt, senderInfo);
+      io.emit(
+        'chat message',
+        msg,
+        result.createdAt.toLocaleString(),
+        senderInfo,
+      );
     } catch (e) {
       console.error('error saving message:', e);
     }
