@@ -1,0 +1,7 @@
+.idea
+.env
+.gitignore.swp
+package-lock.json
+config.json
+node_modules
+.DS_Store

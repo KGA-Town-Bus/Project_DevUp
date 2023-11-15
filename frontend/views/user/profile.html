@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DEVUP Homepage</title>
+
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/user/profile.css" />
+  </head>
+
+  <body>
+    <div class="header bs">
+      <a href="/"
+        ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
+      /></a>
+      <div class="text-set ts">
+        <span>Public Chat</span>
+        <span>Stats</span>
+        <span>Admin</span>
+      </div>
+      {% if user %}
+      <div class="buttons">
+        <a href="/users/logout">
+          <button class="logout bs">Logout</button>
+        </a>
+      </div>
+      {% else %}
+      <div class="buttons">
+        <a href="/users">
+          <button class="signup bs">Sign Up</button>
+        </a>
+        <a href="/users/login">
+          <button class="signin bs">Sign In</button>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="main">
+      <h2 class="title">User Profile</h2>
+
+      <div class="profile-wrapper">
+        <div class="profile">
+          <div class="profile-image">
+            {% if user.Users_profile %}
+            <img
+              id="profile-img"
+              class="user-pfp"
+              src="{{user.Users_profile}}"
+            />
+            {% else %}
+            <img
+              id="profile-img"
+              class="user-pfp"
+              src="/images/github%20logo.png"
+            />
+            {% endif %}
+
+            <div class="profile-name">
+              <p>USERID: {{user.Users_id}}</p>
+
+              <form id="profile-form" enctype="multipart/form-data">
+                <input type="file" id="profile-input" name="profile" />
+
+                <label for="profile-input">Upload an image</label>
+              </form>
+            </div>
+          </div>
+
+          {% if user.Users_provider === 'local' %}
+          <form class="form" action="/users/profile" method="post">
+            <input
+              type="text"
+              name="userNickname"
+              placeholder="nickname"
+              value="{{user.Users_nickname}}"
+            />
+            <input
+              type="text"
+              name="userName"
+              placeholder="name"
+              value="{{user.Users_name}}"
+            />
+            <input
+              type="email"
+              name="userEmail"
+              placeholder="email"
+              value="{{user.Users_email}}"
+            />
+            <input type="password" name="userPassword" placeholder="password" />
+            <input
+              type="password"
+              name="userPassword"
+              placeholder="double-check your pw"
+            />
+            <button type="submit">Edit</button>
+          </form>
+          {% else %}
+          <form class="form" action="/users/profile" method="post">
+            <input
+              type="text"
+              name="userNickname"
+              placeholder="nickname"
+              value="{{user.Users_nickname}}"
+            />
+            <input
+              type="text"
+              name="userName"
+              placeholder="name"
+              value="{{user.Users_name}}"
+            />
+            <input
+              type="email"
+              name="userEmail"
+              placeholder="email"
+              value="{{user.Users_email}}"
+            />
+            <button type="submit">Edit</button>
+          </form>
+          {% endif %}
+        </div>
+
+        <div class="friends">
+          <div class="friends-buttons">
+            <button>Contributions</button>
+            <button>Friends</button>
+          </div>
+          <div class="friends-view"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/user/profile.js"></script>
+  </body>
+</html>

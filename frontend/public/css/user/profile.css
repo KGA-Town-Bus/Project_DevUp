@@ -1,0 +1,119 @@
+.main {
+  margin: auto;
+  position: fixed;
+  bottom: 45%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  background-color: rgba(0, 0, 0, 25%);
+  border-radius: 30px;
+  width: 845px;
+  height: 580px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 14px 74px;
+}
+
+.title {
+  text-align: center;
+  width: 100%;
+  font-size: 50px;
+  color: rgba(255, 255, 255, 80%);
+  margin-bottom: 20px;
+}
+
+.profile-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 62px;
+}
+
+.profile {
+  width: 47%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.profile-image {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.profile-name {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-size: 24px;
+  color: white;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form > input {
+  width: 326px;
+  height: 26px;
+  font-size: 24px;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.form > button {
+  width: 95px;
+  height: 30px;
+  border: none;
+  align-self: end;
+}
+
+.friends {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+}
+
+.friends-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.friends-buttons > button {
+  width: 100px;
+  height: 30px;
+  border: none;
+}
+
+.friends-view {
+  width: 313px;
+  height: 360px;
+  background-color: #d9d9d9;
+  border-radius: 25px;
+}
+
+button {
+  background-color: #8d8acf;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+#profile-input {
+  position: absolute;
+  visibility: hidden;
+}
+
+label {
+  background-color: #8d8acf;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  padding: 8px;
+  cursor: pointer;
+}

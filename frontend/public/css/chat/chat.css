@@ -1,0 +1,46 @@
+.public-chat {
+  position: relative;
+  top: 20vh;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  width: 900px;
+  height: 660px;
+}
+
+.chat-header {
+  padding: 30px;
+  text-align: center;
+}
+
+.chat-header span {
+  color: white;
+  font-size: 50px;
+}
+
+.chat-body {
+  margin: auto;
+  width: 80%;
+  height: 400px;
+  overflow: hidden;
+  background-color: aqua;
+}
+
+.message {
+  width: 30%;
+}
+
+.chat-footer {
+  margin: auto;
+  width: 80%;
+  height: 100px;
+  background-color: antiquewhite;
+}
+
+.chat-input {
+  width: 80%;
+}
+
+.chat-sendbutton > form button {
+  width: 15%;
+}
