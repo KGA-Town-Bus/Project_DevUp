@@ -1,7 +1,7 @@
 const db = require('./backend/src/lib/db');
 const frontApp = require('./frontend/app');
 const backApp = require('./backend/app');
-const {parsing: tokenParsing} = require("./backend/src/lib/jwtAuthMiddleware")
+const {parsing: tokenParsing} = require('./backend/src/lib/jwtAuthMiddleware');
 
 const {createServer} = require('node:http');
 
@@ -19,12 +19,12 @@ const io = new Server(server, {
 
 io.use(async (socket, next) => {
   const token = socket.handshake.auth.token;
-  const user = await tokenParsing(token)
-
-  if (user !== null){
-    console.log(user)
-    next()
-  }else{
+  const user = await tokenParsing(token);
+  socket.user = user;
+  if (user !== null) {
+    console.log(user);
+    next();
+  } else {
     //예외처리
   }
 });
@@ -49,13 +49,20 @@ server.listen(4000, async () => {
 
 io.on('connection', async socket => {
   console.log('a user connected');
+  socket.emit('userinfo', socket.user);
+  console.log('a userinfo has been handed to the client');
 
   if (!socket.recovered) {
     try {
       const missedMessages = await Messages.findAll();
 
       missedMessages.forEach(message => {
-        socket.emit('chat message', message.content, message.id);
+        socket.emit(
+          'chat message',
+          message.content,
+          message.createdAt.toLocaleString(),
+          message.id,
+        );
       });
     } catch (e) {}
   }
@@ -69,10 +76,13 @@ io.on('connection', async socket => {
           raw: true,
         },
       );
+      const {
+        dataValues: {createdAt},
+      } = result;
+      io.emit('chat message', msg, createdAt.toLocaleString());
     } catch (e) {
       console.error('error saving message:', e);
     }
-    io.emit('chat message', msg);
   });
 
   // specialized features

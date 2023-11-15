@@ -12,6 +12,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      uid: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+      },
+      // role: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
+      // rid: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false,
+      // },
     },
     {
       freezeTableName: true,

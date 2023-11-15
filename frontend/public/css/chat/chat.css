@@ -22,8 +22,13 @@
   margin: auto;
   width: 80%;
   height: 400px;
-  overflow: hidden;
+  overflow: scroll;
   background-color: aqua;
+}
+
+.msg-pfp {
+  width: 100px;
+  height: 100px;
 }
 
 .message {
