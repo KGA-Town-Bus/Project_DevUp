@@ -20,11 +20,17 @@ socket.on('userinfo', user => {
 // Handle incoming chat messages
 socket.on('chat message', (msg, date, senderInfo) => {
   const item = `<div class="message-area">
+    <div class="meta-msg">
+
     <div class="message-user">
       <img src="${senderInfo.profile}" class="msg-pfp"></img>
       <span class="msg-username">${senderInfo.nickname}</span>
     </div>
+    
     <div class="message-date"><span>${date}</span></div>
+
+    </div>
+
     <div class="message"><span>${msg}</span></div>
   </div>`;
   messages.innerHTML += item;
