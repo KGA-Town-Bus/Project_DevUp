@@ -28,7 +28,6 @@ const entityList = [
 
 entityList.forEach((entity, index) => {
   const model = require(entityList[index])(sequelize, Sequelize.DataTypes);
-  console.log(model);
   db[model.name] = model;
 });
 
