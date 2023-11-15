@@ -1,3 +1,17 @@
+const commentButton = () => {
+  document.getElementById("comment-button").addEventListener("click",(e) => {
+    const commentWrapper = document.getElementById("comment-wrapper")
+
+    if (commentWrapper.style.visibility === "hidden"){
+      commentWrapper.style.visibility = "visible"
+    }else{
+      commentWrapper.style.visibility = "hidden"
+    }
+
+  })
+}
+
+
 const commentEvent = () => {
   document.getElementById("form-comment").addEventListener("submit", async (e) => {
     e.preventDefault()
@@ -25,11 +39,9 @@ const commentEvent = () => {
             <div><img class="content-user-pfp" src="${newComment.commentUserProfile}"></div>
             <div>${newComment.commentUserNickname} </div>
             <div class="comment-created-at">${newComment.commentCreatedAt}</div>
-            <button class="button-replies">Replies</button>
+            <button class="button-replies" id="button-replies">Replies</button>
          </div>
          <div class="comment-item-content">${newComment.commentContent} </div>`
-
-
     commentWrapper.insertBefore(div,commentWrapper.firstChild)
 
 
@@ -58,7 +70,7 @@ const loadComments = async () => {
             <div><img class="content-user-pfp" src="${comment.commentUserProfile}"></div>
             <div>${comment.commentUserNickname} </div>
             <div class="comment-created-at">${comment.commentCreatedAt}</div>
-            <button class="button-replies">Replies</button>
+            <button class="button-replies" data-commentId="${comment.commentUid}">Replies</button>
          </div>
          <div class="comment-item-content">${comment.commentContent} </div>`
     commentWrapper.appendChild(div)
@@ -129,7 +141,6 @@ const commentByPage = async (postUid, page) => {
     loadingEnd = true;
     return;
   }
-
   const commentWrapper = document.getElementById("comment-box")
 
   commentList.forEach((comment) => {
@@ -145,7 +156,7 @@ const commentByPage = async (postUid, page) => {
             <div><img class="content-user-pfp" src="${comment.commentUserProfile}"></div>
             <div>${comment.commentUserNickname} </div>
             <div class="comment-created-at">${comment.commentCreatedAt}</div>
-            <button class="button-replies">Replies</button>
+            <button class="button-replies" data-commentId="${comment.commentUid}">Replies</button>
          </div>
          <div class="comment-item-content">${comment.commentContent} </div>`
     commentWrapper.appendChild(div)
@@ -161,12 +172,31 @@ const infiniteScroll = async() => {
 }
 
 
+const repliesButton = () => {
+  document.getElementById("comment-box").addEventListener("click",(e)=>{
+
+    if(e.target.tagName === "BUTTON"){
+        const div = document.createElement("div")
+      div.innerHTML ="<p>test</p>"
+      e.target.appendChild(div)
+    }
+
+
+    const commentUid = e.target.dataset.commentid
+    if(commentUid !== undefined){
+      console.log(commentUid)
+    }
+
+  })
+}
 
 
 const initComment = async () => {
+  commentButton()
   commentEvent()
   await loadComments()
-  infiniteScroll()
+  await infiniteScroll()
 
+  repliesButton()
 }
 initComment()
