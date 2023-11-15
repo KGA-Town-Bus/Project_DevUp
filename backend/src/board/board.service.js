@@ -46,29 +46,6 @@ class BoardService {
       const pageSize = 10;
       const offset = (page - 1) * pageSize;
 
-      // db.Comments.count({
-      //   include: [{
-      //     model: Posts,
-      //     where: {
-      //       Posts_uid:
-      //     }
-      //   }],
-      //
-      // })
-
-      // const posts = await db.Posts.findAll({
-      //   include: [{model: db.Users}, {model: db.Likes}],
-      //   offset: offset,
-      //   limit: pageSize,
-      //   where: {
-      //     [Op.or]: [
-      //       {Posts_title: {[Op.like]: search ? `%${search}%` : '%'}},
-      //       {Posts_content: {[Op.like]: search ? `%${search}%` : '%'}},
-      //     ],
-      //   },
-      //   order: [['Posts_created_at', 'DESC']],
-      // });
-
       const posts = await db.Posts.findAll({
         include: [
           {
@@ -80,18 +57,10 @@ class BoardService {
           {
             model: db.Comments,
             attributes: [
-              // [db.sequelize.fn('COUNT', db.sequelize.col('Comments_uid')), 'commentsCount']
-              [
-                db.sequelize.fn(
-                  'IFNULL',
-                  db.sequelize.fn('COUNT', db.sequelize.col('Comments_uid')),
-                  0,
-                ),
-                'commentsCount',
-              ],
+              [db.sequelize.fn('COUNT', db.sequelize.col('Comments_uid')), 'commentsCount']
             ],
             separate: true,
-            group: ['Posts_uid', 'Comments.Comments_uid'],
+            group: ['Posts_uid'],
           },
         ],
         offset: offset,
