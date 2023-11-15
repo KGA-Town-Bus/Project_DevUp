@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       Posts_created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: sequelize.literal('now()'),
       },
       Posts_hit: {
         type: DataTypes.INTEGER,
