@@ -1,3 +1,9 @@
+require('dotenv').config();
+
+const PROTOCOL = process.env.PROTOCOL;
+const FRONTEND_SERVER_IP = process.env.FRONTEND_SERVER_IP;
+const FRONTEND_SERVER_PORT = process.env.FRONTEND_SERVER_PORT;
+
 const db = require('./backend/src/lib/db');
 const frontApp = require('./frontend/app');
 const backApp = require('./backend/app');
@@ -12,7 +18,7 @@ const server = createServer(backApp);
 
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: `${PROTOCOL}://${FRONTEND_SERVER_IP}:${FRONTEND_SERVER_PORT}`,
     methods: ['GET', 'POST'],
     credentials: true,
   },
