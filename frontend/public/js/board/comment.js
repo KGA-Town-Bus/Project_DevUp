@@ -4,8 +4,7 @@ const commentEvent = () => {
     const comment = e.target.comment.value
     const postUid = window.location.pathname.split("/posts/")[1]
 
-
-    const {data: {data:newComment}} = await axios.post("http://localhost:4000/comments", {
+    const {data: {data:newComment}} = await axios.post(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/comments`, {
       comment,
       postUid
     }, {
@@ -39,7 +38,7 @@ const commentEvent = () => {
 const loadComments = async () => {
   const postUid = window.location.pathname.split("/posts/")[1]
 
-  const {data: {data: commentList}} = await axios.get(`http://localhost:4000/comments?post=${postUid}`)
+  const {data: {data: commentList}} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/comments?post=${postUid}`)
 
   const commentWrapper = document.getElementById("comment-box")
 
