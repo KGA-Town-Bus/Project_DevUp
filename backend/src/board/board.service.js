@@ -74,10 +74,7 @@ class BoardService {
         order: [['Posts_created_at', 'DESC']],
       });
 
-
-
       return posts.map(post => {
-
         const data = {
           Posts_uid: post.dataValues.Posts_uid,
           Posts_title: post.dataValues.Posts_title,
@@ -89,13 +86,13 @@ class BoardService {
           Posts_like: post.dataValues.Posts_like,
         };
 
-        if(post.dataValues.Comments.length === 0) {
+        if (post.dataValues.Comments.length === 0) {
           data.Comment = 0;
-        }else{
-          data.Comment = post.Comments[0].dataValues.commentsCount
+        } else {
+          data.Comment = post.Comments[0].dataValues.commentsCount;
         }
 
-          return new PostReadAllResponseDTO(data);
+        return new PostReadAllResponseDTO(data);
       });
     } catch (e) {
       console.error('Service findAllPost Error', e);
@@ -135,8 +132,8 @@ class BoardService {
       }
       const {postUid, postTitle, postContent} = postUpdateRequestDTO;
       await db.Posts.update(
-          {Posts_title: postTitle, Posts_content: postContent},
-          {where: {Posts_uid: postUid}},
+        {Posts_title: postTitle, Posts_content: postContent},
+        {where: {Posts_uid: postUid}},
       );
       // const updatedPost = await db.Posts.findOne({
       //   where: {Posts_uid: postUid},
