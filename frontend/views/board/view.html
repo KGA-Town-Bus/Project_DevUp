@@ -81,6 +81,7 @@
               {{ post.postContent | safe }}
             </div>
           </div>
+
           <div class="button-box">
             {% if canEdit %}
             <button class="modify-button" data-postid="{{ post.postUid }}">
@@ -88,9 +89,12 @@
             </button>
             <button class="delete-button">Delete</button>
             {% endif %}
-            <a href="/">Back to List</a>
-            <button id="like-button">❤️</button>
-            <p id="likeCount">{{post.postLike}}</p>
+            <button class="back-button" onclick="location.href = '/'">Back to List</button>
+            <button class="comment-button">Comments</button>
+
+
+            <button class="like-button" id="like-button"><img src="/images/Like Icon.svg" alt=""/></button>
+            <p class="like-count" id="likeCount">{{post.postLike}}</p>
           </div>
         </div>
 
