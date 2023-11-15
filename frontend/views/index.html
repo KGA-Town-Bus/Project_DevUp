@@ -43,7 +43,9 @@
       {% if user %}
       <div class="buttons">
         <a href="/users/logout">
-          <button class="logout bs">Logout</button>
+          <button onclick="localStorage.clear()" class="logout bs">
+            Logout
+          </button>
         </a>
       </div>
       {% else %}
