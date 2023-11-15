@@ -65,19 +65,23 @@
     <div class="container">
       <div id="contents" class="contents">
         <div class="post-wrapper">
-          <div><h1>{{ post.postTitle }}</h1></div>
+
+          <div class="post-title"><h1>{{ post.postTitle }}</h1></div>
+
           <div>
             <div class="post-header">
               <img class="content-user-pfp" src="{{post.userProfile}}" />
               <div>{{ post.postWriter}}</div>
               <div class="post-created-at">{{post.postCreatedAt}}</div>
               <img class="post-hit-icon" src="/images/Hit Icon.svg" />
-              <div>{{post.postHit}}</div>
+              <div class="post-hit">{{post.postHit}}</div>
             </div>
+
             <div class="post-content" id="post-content">
               {{ post.postContent | safe }}
             </div>
           </div>
+
           <div class="button-box">
             {% if canEdit %}
             <button class="modify-button" data-postid="{{ post.postUid }}">
@@ -85,9 +89,12 @@
             </button>
             <button class="delete-button">Delete</button>
             {% endif %}
-            <a href="/">Back to List</a>
-            <button id="like-button">❤️</button>
-            <p id="likeCount">{{post.postLike}}</p>
+            <button class="back-button" onclick="location.href = '/'">Back to List</button>
+            <button class="comment-button">Comments</button>
+
+
+            <button class="like-button" id="like-button"><img src="/images/Like Icon.svg" alt=""/></button>
+            <p class="like-count" id="likeCount">{{post.postLike}}</p>
           </div>
         </div>
 
