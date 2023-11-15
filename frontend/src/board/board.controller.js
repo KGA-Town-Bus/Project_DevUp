@@ -82,6 +82,7 @@ class BoardController {
         like: 0,
         canEdit: postData.isAuthor,
       });
+      console.log(postData.postContent);
     } catch (e) {
       next(e);
     }

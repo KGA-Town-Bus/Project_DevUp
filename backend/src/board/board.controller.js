@@ -53,7 +53,7 @@ class BoardController {
         postReadRequestDTO,
         userUid,
       );
-      res.status(201).json(data);
+      res.status(201).send(data);
     } catch (e) {
       console.error('postCreate Error', e);
       next(e);

@@ -11,35 +11,22 @@ document.addEventListener('DOMContentLoaded', function () {
     publishButton.addEventListener('click', async function () {
       const postTitle = document.querySelector('.postTitle').value;
       const postContent = window.editor.getData();
+      const url = window.location.pathname;
+      const postUid = url.substring(url.lastIndexOf('/') + 1);
 
-      console.log(postContent);
-
-      if (!postTitle.trim() || !postContent.trim()) {
-        alert('제목과 내용을 모두 입력해주세요.');
-        return; // 함수 실행 중단
-      }
-
-      // axios communication with backend
-      const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/create`;
+      const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`;
       const axiosBody = {
         postTitle,
         postContent,
       };
-      const axiosOptions = {
-        withCredentials: true,
-      };
 
       try {
-        const {
-          data: {data},
-        } = await axios.post(axiosPath, axiosBody, axiosOptions);
-
-        const postUid = data; // 서버 응답 구조에 따라 조정 필요
-
+        const response = await axios.put(axiosPath, axiosBody, {
+          withCredentials: true,
+        });
         location.href = `/posts/${postUid}`;
       } catch (error) {
-        console.error('Error during post creation:', error);
-        // 오류 처리 로직 추가
+        console.error('Error during post update:', error);
       }
     });
   }

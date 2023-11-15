@@ -6,6 +6,7 @@ const {parsing: tokenParsing} = require('./backend/src/lib/jwtAuthMiddleware');
 const {createServer} = require('node:http');
 
 const {Server} = require('socket.io');
+const {BadRequest} = require("./backend/src/lib/customException");
 
 const server = createServer(backApp);
 
@@ -19,11 +20,13 @@ const io = new Server(server, {
 
 io.use(async (socket, next) => {
   const token = socket.handshake.auth.token;
+
   const user = await tokenParsing(token);
   socket.user = user;
   if (user !== null) {
     console.log(user);
     next();
+
   } else {
     //예외처리
   }
@@ -44,6 +47,15 @@ frontApp.listen(3000, () => {
 
 server.listen(4000, async () => {
   await db.sequelize.sync({force: false});
+
+  const data = ["admin", "user" ];
+
+  for (const row of data) {
+    await db.Role.findOrCreate({
+      where: { Role_authority:row },
+      defaults: row,
+    });
+  }
   console.log(`Backend START: 4000`);
 });
 
@@ -64,17 +76,18 @@ io.on('connection', async socket => {
           message.id,
         );
       });
-    } catch (e) {}
+    } catch (e) {
+    }
   }
 
   socket.on('chat message', async msg => {
     let result;
     try {
       result = await Messages.create(
-        {content: msg},
-        {
-          raw: true,
-        },
+          {content: msg},
+          {
+            raw: true,
+          },
       );
       const {
         dataValues: {createdAt},
