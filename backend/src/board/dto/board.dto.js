@@ -47,6 +47,7 @@ class PostReadAllResponseDTO extends BaseDTO {
   postHit;
   userProfile;
   postLike;
+  comment
 
   constructor(response) {
     super();
@@ -58,6 +59,7 @@ class PostReadAllResponseDTO extends BaseDTO {
     this.postHit = response.Posts_hit;
     this.userProfile = response.Users_profile;
     this.postLike = response.Posts_like;
+    this.comment = response.Comment
   }
 }
 

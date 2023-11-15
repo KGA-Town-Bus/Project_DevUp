@@ -19,6 +19,7 @@ class BoardService {
     }
     return instance;
   }
+
   async createPost(createRequestDTO) {
     try {
       if (!(createRequestDTO instanceof PostCreateRequestDTO)) {
@@ -45,8 +46,49 @@ class BoardService {
       const pageSize = 10;
       const offset = (page - 1) * pageSize;
 
+      // db.Comments.count({
+      //   include: [{
+      //     model: Posts,
+      //     where: {
+      //       Posts_uid:
+      //     }
+      //   }],
+      //
+      // })
+
+      // const posts = await db.Posts.findAll({
+      //   include: [{model: db.Users}, {model: db.Likes}],
+      //   offset: offset,
+      //   limit: pageSize,
+      //   where: {
+      //     [Op.or]: [
+      //       {Posts_title: {[Op.like]: search ? `%${search}%` : '%'}},
+      //       {Posts_content: {[Op.like]: search ? `%${search}%` : '%'}},
+      //     ],
+      //   },
+      //   order: [['Posts_created_at', 'DESC']],
+      // });
+
+
       const posts = await db.Posts.findAll({
-        include: [{model: db.Users}, {model: db.Likes}],
+        include: [
+          {
+            model: db.Users,
+          },
+          {
+            model: db.Likes,
+          },
+          {
+            model: db.Comments,
+            attributes: [
+              // [db.sequelize.fn('COUNT', db.sequelize.col('Comments_uid')), 'commentsCount']
+              [db.sequelize.fn('IFNULL', db.sequelize.fn('COUNT', db.sequelize.col('Comments_uid')), 0), 'commentsCount']
+
+            ],
+            separate: true,
+            group: ['Posts_uid'],
+          },
+        ],
         offset: offset,
         limit: pageSize,
         where: {
@@ -58,7 +100,10 @@ class BoardService {
         order: [['Posts_created_at', 'DESC']],
       });
 
+
+
       return posts.map(post => {
+
         const data = {
           Posts_uid: post.dataValues.Posts_uid,
           Posts_title: post.dataValues.Posts_title,
@@ -70,7 +115,13 @@ class BoardService {
           Posts_like: post.dataValues.Posts_like,
         };
 
-        return new PostReadAllResponseDTO(data);
+        if(post.dataValues.Comments.length === 0) {
+          data.Comment = 0;
+        }else{
+          data.Comment = post.Comments[0].dataValues.commentsCount
+        }
+
+          return new PostReadAllResponseDTO(data);
       });
     } catch (e) {
       console.error('Service findAllPost Error', e);
@@ -110,8 +161,8 @@ class BoardService {
       }
       const {postUid, postTitle, postContent} = postUpdateRequestDTO;
       await db.Posts.update(
-        {Posts_title: postTitle, Posts_content: postContent},
-        {where: {Posts_uid: postUid}},
+          {Posts_title: postTitle, Posts_content: postContent},
+          {where: {Posts_uid: postUid}},
       );
       // const updatedPost = await db.Posts.findOne({
       //   where: {Posts_uid: postUid},
@@ -142,6 +193,7 @@ class BoardService {
       throw new Error(e.message);
     }
   }
+
   async incrementHit(postUid) {
     try {
       await db.Posts.increment('Posts_hit', {

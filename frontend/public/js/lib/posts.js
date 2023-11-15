@@ -100,7 +100,7 @@ const postByPage = async (page, searchString) => {
           <img src="images/Like Icon.svg" alt=""/>
           <span id="postLike">${post.postLike}</span>
           <img src="images/Comment Icon.svg" alt=""/>
-          <span>50</span>
+          <span>${post.comment}</span>
         </div>
       </div>
     </section>`;
