@@ -33,6 +33,19 @@ input.postTitle {
   color: #ffffff;
 }
 
+textarea {
+  resize: none;
+  outline: none;
+  width: 450px;
+  height: 345px;
+  border: none;
+  border-radius: 20px;
+  background: #374151;
+  padding: 10px;
+  color: #eee;
+  display: none;
+}
+
 .ck-editor__editable_inline {
   min-height: 300px;
   width: 435px;
@@ -49,18 +62,42 @@ input.postTitle {
   color: #ffffff;
 }
 
-.ck.ck-toolbar {
+.ck.ck-toolbar__items {
   background-color: #374151 !important;
   color: white !important;
   border: none !important;
   border-radius: 20px 20px 0 0 !important;
-}
-
-.ck.ck-button {
-  color: white !important;
+  background-color: inherit; /* 기본 배경색 유지 */
+  color: inherit; /* 기본 텍스트 색상 유지 */
 }
 
 .ck.ck-button:hover,
 .ck.ck-button.ck-on {
   color: #29313d !important;
+}
+
+.ck-button:hover {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+.ck.ck-reset.ck-dropdown__panel.ck-dropdown__panel_se.ck-dropdown__panel-visible
+  ul
+  li
+  span {
+  color: black !important;
+}
+
+/* 코드블록 언어 선택 메뉴의 클래스 이름을 확인하여 적용 */
+.ck-dropdown__panel {
+  color: black !important; /* 글자색 변경 */
+}
+
+/* 선택 가능한 항목에 대한 스타일 변경 */
+.ck-dropdown__panel .ck-button {
+  color: black !important; /* 글자색 변경 */
+}
+
+#ck-editor__aria-label_ {
+  color: black !important;
 }

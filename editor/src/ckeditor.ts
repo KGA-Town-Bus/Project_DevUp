@@ -12,7 +12,13 @@ import {CodeBlock} from '@ckeditor/ckeditor5-code-block';
 import {EasyImage} from '@ckeditor/ckeditor5-easy-image';
 import {Essentials} from '@ckeditor/ckeditor5-essentials';
 import {FontColor, FontSize} from '@ckeditor/ckeditor5-font';
-import {Image, ImageResize, ImageUpload} from '@ckeditor/ckeditor5-image';
+import {
+  Image,
+  ImageResize,
+  ImageStyle,
+  ImageToolbar,
+  ImageUpload,
+} from '@ckeditor/ckeditor5-image';
 import {Link} from '@ckeditor/ckeditor5-link';
 import {Paragraph} from '@ckeditor/ckeditor5-paragraph';
 
@@ -31,6 +37,8 @@ class Editor extends ClassicEditor {
     FontSize,
     Image,
     ImageResize,
+    ImageStyle,
+    ImageToolbar,
     ImageUpload,
     Italic,
     Link,
@@ -41,8 +49,8 @@ class Editor extends ClassicEditor {
     toolbar: {
       items: [
         'fontColor',
-        'fontSize',
         'bold',
+        'fontSize',
         'italic',
         '|',
         'imageUpload',
@@ -54,6 +62,14 @@ class Editor extends ClassicEditor {
       ],
     },
     language: 'en',
+    image: {
+      toolbar: [
+        'imageTextAlternative',
+        'imageStyle:inline',
+        'imageStyle:block',
+        'imageStyle:side',
+      ],
+    },
   };
 }
 

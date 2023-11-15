@@ -99,6 +99,7 @@ class BoardController {
       postUid,
       req,
     );
+    console.log(postContent);
     res.render('board/modify', {
       postUid,
       user,
