@@ -119,7 +119,6 @@ const addClickListenerToPosts = () => {
     });
 
     post.addEventListener('click', e => {
-      // content-footer와 userProfile 영역 클릭 시 이벤트를 트리거하지 않음
       if (
         e.target.closest('.content-footer') ||
         e.target.closest('.content-user')
@@ -128,7 +127,7 @@ const addClickListenerToPosts = () => {
       }
 
       const postUid = post.getAttribute('data-post-id');
-      window.location.href = `/posts/${postUid}`; // 게시물 상세 페이지로 이동
+      window.location.href = `/posts/${postUid}`;
     });
   });
 };

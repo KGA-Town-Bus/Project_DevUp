@@ -113,10 +113,11 @@ class BoardService {
         {Posts_title: postTitle, Posts_content: postContent},
         {where: {Posts_uid: postUid}},
       );
-      const updatedPost = await db.Posts.findOne({
-        where: {Posts_uid: postUid},
-      });
-      return new PostUpdateResponseDTO(updatedPost);
+      // const updatedPost = await db.Posts.findOne({
+      //   where: {Posts_uid: postUid},
+      // });
+      // return new PostUpdateResponseDTO(updatedPost);
+      return {message: '업데이트 성공'};
     } catch (e) {
       console.error('Service updatePost Error', e);
       throw new Error(e.message);
