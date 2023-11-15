@@ -31,8 +31,7 @@
           ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
         /></a>
         <div class="text-set ts">
-          <span>Public Chat</span>
-          <span>Stats</span>
+          <span href="/chat">Public Chat</span>
           <a href="/admin"><span>Admin</span></a>
         </div>
         <div class="search">
@@ -48,7 +47,9 @@
         {% if user %}
         <div class="buttons">
           <a href="/users/logout">
-            <button class="logout bs">Logout</button>
+            <button onclick="localStorage.clear()" class="logout bs">
+              Logout
+            </button>
           </a>
         </div>
         {% else %}

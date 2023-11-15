@@ -32,8 +32,7 @@
         ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
       /></a>
       <div class="text-set ts">
-        <span>Public Chat</span>
-        <span>Stats</span>
+        <span href="/chat">Public Chat</span>
         <a href="/admin"><span>Admin</span></a>
       </div>
       <div class="search">
@@ -49,7 +48,9 @@
       {% if user %}
       <div class="buttons">
         <a href="/users/logout">
-          <button class="logout bs">Logout</button>
+          <button onclick="localStorage.clear()" class="logout bs">
+            Logout
+          </button>
         </a>
       </div>
       {% else %}
@@ -66,7 +67,6 @@
     <div class="container">
       <div id="contents" class="contents">
         <div class="post-wrapper">
-
           <div class="post-title"><h1>{{ post.postTitle }}</h1></div>
 
           <div>
@@ -90,18 +90,26 @@
             </button>
             <button class="delete-button">Delete</button>
             {% endif %}
-            <button class="back-button" onclick="location.href = '/'">Back to List</button>
+            <button class="back-button" onclick="location.href = '/'">
+              Back to List
+            </button>
             <button class="comment-button">Comments</button>
 
-
-            <button class="like-button" id="like-button"><img src="/images/Like Icon.svg" alt=""/></button>
+            <button class="like-button" id="like-button">
+              <img src="/images/Like Icon.svg" alt="" />
+            </button>
             <p class="like-count" id="likeCount">{{post.postLike}}</p>
           </div>
         </div>
 
         <div class="comment-wrapper">
           <form class="form-comment" id="form-comment">
-            <input type="text" name="comment" class="comment-input" id="commentInput"/>
+            <input
+              type="text"
+              name="comment"
+              class="comment-input"
+              id="commentInput"
+            />
             <button type="submit" class="comment-submit">Post</button>
           </form>
           <div class="comment-box" id="comment-box"></div>

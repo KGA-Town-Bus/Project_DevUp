@@ -13,13 +13,16 @@
         ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
       /></a>
       <div class="text-set ts">
-        <span>Public Chat</span>
-        <span>Stats</span>
-        <span>Admin</span>
+        <span href="/chat">Public Chat</span>
+        <span href="/admin">Admin</span>
       </div>
       {% if user %}
       <div class="buttons">
-        <a href="/users/logout"><button class="logout bs">Logout</button></a>
+        <a href="/users/logout"
+          ><button onclick="localStorage.clear()" class="logout bs">
+            Logout
+          </button></a
+        >
       </div>
       {% else %}
       <div class="buttons">
