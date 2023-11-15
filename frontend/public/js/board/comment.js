@@ -14,15 +14,24 @@ const commentEvent = () => {
 
     const commentWrapper = document.getElementById("comment-box")
     const div = document.createElement("div")
+    div.className = "comment-item"
+
 
     const dateTime = new Date(newComment.commentCreatedAt)
 
     newComment.commentCreatedAt = dateTime.toLocaleDateString() + "  " + dateTime.toLocaleTimeString()
+
     div.innerHTML =
-        `${newComment.commentUserNickname} 
-        / ${newComment.commentContent} 
-        / ${newComment.commentCreatedAt}`
-    commentWrapper.appendChild(div)
+        `<div class="comment-item-header">
+            <div><img class="content-user-pfp" src="${newComment.commentUserProfile}"></div>
+            <div>${newComment.commentUserNickname} </div>
+            <div class="comment-created-at">${newComment.commentCreatedAt}</div>
+            <button class="button-replies">Replies</button>
+         </div>
+         <div class="comment-item-content">${newComment.commentContent} </div>`
+
+
+    commentWrapper.insertBefore(div,commentWrapper.firstChild)
 
   })
 }
@@ -36,16 +45,21 @@ const loadComments = async () => {
 
   commentList.forEach((comment) => {
     const div = document.createElement("div")
+    div.className = "comment-item"
 
     const dateTime = new Date(comment.commentCreatedAt)
 
     comment.commentCreatedAt = dateTime.toLocaleDateString() + "  " + dateTime.toLocaleTimeString()
-    div.innerHTML =
-        `${comment.commentUserNickname} 
-        / ${comment.commentContent} 
-        / ${comment.commentCreatedAt}`
-    commentWrapper.appendChild(div)
 
+    div.innerHTML =
+        `<div class="comment-item-header">
+            <div><img class="content-user-pfp" src="${comment.commentUserProfile}"></div>
+            <div>${comment.commentUserNickname} </div>
+            <div class="comment-created-at">${comment.commentCreatedAt}</div>
+            <button class="button-replies">Replies</button>
+         </div>
+         <div class="comment-item-content">${comment.commentContent} </div>`
+    commentWrapper.appendChild(div)
   })
 
 }

@@ -9,6 +9,7 @@ class CommentResponseDTO extends baseDTO {
   commentPostUid
   commentUserUid
   commentUserNickname
+  commentUserProfile
   commentUid2
 
 
@@ -21,6 +22,7 @@ class CommentResponseDTO extends baseDTO {
     this.commentUserUid = comment.Users_uid
     this.commentUid2 = comment.Comments_uid2
     this.commentUserNickname = comment.User.dataValues.Users_nickname
+    this.commentUserProfile = comment.User.dataValues.Users_profile
 
     this.validate(this, InternalServerError)
   }

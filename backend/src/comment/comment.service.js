@@ -13,11 +13,12 @@ class CommentService {
     const commentList = await this.commentRepository.findAll({
       include: [{
         model: db.Users,
-        attributes: ["Users_nickname"]
+        attributes: ["Users_nickname", "Users_profile"]
       }],
       where: {
         Posts_uid: postUid
-      }
+      },
+      order: [['Comments_created_at', 'DESC']],
     })
 
     return commentList.map((comment) => {
@@ -38,7 +39,7 @@ class CommentService {
       const {dataValues} = await this.commentRepository.findOne({
         include: {
           model : db.Users,
-          attributes: ["Users_nickname"]
+          attributes: ["Users_nickname", "Users_profile"]
         },
         where: {
           Comments_uid: result.Comments_uid
