@@ -1,9 +1,3 @@
-require('dotenv').config();
-
-const PROTOCOL = process.env.PROTOCOL;
-const FRONTEND_SERVER_IP = process.env.FRONTEND_SERVER_IP;
-const FRONTEND_SERVER_PORT = process.env.FRONTEND_SERVER_PORT;
-
 const db = require('./backend/src/lib/db');
 const frontApp = require('./frontend/app');
 const backApp = require('./backend/app');
@@ -16,9 +10,15 @@ const {BadRequest} = require('./backend/src/lib/customException');
 
 const server = createServer(backApp);
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'https://devup.hyunjun.kr',
+];
+
 const io = new Server(server, {
   cors: {
-    origin: `${PROTOCOL}://${FRONTEND_SERVER_IP}:${FRONTEND_SERVER_PORT}`,
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
     credentials: true,
   },
