@@ -6,7 +6,7 @@ const {parsing: tokenParsing} = require('./backend/src/lib/jwtAuthMiddleware');
 const {createServer} = require('node:http');
 
 const {Server} = require('socket.io');
-const {BadRequest} = require("./backend/src/lib/customException");
+const {BadRequest} = require('./backend/src/lib/customException');
 
 const server = createServer(backApp);
 
@@ -26,7 +26,6 @@ io.use(async (socket, next) => {
   if (user !== null) {
     console.log(user);
     next();
-
   } else {
     //예외처리
   }
@@ -48,51 +47,73 @@ frontApp.listen(3000, () => {
 server.listen(4000, async () => {
   await db.sequelize.sync({force: false});
 
-  const data = ["admin", "user" ];
+  const data = ['admin', 'user'];
 
   for (const row of data) {
     await db.Role.findOrCreate({
-      where: { Role_authority:row },
+      where: {Role_authority: row},
       defaults: row,
     });
   }
   console.log(`Backend START: 4000`);
 });
 
+let users = {};
+
 io.on('connection', async socket => {
-  console.log('a user connected');
   socket.emit('userinfo', socket.user);
   console.log('a userinfo has been handed to the client');
 
+  socket.on('register', uid => {
+    users[uid] = socket.id;
+    console.log(`${uid} connected with ${socket.id}`);
+  });
+
   if (!socket.recovered) {
     try {
-      const missedMessages = await Messages.findAll();
+      const missedMessages = await Messages.findAll({
+        include: [
+          {
+            model: db.Users,
+            attributes: ['Users_profile', 'Users_nickname'],
+          },
+        ],
+      });
+
+      console.log('kkk', missedMessages);
 
       missedMessages.forEach(message => {
+        const userinfo = message.User.dataValues;
+
+        const senderInfo = {
+          profile: userinfo.Users_profile,
+          nickname: userinfo.Users_nickname,
+        };
         socket.emit(
           'chat message',
           message.content,
           message.createdAt.toLocaleString(),
-          message.id,
+          senderInfo,
         );
       });
     } catch (e) {
+      console.error('Error retrieving missed messages:', e);
     }
   }
 
   socket.on('chat message', async msg => {
     let result;
     try {
-      result = await Messages.create(
-          {content: msg},
-          {
-            raw: true,
-          },
-      );
-      const {
-        dataValues: {createdAt},
-      } = result;
-      io.emit('chat message', msg, createdAt.toLocaleString());
+      result = await Messages.create({
+        content: msg,
+        Users_uid: socket.user.Users_uid,
+        Users_profile: socket.user.Users_profile,
+      });
+      const senderInfo = {
+        profile: socket.user.Users_profile,
+        nickname: socket.user.Users_nickname,
+      };
+      io.emit('chat message', msg, result.createdAt, senderInfo);
     } catch (e) {
       console.error('error saving message:', e);
     }

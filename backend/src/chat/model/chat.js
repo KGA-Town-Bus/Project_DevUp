@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      uid: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-      },
+      // uid: {
+      //   type: DataTypes.BIGINT,
+      //   allowNull: true,
+      // },
       // role: {
       //   type: DataTypes.STRING,
       //   allowNull: false,
