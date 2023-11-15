@@ -6,9 +6,12 @@
     <title>{{ post.title }}</title>
     <link rel="stylesheet" href="/css/index.css" />
     <link rel="stylesheet" href="/css/board/view.css" />
-    <link rel="stylesheet" href="/css/board/editor.css" />
+    <link rel="stylesheet" href="/css/board/prism.css" />
+
     <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
     <script>
       const PROTOCOL = "{{backServer.PROTOCOL}}"
       const BACKEND_SERVER_IP = "{{backServer.BACKEND_SERVER_IP}}"
@@ -66,8 +69,16 @@
               <img class="post-hit-icon" src="/images/Hit Icon.svg" />
               <div>{{post.postHit}}</div>
             </div>
-            <div class="post-content">
+            <pre><code class="language-javascript">
+              // JavaScript 코드
+              console.log("Hello, World!");
+              </code></pre>
+            <div class="post-content" id="post-content">
               {{ post.postContent | safe }}
+              <pre><code class="language-python">
+                # Python 코드
+                print("Hello, World!")
+                </code></pre>
             </div>
           </div>
           <div class="button-box">
@@ -126,5 +137,11 @@
         <div class="modal-body"></div>
       </div>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const postContent = '{{post.postContent | safe}}';
+        document.querySelector('#post-content').innerHTML = postContent;
+      });
+    </script>
   </body>
 </html>

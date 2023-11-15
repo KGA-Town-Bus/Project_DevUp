@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
   const likeButton = document.querySelector('#like-button');
-  const publishButton = document.querySelector('.publish-button');
   const deleteButton = document.querySelector('.delete-button');
   const modifyButton = document.querySelector('.modify-button');
   const postButton = document.querySelector('.post');
-
   if (likeButton) {
     likeButton.addEventListener('click', async function () {
       const url = window.location.pathname;
@@ -21,30 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('likeCount').textContent = likedCount;
       } catch (error) {
         console.error('Error during like request:', error);
-      }
-    });
-  }
-
-  if (publishButton) {
-    publishButton.addEventListener('click', async function () {
-      const postTitle = document.querySelector('.postTitle').value;
-      const postContent = editorInstance.getData().replace(/<[^>]*>/g, '');
-      const url = window.location.pathname;
-      const postUid = url.substring(url.lastIndexOf('/') + 1);
-
-      const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`;
-      const axiosBody = {
-        postTitle,
-        postContent,
-      };
-
-      try {
-        const response = await axios.put(axiosPath, axiosBody, {
-          withCredentials: true,
-        });
-        location.href = `/posts/${postUid}`;
-      } catch (error) {
-        console.error('Error during post update:', error);
       }
     });
   }
