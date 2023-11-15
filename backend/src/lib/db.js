@@ -20,7 +20,7 @@ const entityList = [
   '../user/role',
   `../email/email`,
   `../board/model/board`,
-    '../comment/comment',
+  '../comment/comment',
   // `../board/model/comments`,
   `../board/model/likes`,
   `../chat/model/chat`,
@@ -65,39 +65,40 @@ db.Role.hasMany(db.Users, {
 });
 
 db.Users.belongsTo(db.Role, {
-
-  foreignKey: "Role_authority"
-})
+  foreignKey: 'Role_authority',
+});
 
 db.Comments.belongsTo(db.Posts, {
-  foreignKey: "Posts_uid"
-})
+  foreignKey: 'Posts_uid',
+});
 
 db.Posts.hasMany(db.Comments, {
-  foreignKey: "Posts_uid"
-})
-
+  foreignKey: 'Posts_uid',
+});
 
 db.Comments.belongsTo(db.Users, {
-  foreignKey: "Users_uid"
-})
+  foreignKey: 'Users_uid',
+});
 
 db.Users.hasMany(db.Comments, {
-  foreignKey: "Users_uid"
-})
+  foreignKey: 'Users_uid',
+});
 
 db.Comments.belongsTo(db.Comments, {
-  foreignKey: "Comments_uid2"
-})
+  foreignKey: 'Comments_uid2',
+});
 
 db.Comments.hasMany(db.Comments, {
-  foreignKey: "Comments_uid2"
-})
+  foreignKey: 'Comments_uid2',
+});
 
+db.Messages.belongsTo(db.Users, {
+  foreignKey: 'Users_uid',
+});
 
-
-
-
+db.Users.hasMany(db.Messages, {
+  foreignKey: 'Users_uid',
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

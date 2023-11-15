@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ post.title }}</title>
@@ -100,7 +101,7 @@
 
         <div class="comment-wrapper">
           <form class="form-comment" id="form-comment">
-            <input type="text" name="comment" class="comment-input" />
+            <input type="text" name="comment" class="comment-input" id="commentInput"/>
             <button type="submit" class="comment-submit">Post</button>
           </form>
           <div class="comment-box" id="comment-box"></div>

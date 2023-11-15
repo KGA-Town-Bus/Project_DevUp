@@ -8,7 +8,7 @@ class CommentController {
 
   async getComments(req, res, next) {
     try {
-      const commentListResponseDTO = await this.service.commentList(req.query.post)
+      const commentListResponseDTO = await this.service.commentList(req.query.post, req.query.page)
 
       res.status(200).json(new OK(commentListResponseDTO))
     } catch (e) {

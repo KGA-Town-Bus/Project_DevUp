@@ -97,14 +97,21 @@ textarea::placeholder {
   border: none;
 }
 
-.contents {
-  background-color: rgba(0, 0, 0, 30%);
-  height: 936px;
+
+
+.contents{
+  background-color: rgba(0,0,0,30%);
+  min-height: 860px;
+
   border-radius: 20px;
 }
 
 .post-wrapper {
   width: 80%;
+
+
+  margin-bottom: -30px;
+
 }
 
 .post-title {
@@ -219,14 +226,19 @@ textarea::placeholder {
   padding-left: 30px;
 }
 
-.comment-box {
-  height: 290px;
+
+
+
+.comment-box{
+  height: 240px;
+
   width: 710px;
   overflow-y: scroll;
 }
 
-.comment-item {
-  height: 140px;
+
+.comment-item{
+  height: 120px;
   background-color: #374151;
   padding: 10px;
   border-radius: 20px;
@@ -257,6 +269,8 @@ textarea::placeholder {
 
 .comment-item-content {
   padding: 0 50px;
+  width: 660px;
+
 }
 
 .comment-submit {
