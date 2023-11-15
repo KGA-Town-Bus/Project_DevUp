@@ -98,13 +98,11 @@ const debounceScroll = _.debounce(async function () {
 
 const loading = {
   start: () => {
-    document.getElementById("comment-box").style.height = "340px"
-
     const spinnerWrapper = document.createElement('div');
     spinnerWrapper.id = 'spinner-wrapper';
     spinnerWrapper.style.display = 'flex';
     spinnerWrapper.style.alignItems = 'center';
-    spinnerWrapper.style.marginTop = "-30px"
+    spinnerWrapper.style.marginTop = "-90px"
 
     const spinner = document.createElement('img');
     spinner.id = 'spinner';
@@ -117,7 +115,6 @@ const loading = {
   },
 
   end: () => {
-    document.getElementById("comment-box").style.height = "240px"
 
     const loading = document.querySelector('#spinner-wrapper');
     loading.remove();
@@ -126,9 +123,6 @@ const loading = {
 
 
 const commentByPage = async (postUid, page) => {
-  let postList;
-
-
   const {data: {data:commentList}} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/comments?post=${postUid}&page=${page}`)
 
   if (commentList.length === 0) {
