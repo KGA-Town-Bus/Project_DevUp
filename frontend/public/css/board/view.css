@@ -129,19 +129,19 @@ textarea::placeholder {
 
 .post-title {
   background-color: rgba(0, 0, 0, 30%);
-  border-radius: 10px;
+  /* border-radius: 10px; */
   color: white;
-  padding: 10px;
+  padding: 20px 10px 10px 20px;
 }
 
 .post-header {
   background-color: rgba(0, 0, 0, 30%);
-  margin-top: 19px;
+  /* margin-top: 19px; */
   display: flex;
   flex-direction: row;
   gap: 10px;
   color: white;
-  padding: 10px;
+  padding: 10px 10px 20px 20px;
 }
 
 .post-header div {
@@ -164,7 +164,7 @@ textarea::placeholder {
 
 .post-content {
   background-color: rgba(0, 0, 0, 30%);
-  margin-top: 10px;
+  margin-top: 12px;
   height: 600px;
   color: white;
   padding: 20px;
@@ -180,13 +180,14 @@ textarea::placeholder {
   display: flex;
   flex-direction: row;
   justify-content: end;
+  align-items: center;
   gap: 30px;
 }
 
 .modify-button,
 .delete-button,
 .back-button {
-  width: 105px;
+  width: 90px;
   height: 27px;
   border-radius: 20px;
   border: none;
@@ -207,10 +208,12 @@ textarea::placeholder {
 
 .like-button {
   background-color: rgba(0, 0, 0, 0);
+  padding-top: 10px;
   border: none;
 }
 
 .like-count {
+margin: 0 20px 5px 0;
   color: white;
 }
 
@@ -226,6 +229,15 @@ textarea::placeholder {
   height: 50px;
 }
 
+.form-comment> input::placeholder{
+  color: white;
+}
+
+input, textarea {
+  caret-color: rgb(255, 255, 255); 
+}
+
+
 /*comment*/
 .comment-wrapper {
   padding-top: 10px;
@@ -237,6 +249,7 @@ textarea::placeholder {
   background-color: rgba(0, 0, 0, 30%);
   font-size: 24px;
   color: white;
+  padding-left: 10px;
 }
 
 .comment-box {
@@ -293,13 +306,14 @@ textarea::placeholder {
 .comment-submit {
   position: relative;
   top: -35px;
-  left: 410px;
-  width: 40px;
-  height: 25px;
+  left: 405px;
+  width: 50px;
+  height: 27.5px;
   background-color: #8d8acf;
   color: white;
   border-radius: 10px;
   border: none;
+
 }
 
 .replies-item {
