@@ -7,6 +7,13 @@ ClassicEditor.create(document.querySelector('.editor'), {
 })
   .then(editor => {
     window.editor = editor;
+    editor.editing.view.change(writer => {
+      writer.setAttribute(
+        'spellcheck',
+        'false',
+        editor.editing.view.document.getRoot(),
+      );
+    });
   })
   .catch(handleSampleError);
 

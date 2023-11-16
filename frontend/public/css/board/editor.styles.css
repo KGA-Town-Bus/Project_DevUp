@@ -25,7 +25,7 @@ main .ck-editor[role='application'] .ck.ck-content,
 .ck.ck-editor__editable[role='textbox'],
 /* Inline & Balloon build. */
 .ck.editor[role='textbox'] {
-  width: 100%;
+  /* width: 100%; */
   background: #fff;
   font-size: 1em;
   line-height: 1.6em;
@@ -59,7 +59,7 @@ main .ck-editor[role='application'] .ck.ck-content,
 }
 
 .ck.ck-editor {
-  width: 1200px !important;
+  width: 100% !important;
   border-radius: 25px !important;
   background-color: rgb(40, 40, 40) !important;
 }

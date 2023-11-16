@@ -11,9 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     publishButton.addEventListener('click', async function () {
       const postTitle = document.querySelector('.postTitle').value;
       const postContent = window.editor.getData();
-
-      console.log(postContent);
-
       if (!postTitle.trim() || !postContent.trim()) {
         alert('제목과 내용을 모두 입력해주세요.');
         return; // 함수 실행 중단
