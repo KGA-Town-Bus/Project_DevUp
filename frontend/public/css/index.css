@@ -241,7 +241,7 @@ section > .content-header {
   bottom: 20px;
   width: 40px;
   height: 40px;
-  animation: spin 1s infinite linear;
+  animation: spin 1.5s infinite linear;
 }
 
 @keyframes spin {

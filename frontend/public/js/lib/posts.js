@@ -93,7 +93,7 @@ const postByPage = async (page, searchString) => {
         <span class="body-text" id="postContent">${post.postContent}</span>
       </div>
       <div class="content-footer">
-        <div class="content-date">2023-11-08</div>
+        <div class="content-date">${post.postCreatedAt}</div>
         <div class="icon-set">
           <img src="images/Hit Icon.svg" alt=""/>
           <span id="postHit">${post.postHit}</span>
