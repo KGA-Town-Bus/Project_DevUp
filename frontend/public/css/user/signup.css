@@ -46,3 +46,13 @@ form > button {
   border-radius: 15px;
   font-size: 25px;
 }
+
+/* 웹키트 기반 브라우저에서 스크롤 바 숨기기 */
+::-webkit-scrollbar {
+  display: none; /* 스크롤 바를 완전히 숨김 */
+}
+
+/* Firefox에서 스크롤 바 숨기기 */
+html {
+  scrollbar-width: none; /* 스크롤 바를 완전히 숨김 */
+}

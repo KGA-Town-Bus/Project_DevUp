@@ -14,6 +14,9 @@ const backServer = {
 };
 
 chatRouter.get('/', (req, res) => {
+  if (!req.user || !req.user.Users_uid) {
+    return res.redirect('/users/login');
+  }
   const user = req.user;
   res.render('chat/client.html', {user, backServer});
 });
