@@ -169,29 +169,55 @@ io.of("/visitors").use(
 )
 
 
+// let userList = []
+// io.of("/visitors").on("connection", (socket) => {
+//
+//
+//   const isUser = userList.find((user) => {
+//     return user.Users_uid === socket.user.Users_uid
+//   })
+//   if (!isUser) userList.push(socket.user)
+//
+//
+//
+//   io.of("/visitors").emit('userList', userList);
+//
+//
+//   socket.on('disconnect', () => {
+//     userList = userList.filter((user) => {
+//       return user.Users_uid !== socket.user.Users_uid
+//     })
+//     io.of("/visitors").emit('userExit', userList);
+//     clearInterval(socket.interval);
+//   });
+// })
+
+
 let userList = []
 io.of("/visitors").on("connection", (socket) => {
 
-
-  const isUser = userList.find((user) => {
-    return user.Users_uid === socket.user.Users_uid
-  })
-
-
-  if (!isUser) userList.push(socket.user)
-
-
-
-  io.of("/visitors").emit('userList', userList);
+  userList.push(socket.user)
+  let deDuplicationUserList = Array.from(new Set(userList.map(obj => obj.Users_uid))).map(id => {
+    return userList.find(obj => obj.Users_uid === id);
+  });
+  io.of("/visitors").emit('userList', deDuplicationUserList);
 
 
   socket.on('disconnect', () => {
+    let toggle = false
+
     userList = userList.filter((user) => {
-      return user.Users_uid !== socket.user.Users_uid
+
+      if(toggle === false && user.Users_uid === socket.user.Users_uid) {
+        toggle = true
+        return false
+      }
+      return true
     })
     io.of("/visitors").emit('userExit', userList);
     clearInterval(socket.interval);
   });
+
 })
 
 
