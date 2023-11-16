@@ -128,15 +128,24 @@ textarea::placeholder {
 }
 
 .post-title {
+  width: 100%;
   background-color: rgba(0, 0, 0, 30%);
-  /* border-radius: 10px; */
   color: white;
   padding: 20px 10px 10px 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+.post-title > h1{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 .post-header {
   background-color: rgba(0, 0, 0, 30%);
-  /* margin-top: 19px; */
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -267,10 +276,6 @@ input, textarea {
   margin-bottom: 15px;
 }
 
-
-
-
-
 .comment-item-header {
   display: flex;
   flex-direction: row;
@@ -279,7 +284,7 @@ input, textarea {
 }
 
 .comment-user-nickname {
-  width: 80px;
+  width: 120px;
 }
 
 .comment-created-at {
@@ -290,7 +295,7 @@ input, textarea {
 .button-replies {
   background-color: #8d8acf;
   color: white;
-  width: 92px;
+  width: 110px;
   height: 30px;
   border-radius: 20px;
   border: none;
@@ -313,7 +318,6 @@ input, textarea {
   color: white;
   border-radius: 10px;
   border: none;
-
 }
 
 .replies-item {
@@ -337,10 +341,6 @@ input, textarea {
 
 /* 웹키트 기반 브라우저에서 스크롤 바 숨기기 */
 ::-webkit-scrollbar {
-  display: none; /* 스크롤 바를 완전히 숨김 */
+  background: #374151;
 }
 
-/* Firefox에서 스크롤 바 숨기기 */
-html {
-  scrollbar-width: none; /* 스크롤 바를 완전히 숨김 */
-}
