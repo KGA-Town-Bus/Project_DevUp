@@ -1,3 +1,4 @@
+
 .public-chat {
   position: relative;
   top: 20vh;
@@ -116,6 +117,35 @@
   right: 0;
 }
 
+
+
+.visitors {
+  display: block;
+  position: fixed;
+  top: 200px;
+  left: 1500px;
+
+  width: 310px;
+  height: 55vh;
+  background: linear-gradient(rgba(23, 29, 37, 0.35), #374151);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+  margin-top: 30px;
+  padding: 10px 0 10px 10px;
+}
+
+.visitors-contents {
+  width: 300px;
+  height: 49vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+
+
+
+
 /* 웹키트 기반 브라우저에서 스크롤 바 숨기기 */
 ::-webkit-scrollbar {
   display: none; /* 스크롤 바를 완전히 숨김 */
@@ -125,3 +155,6 @@
 html {
   scrollbar-width: none; /* 스크롤 바를 완전히 숨김 */
 }
+
+
+

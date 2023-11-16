@@ -30,11 +30,8 @@ io.use(async (socket, next) => {
   const user = await tokenParsing(token);
   socket.user = user;
   if (user !== null) {
-    console.log("성공")
-    console.log(user);
     next();
   } else {
-    console.log("실패")
     //예외처리
   }
 });
