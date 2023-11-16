@@ -12,8 +12,9 @@
   position: absolute;
   top: 10%;
   left: 15%;
-  border-radius: 30px;
+  border-radius: 20px;
 }
+
 
 .button-container {
   margin-top: 40px;
@@ -24,7 +25,7 @@
 }
 
 input.postTitle {
-  width: 600px;
+  width: 1200px;
   height: 50px;
   margin-left: 25px;
   margin-bottom: 30px;
