@@ -172,6 +172,7 @@ textarea::placeholder {
   height: 600px;
   color: white;
   padding: 20px;
+  overflow-y: scroll;
 }
 
 .post-content img {
@@ -260,8 +261,11 @@ textarea::placeholder {
   border-radius: 20px;
   color: white;
   margin-bottom: 15px;
-
 }
+
+
+
+
 
 .comment-item-header {
   display: flex;
@@ -291,8 +295,10 @@ textarea::placeholder {
 
 .comment-item-content {
   padding: 0 50px;
-  width: 660px;
+  height: 50px;
+  overflow-y: scroll;
 }
+
 
 .comment-submit {
   position: relative;
