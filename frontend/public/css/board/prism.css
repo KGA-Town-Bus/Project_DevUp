@@ -3,11 +3,15 @@
  * Based on dabblet (http://dabblet.com)
  * @author Lea Verou
  */
+.post-content pre[class*='language-'] {
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.3);
+}
 
 .post-content code[class*='language-'],
 .post-content pre[class*='language-'] {
-  color: black;
-  background: #404040;
+  width: 100% !important;
+  color: white;
+  background: #272727;
   text-shadow: none !important;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   font-size: 1em;
@@ -21,11 +25,13 @@
   -moz-tab-size: 4;
   -o-tab-size: 4;
   tab-size: 4;
-
   -webkit-hyphens: none;
   -moz-hyphens: none;
   -ms-hyphens: none;
   hyphens: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .post-content pre[class*='language-']::-moz-selection,
@@ -109,9 +115,9 @@ pre[class*='language-'] {
 .post-content .token.url,
 .language-css .post-content .token.string,
 .style .post-content .token.string {
-  color: #9a6e3a;
+  color: #b9956c;
   /* This background color was intended by the author of this theme. */
-  background: hsla(0, 0%, 100%, 0.5);
+  background: #272727;
 }
 
 .post-content .token.atrule,

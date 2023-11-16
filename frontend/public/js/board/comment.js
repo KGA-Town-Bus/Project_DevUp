@@ -1,202 +1,204 @@
-const commentButton = () => {
-  document.getElementById("comment-button").addEventListener("click",(e) => {
-    const commentWrapper = document.getElementById("comment-wrapper")
+class Comment {
+  page
+  loadingState
+  loadingEnd
+  postUid
+  commentWrapperElement
+  commentBoxElement
+  commentForm
 
-    if (commentWrapper.style.visibility === "hidden"){
-      commentWrapper.style.visibility = "visible"
-    }else{
-      commentWrapper.style.visibility = "hidden"
+  constructor(postUid) {
+    this.page = 1;
+    this.loadingState = false
+    this.loadingEnd = false
+    this.postUid = postUid
+    this.commentWrapperElement = document.getElementById("comment-wrapper")
+    this.commentBoxElement = document.getElementById("comment-box")
+    this.commentForm = document.getElementById("form-comment")
+    this.commentInputElement = document.getElementById("commentInput")
+  }
+
+
+  async commentsByPage(postUid, page) {
+    const {data: {data: commentList}} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/comments?post=${postUid}&page=${page}`)
+    if (commentList.length === 0) {
+      this.loadingEnd = true;
+      return;
     }
 
-  })
-}
+    commentList.forEach((comment) => {
+      const commentItemElement = document.createElement("div")
+      commentItemElement.className = "comment-item"
 
+      const dateTime = new Date(comment.commentCreatedAt)
+      comment.commentCreatedAt = dateTime.toLocaleDateString() + "  " + dateTime.toLocaleTimeString()
 
-const commentEvent = () => {
-  document.getElementById("form-comment").addEventListener("submit", async (e) => {
-    e.preventDefault()
-    const comment = e.target.comment.value
-    const postUid = window.location.pathname.split("/posts/")[1]
+      commentItemElement.innerHTML =
+          `<div class="comment-item-header">
+            <div><img class="content-user-pfp" src="${comment.commentUserProfile}"></div>
+            <div class="comment-user-nickname">${comment.commentUserNickname} </div>
+            <div class="comment-created-at">${comment.commentCreatedAt}</div>
+            <button class="button-replies" data-commentId="${comment.commentUid}">Replies</button>
+         </div>
+         <div class="comment-item-content">${comment.commentContent} </div>`
+      this.commentBoxElement.appendChild(commentItemElement)
 
-    const {data: {data:newComment}} = await axios.post(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/comments`, {
-      comment,
-      postUid
-    }, {
-      withCredentials: true
+      comment.replies.forEach((comment) => {
+        const repliesItemElement = document.createElement("div")
+        repliesItemElement.className = "replies-item"
+
+        const dateTime = new Date(comment.commentCreatedAt)
+        comment.commentCreatedAt = dateTime.toLocaleDateString() + "  " + dateTime.toLocaleTimeString()
+
+        repliesItemElement.innerHTML =
+            `<div class="comment-item-header">
+            <div><img class="replies-arrow" src="/images/replies-arrow.png"></div>
+            <div><img class="content-user-pfp" src="${comment.commentUserProfile}"></div>
+            <div class="comment-user-nickname">${comment.commentUserNickname} </div>
+            <div class="comment-created-at">${comment.commentCreatedAt}</div>
+         </div>
+         <div class="replies-item-content">${comment.commentContent} </div>`
+        commentItemElement.insertAdjacentElement("afterend", repliesItemElement)
+      })
     })
+  }
 
-    const commentWrapper = document.getElementById("comment-box")
-    const div = document.createElement("div")
-    div.className = "comment-item"
+  commentSubmitEvent(postUid) {
+    this.commentForm.addEventListener("submit", async (e) => {
+      e.preventDefault()
+
+      let comment
+      let type
+      let targetUid
+      if(e.target[0].name === "comment") {
+        comment = e.target.comment.value
+        type = "comment"
+      }else{
+        comment = e.target.replies.value
+        type = "replies"
+        targetUid = e.target.targetUid.value
+      }
+
+      const {data: {data: newComment}} = await axios.post(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/comments`, {
+        comment,
+        type,
+        postUid,
+        targetUid
+      }, {
+        withCredentials: true
+      })
+      this.commentInputElement.value = ""
+      this.commentBoxElement.innerHTML = ""
+
+      console.log(postUid)
+      console.log(this.page)
+      await this.commentsByPage(postUid, 1)
+    })
+  }
+
+  infiniteScroll = async () => {
+    this.commentBoxElement.addEventListener('scroll', this.debounceScroll);
+  }
+
+  debounceScroll = _.debounce(async () => {
+
+    const commentBoxElement = document.getElementById("comment-box")
+
+    const nowHeight = commentBoxElement.scrollY || commentBoxElement.scrollTop;
+    const targetHeight = commentBoxElement.scrollHeight / 6;
+
+    if (
+        nowHeight >= targetHeight &&
+        this.loadingState === false &&
+        this.loadingEnd === false
+    ) {
+      this.loadingState = true;
+      this.loading.start();
+      setTimeout(async () => {
+        this.page++;
+        await this.commentsByPage(postUid, this.page);
+        this.loading.end();
+        this.loadingState = false;
+      }, 1000);
+    }
+  }, 400);
+
+  loading = {
+    start: () => {
+      const spinnerWrapper = document.createElement('div');
+      spinnerWrapper.id = 'spinner-wrapper';
+      spinnerWrapper.style.display = 'flex';
+      spinnerWrapper.style.alignItems = 'center';
+      spinnerWrapper.style.marginTop = "-90px"
+
+      const spinner = document.createElement('img');
+      spinner.id = 'spinner';
+      spinner.className = 'spinner';
+      spinner.src = '/images/loading.png';
+      spinnerWrapper.appendChild(spinner);
+
+      this.commentBoxElement.appendChild(spinnerWrapper);
+    },
+
+    end: () => {
+      const loading = document.querySelector('#spinner-wrapper');
+      loading.remove();
+    },
+  };
 
 
-    const dateTime = new Date(newComment.commentCreatedAt)
+  repliesButtonHandler = () => {
+    this.commentBoxElement.addEventListener("click", (e) => {
+      if (e.target.tagName === "BUTTON") {
+        const commentUid = e.target.dataset.commentid
+        this.commentForm.remove()
 
-    newComment.commentCreatedAt = dateTime.toLocaleDateString() + "  " + dateTime.toLocaleTimeString()
+        const form = document.createElement("form")
+        form.className = "form-comment"
+        form.innerHTML =
+            "<input name='replies' placeholder='Replies...' class='comment-input'>" +
+            `<input type='hidden' name='targetUid' value="${commentUid}">`
 
-    div.innerHTML =
-        `<div class="comment-item-header">
-            <div><img class="content-user-pfp" src="${newComment.commentUserProfile}"></div>
-            <div>${newComment.commentUserNickname} </div>
-            <div class="comment-created-at">${newComment.commentCreatedAt}</div>
-            <button class="button-replies" id="button-replies">Replies</button>
-         </div>
-         <div class="comment-item-content">${newComment.commentContent} </div>`
-    commentWrapper.insertBefore(div,commentWrapper.firstChild)
+        const button = document.createElement("button")
+        button.className = "comment-submit"
+        button.innerText = "Replies"
+        form.appendChild(button)
+
+        this.commentForm = form
+
+        document.getElementById("post-footer").insertBefore(form, document.getElementById("post-footer").firstChild)
+        this.commentSubmitEvent(this.postUid)
+      }
+    })
+  }
 
 
-    document.getElementById("commentInput").value = ""
 
-  })
 }
 
-const loadComments = async () => {
-  const postUid = window.location.pathname.split("/posts/")[1]
-
-  const {data: {data: commentList}} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/comments?post=${postUid}&page=1`)
-
-  const commentWrapper = document.getElementById("comment-box")
-
-  commentList.forEach((comment) => {
-    const div = document.createElement("div")
-    div.className = "comment-item"
-
-    const dateTime = new Date(comment.commentCreatedAt)
-
-    comment.commentCreatedAt = dateTime.toLocaleDateString() + "  " + dateTime.toLocaleTimeString()
-
-    div.innerHTML =
-        `<div class="comment-item-header">
-            <div><img class="content-user-pfp" src="${comment.commentUserProfile}"></div>
-            <div>${comment.commentUserNickname} </div>
-            <div class="comment-created-at">${comment.commentCreatedAt}</div>
-            <button class="button-replies" data-commentId="${comment.commentUid}">Replies</button>
-         </div>
-         <div class="comment-item-content">${comment.commentContent} </div>`
-    commentWrapper.appendChild(div)
-  })
-
-}
-
-
-let page = 1;
-let loadingState = false;
-let loadingEnd = false;
 const postUid = window.location.pathname.split("/posts/")[1]
-
-const debounceScroll = _.debounce(async function () {
-  const commentBox = document.getElementById("comment-box")
-
-  const nowHeight = commentBox.scrollY || commentBox.scrollTop;
-  const targetHeight = commentBox.offsetHeight / 1.6;
-
-  if (
-      nowHeight >= targetHeight &&
-      loadingState === false &&
-      loadingEnd === false
-  ) {
-    loadingState = true;
-    loading.start();
-    setTimeout(async () => {
-      page++;
-      await commentByPage(postUid, page);
-      loading.end();
-      loadingState = false;
-    }, 1000);
-  }
-}, 400);
+const comment = new Comment(postUid)
+comment.commentsByPage(postUid, 1)
+comment.commentSubmitEvent(postUid)
+comment.infiniteScroll()
+comment.repliesButtonHandler()
 
 
 
-const loading = {
-  start: () => {
-    const spinnerWrapper = document.createElement('div');
-    spinnerWrapper.id = 'spinner-wrapper';
-    spinnerWrapper.style.display = 'flex';
-    spinnerWrapper.style.alignItems = 'center';
-    spinnerWrapper.style.marginTop = "-90px"
-
-    const spinner = document.createElement('img');
-    spinner.id = 'spinner';
-    spinner.className = 'spinner';
-    spinner.src = '/images/loading.png';
-    spinnerWrapper.appendChild(spinner);
-
-    contents.appendChild(spinnerWrapper);
-
-  },
-
-  end: () => {
-
-    const loading = document.querySelector('#spinner-wrapper');
-    loading.remove();
-  },
-};
-
-
-const commentByPage = async (postUid, page) => {
-  const {data: {data:commentList}} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/comments?post=${postUid}&page=${page}`)
-
-  if (commentList.length === 0) {
-    loadingEnd = true;
-    return;
-  }
-  const commentWrapper = document.getElementById("comment-box")
-
-  commentList.forEach((comment) => {
-    const div = document.createElement("div")
-    div.className = "comment-item"
-
-    const dateTime = new Date(comment.commentCreatedAt)
-
-    comment.commentCreatedAt = dateTime.toLocaleDateString() + "  " + dateTime.toLocaleTimeString()
-
-    div.innerHTML =
-        `<div class="comment-item-header">
-            <div><img class="content-user-pfp" src="${comment.commentUserProfile}"></div>
-            <div>${comment.commentUserNickname} </div>
-            <div class="comment-created-at">${comment.commentCreatedAt}</div>
-            <button class="button-replies" data-commentId="${comment.commentUid}">Replies</button>
-         </div>
-         <div class="comment-item-content">${comment.commentContent} </div>`
-    commentWrapper.appendChild(div)
-  })
-
-};
 
 
 
-const infiniteScroll = async() => {
-  const commentBox = document.getElementById("comment-box")
-  commentBox.addEventListener('scroll', debounceScroll);
-}
 
 
-const repliesButton = () => {
-  document.getElementById("comment-box").addEventListener("click",(e)=>{
-
-    if(e.target.tagName === "BUTTON"){
-        const div = document.createElement("div")
-      div.innerHTML ="<p>test</p>"
-      e.target.appendChild(div)
-    }
 
 
-    const commentUid = e.target.dataset.commentid
-    if(commentUid !== undefined){
-      console.log(commentUid)
-    }
-
-  })
-}
 
 
-const initComment = async () => {
-  commentButton()
-  commentEvent()
-  await loadComments()
-  await infiniteScroll()
 
-  repliesButton()
-}
-initComment()
+
+
+
+
+
+
+

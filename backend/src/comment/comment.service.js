@@ -11,18 +11,30 @@ class CommentService {
 
   async commentList(postUid, page) {
     try {
-      const pageSize = 5;
+      const pageSize = 10;
       const offset = (page - 1) * pageSize;
 
       const commentList = await this.commentRepository.findAll({
         include: [{
           model: db.Users,
           attributes: ["Users_nickname", "Users_profile"]
-        }],
+        },
+          {
+            model: db.Comments,
+            as: "Replies",
+            include: [
+              {
+                model: db.Users,
+                attributes: ["Users_nickname", "Users_profile"]
+              }
+            ]
+          }
+        ],
         offset: offset,
         limit: pageSize,
         where: {
-          Posts_uid: postUid
+          Posts_uid: postUid,
+          Comments_uid2: null
         },
         order: [['Comments_created_at', 'DESC']],
       })
@@ -38,12 +50,11 @@ class CommentService {
 
   async createComment(requestDTO) {
     try {
-
       const {dataValues: result} = await this.commentRepository.create({
         Posts_uid: requestDTO.postUid,
         Users_uid: requestDTO.userUid,
         Comments_content: requestDTO.commentContent,
-        Comments_uid2: null
+        Comments_uid2: requestDTO.targetUid
       })
 
       const {dataValues} = await this.commentRepository.findOne({
