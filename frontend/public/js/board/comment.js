@@ -21,6 +21,18 @@ class Comment {
 
   async commentsByPage(postUid, page) {
     const {data: {data: commentList}} = await axios.get(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/comments?post=${postUid}&page=${page}`)
+
+    // if (this.page === 1 && commentList.length === 0) {
+    //   this.loadingEnd = true;
+    //   this.commentBoxElement.innerText = "Comments...."
+    //   this.commentBoxElement.style.display = "flex"
+    //   this.commentBoxElement.style.alignItems = "center"
+    //   this.commentBoxElement.style.justifyContent = "center"
+    //   this.commentBoxElement.style.color = "#eee"
+    //   this.commentBoxElement.style.fontSize = "23px"
+    //   return;
+    // }
+
     if (commentList.length === 0) {
       this.loadingEnd = true;
       return;
@@ -61,6 +73,8 @@ class Comment {
         commentItemElement.insertAdjacentElement("afterend", repliesItemElement)
       })
     })
+
+
   }
 
   commentSubmitEvent(postUid) {

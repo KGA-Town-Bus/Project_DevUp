@@ -1,5 +1,5 @@
 if(localStorage.getItem('token') !== null){
-
+  let count = 0;
   const socket = io(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/visitors`, {
     auth: {
       token: localStorage.getItem('token'),
@@ -10,7 +10,9 @@ if(localStorage.getItem('token') !== null){
   const targetElement = document.getElementById("visitors-contents")
   socket.on('userList', userList => {
     targetElement.innerHTML = ""
+    count = 0;
     userList.forEach((user) => {
+      count++;
       const div = document.createElement("div")
       div.style.display = "flex"
       div.style.alignItems = "center"
@@ -31,12 +33,31 @@ if(localStorage.getItem('token') !== null){
       div.appendChild(p)
       targetElement.appendChild(div)
     })
+
+    const countElement = document.createElement("p")
+    countElement.style.color = "white"
+    countElement.style.textAlign = "center"
+    countElement.style.fontSize = "20px"
+    countElement.style.marginBottom = "20px"
+    countElement.id = "visitors-count"
+
+
+
+
+    countElement.innerText = `${count}명의 유저가 접속 중 입니다.`
+    targetElement.insertBefore(countElement, targetElement.firstChild)
+
+
+
+
   });
 
   socket.on('userExit', (userList) => {
     targetElement.innerHTML = ""
+    count = 0;
 
     userList.forEach((user) => {
+      count++;
       const div = document.createElement("div")
       div.style.display = "flex"
       div.style.alignItems = "center"
@@ -56,6 +77,20 @@ if(localStorage.getItem('token') !== null){
       div.appendChild(p)
       targetElement.appendChild(div)
     })
+
+    const countElement = document.createElement("p")
+    countElement.style.color = "white"
+    countElement.style.textAlign = "center"
+    countElement.style.fontSize = "20px"
+    countElement.style.marginBottom = "20px"
+    countElement.id = "visitors-count"
+
+
+
+
+    countElement.innerText = `${count}명의 유저가 접속 중 입니다.`
+    targetElement.insertBefore(countElement, targetElement.firstChild)
+
   });
 
 }

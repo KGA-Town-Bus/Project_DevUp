@@ -186,7 +186,6 @@ io.of("/visitors").on("connection", (socket) => {
 
 
   socket.on('disconnect', () => {
-
     userList = userList.filter((user) => {
       return user.Users_uid !== socket.user.Users_uid
     })
