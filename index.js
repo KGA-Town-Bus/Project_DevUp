@@ -174,14 +174,13 @@ io.of("/visitors").use(
       }
     }
 )
-io.of("/visitors").on("connection", (socket) => {
-  socket.emit('userinfo', socket.user);
 
+io.of("/visitors").on("connection", (socket) => {
+  io.of("/visitors").emit('userinfo', socket.user);
 
   socket.on('disconnect', () => {
-    console.log('a user disconnected');
-    socket.emit('userExit', socket.user);
-
+    io.of("/visitors").emit('userExit', socket.user);
+    clearInterval(socket.interval);
   });
 })
 

@@ -1,4 +1,5 @@
 if(localStorage.getItem('token') !== null){
+
   const socket = io(`${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/visitors`, {
     auth: {
       token: localStorage.getItem('token'),
@@ -15,7 +16,6 @@ if(localStorage.getItem('token') !== null){
 
     div.dataset.user = `${user.Users_uid}`
 
-
     const img =  document.createElement("img")
     img.src = user.Users_profile
     img.style.width = "50px";
@@ -24,17 +24,13 @@ if(localStorage.getItem('token') !== null){
     const p = document.createElement("p")
     p.innerText = `${user.Users_provider}:${user.Role_authority} / ${user.Users_nickname}`
 
-
     div.appendChild(img)
     div.appendChild(p)
     targetElement.appendChild(div)
-
-
-
   });
 
-// Handle incoming chat messages
   socket.on('userExit', (user) => {
+    console.log("나간 유저 : ", user)
     document.querySelector(`[data-user='${user.Users_uid}']`).remove()
 
   });
