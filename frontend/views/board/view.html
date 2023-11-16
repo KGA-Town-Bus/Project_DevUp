@@ -5,6 +5,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{{ post.title }}</title>
+  <link rel="icon" href="/images/DevUp Logo.png" />
   <link rel="stylesheet" href="/css/index.css"/>
   <link rel="stylesheet" href="/css/board/view.css"/>
   <link
@@ -28,42 +29,44 @@
 </head>
 <body>
 <div class="header bs">
-  <a href="/"
-  ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
-  /></a>
-  <div class="text-set ts">
-    <span href="/chat">Public Chat</span>
-    <a href="/admin"><span>Admin</span></a>
-  </div>
-  <div class="search">
-    <span class="search-icon">🔍</span>
-    <input
-            spellcheck="false"
-            type="text"
-            class="search-bar bs"
-            placeholder="Search..."
-            id="search"
-    />
-  </div>
-  {% if user %}
-  <div class="buttons">
-    <a href="/users/logout">
-      <button onclick="localStorage.clear()" class="logout bs">
-        Logout
-      </button>
-    </a>
-  </div>
-  {% else %}
-  <div class="buttons">
-    <a href="/users">
-      <button class="signup bs">Sign Up</button>
-    </a>
-    <a href="/users/login">
-      <button class="signin bs">Sign In</button>
-    </a>
-  </div>
-  {% endif %}
-</div>
+      <a href="/"
+        ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
+      /></a>
+      <div class="text-set ts">
+        <a href="/chat"><span>PUBLIC CHAT</span></a>
+      </div>
+      <div class="search">
+        <span class="search-icon">🔍</span>
+        <input
+          spellcheck="false"
+          type="text"
+          class="search-bar bs"
+          placeholder="Search..."
+          id="search"
+        />
+      </div>
+      {% if user %}
+      <div class="buttons">
+        <a href="/admin">
+          <button class="admin bs">Admin</button>
+        </a>
+        <a href="/users/logout">
+          <button onclick="localStorage.clear()" class="logout bs">
+            Logout
+          </button>
+        </a>
+      </div>
+      {% else %}
+      <div class="buttons">
+        <a href="/users">
+          <button class="signup bs">Sign Up</button>
+        </a>
+        <a href="/users/login">
+          <button class="signin bs">Sign In</button>
+        </a>
+      </div>
+      {% endif %}
+    </div>
 <div class="container">
   <div id="contents" class="contents">
     <div class="post-container">
@@ -76,6 +79,7 @@
             <div class="post-created-at">{{post.postCreatedAt}}</div>
             <img class="post-hit-icon" src="/images/Hit Icon.svg"/>
             <div class="post-hit">{{post.postHit}}</div>
+
           </div>
 
           <div class="post-content" id="post-content">

@@ -47,9 +47,16 @@
   margin-top: 10px;
 }
 
-.message-area {
+.message-area-self {
   display: flex;
   flex-flow: row-reverse nowrap;
+  margin: 20px 0;
+  column-gap: 10px;
+}
+
+.message-area-other {
+  display: flex;
+  flex-flow: row nowrap;
   margin: 20px 0;
   column-gap: 10px;
 }
@@ -64,7 +71,7 @@
   border-radius: 20px;
   padding: 10px;
   max-width: 580px;
-  height: auto;
+  height: min-content;
   background-color: #fee500;
   display: flex;
   flex-flow: row wrap;

@@ -19,7 +19,12 @@ socket.on('userinfo', user => {
 
 // Handle incoming chat messages
 socket.on('chat message', (msg, date, senderInfo) => {
-  const item = `<div class="message-area">
+  const alignClass =
+    senderInfo.profile === currentUser.Users_profile
+      ? 'message-area-self'
+      : 'message-area-other';
+
+  const item = `<div class="${alignClass}">
     <div class="meta-msg">
 
     <div class="message-user">
