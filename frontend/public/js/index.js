@@ -1,6 +1,6 @@
 // chat toggle
-const chatButton = document.querySelector('.chat');
-const chatRoom = document.getElementById('chatroom');
+const chatButton = document.querySelector('.visitors-button');
+const chatRoom = document.getElementById('visitors');
 
 chatButton.addEventListener('click', function () {
   if (chatRoom.style.display === 'none' || chatRoom.style.display === '') {

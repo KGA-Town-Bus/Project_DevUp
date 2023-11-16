@@ -25,6 +25,8 @@
       const BACKEND_SERVER_PORT = {{backServer.BACKEND_SERVER_PORT}}
     </script>
 
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script defer src="/js/visitors/client.js"></script>
     <script type="module" src="/js/index.js"></script>
   </head>
   <body>
@@ -77,163 +79,19 @@
         </div>
         <div class="user-buttons">
           <button class="post bs">Post</button>
-          <button class="chat bs">Visitors</button>
-
+          <button class="visitors-button bs">Visitors</button>
           <a href="/users/profile">
             <button class="profile bs">Profile</button>
           </a>
         </div>
-        <div id="chatroom" class="chatroom">
-          <div class="chat-contents">
-            <div class="chat-content"></div>
-            <div class="chat-content"></div>
-            <div class="chat-content"></div>
-            <div class="chat-content"></div>
-            <div class="chat-content"></div>
-            <div class="chat-content"></div>
-            <div class="chat-content"></div>
-            <div class="chat-content"></div>
+
+        <div id="visitors" class="visitors">
+          <div class="visitors-contents" id="visitors-contents">
           </div>
-          <form class="chat-sendbox" action="#">
-            <input type="text" class="chat-input" />
-            <button class="send-button">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="36"
-                height="35"
-                viewBox="0 0 36 35"
-                fill="none"
-              >
-                <mask
-                  id="mask0_151_11"
-                  style="mask-type: luminance"
-                  maskUnits="userSpaceOnUse"
-                  x="0"
-                  y="0"
-                  width="36"
-                  height="35"
-                >
-                  <path
-                    d="M35.4317 0.934082H0.767578V34.9718H35.4317V0.934082Z"
-                    fill="white"
-                  />
-                </mask>
-                <g mask="url(#mask0_151_11)">
-                  <path
-                    d="M32.7642 5.97314L16.9122 30.7231L14.4996 18.5311L3.65723 12.135L32.7642 5.97314Z"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M14.4243 18.5818L32.7628 5.97314"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </g>
-              </svg>
-            </button>
-          </form>
-        </div>
-      </div>
-      <!-- post modal -->
-      <!-- post modal -->
-      <!-- <div class="modal">
-        <div class="modal-header">
-          <input
-            type="text"
-            name="postTitle"
-            placeholder="Write a title..."
-            class="postTitle"
-            required
-          />
-        </div>
-        <div class="modal-body">
-          <textarea
-            name="postContent"
-            placeholder="Boast your writing skills"
-            id="editor"
-          ></textarea>
         </div>
 
-        <div class="modal-footer">
-          <button class="upload-button">
-            <svg
-              width="50"
-              height="52"
-              viewBox="0 0 50 52"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g filter="url(#filter0_d_438_13)">
-                <path
-                  d="M39.5833 10.4167V39.5833H10.4167V10.4167H39.5833ZM39.5833 6.25H10.4167C8.125 6.25 6.25 8.125 6.25 10.4167V39.5833C6.25 41.875 8.125 43.75 10.4167 43.75H39.5833C41.875 43.75 43.75 41.875 43.75 39.5833V10.4167C43.75 8.125 41.875 6.25 39.5833 6.25ZM29.4583 24.7083L23.2083 32.7708L18.75 27.375L12.5 35.4167H37.5L29.4583 24.7083Z"
-                  fill="#8D8ACF"
-                />
-                <path
-                  d="M40.0833 10.4167V9.91667H39.5833H10.4167H9.91667V10.4167V39.5833V40.0833H10.4167H39.5833H40.0833V39.5833V10.4167ZM13.5219 34.9167L18.7619 28.1744L22.8229 33.0893L23.2208 33.5709L23.6035 33.0772L29.452 25.5326L36.4992 34.9167H13.5219ZM10.4167 6.75H39.5833C41.5989 6.75 43.25 8.40114 43.25 10.4167V39.5833C43.25 41.5989 41.5989 43.25 39.5833 43.25H10.4167C8.40114 43.25 6.75 41.5989 6.75 39.5833V10.4167C6.75 8.40114 8.40114 6.75 10.4167 6.75Z"
-                  stroke="#3C3751"
-                />
-              </g>
-              <defs>
-                <filter
-                  id="filter0_d_438_13"
-                  x="2.25"
-                  y="6.25"
-                  width="45.5"
-                  height="45.5"
-                  filterUnits="userSpaceOnUse"
-                  color-interpolation-filters="sRGB"
-                >
-                  <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix
-                    in="SourceAlpha"
-                    type="matrix"
-                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha"
-                  />
-                  <feOffset dy="4" />
-                  <feGaussianBlur stdDeviation="2" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix
-                    type="matrix"
-                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                  />
-                  <feBlend
-                    mode="normal"
-                    in2="BackgroundImageFix"
-                    result="effect1_dropShadow_438_13"
-                  />
-                  <feBlend
-                    mode="normal"
-                    in="SourceGraphic"
-                    in2="effect1_dropShadow_438_13"
-                    result="shape"
-                  />
-                </filter>
-              </defs>
-            </svg>
-          </button>
-          <button class="publish-button">Publish</button>
-        </div>
-        <button class="close-button">
-          <svg
-            width="38"
-            height="38"
-            viewBox="0 0 38 38"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M28.9749 9.04073C28.3574 8.42323 27.3599 8.42323 26.7424 9.04073L18.9999 16.7674L11.2574 9.02489C10.6399 8.40739 9.64239 8.40739 9.02489 9.02489C8.40739 9.64239 8.40739 10.6399 9.02489 11.2574L16.7674 18.9999L9.02489 26.7424C8.40739 27.3599 8.40739 28.3574 9.02489 28.9749C9.64239 29.5924 10.6399 29.5924 11.2574 28.9749L18.9999 21.2324L26.7424 28.9749C27.3599 29.5924 28.3574 29.5924 28.9749 28.9749C29.5924 28.3574 29.5924 27.3599 28.9749 26.7424L21.2324 18.9999L28.9749 11.2574C29.5766 10.6557 29.5766 9.64239 28.9749 9.04073Z"
-              fill="white"
-            />
-          </svg>
-        </button>
-      </div> -->
+
+      </div>
       {% else %}
       <div class="user bs">
         <div class="user-info">
@@ -246,4 +104,5 @@
   </body>
   <script src="/js/lib/messageCheck.js"></script>
   <script src="/js/lib/tokenCheck.js"></script>
+
 </html>

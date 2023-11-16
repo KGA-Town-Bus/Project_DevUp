@@ -30,9 +30,11 @@ io.use(async (socket, next) => {
   const user = await tokenParsing(token);
   socket.user = user;
   if (user !== null) {
+    console.log("성공")
     console.log(user);
     next();
   } else {
+    console.log("실패")
     //예외처리
   }
 });
@@ -94,10 +96,10 @@ io.on('connection', async socket => {
           nickname: userinfo.Users_nickname,
         };
         socket.emit(
-          'chat message',
-          message.content,
-          message.createdAt.toLocaleString(),
-          senderInfo,
+            'chat message',
+            message.content,
+            message.createdAt.toLocaleString(),
+            senderInfo,
         );
       });
     } catch (e) {
@@ -118,10 +120,10 @@ io.on('connection', async socket => {
         nickname: socket.user.Users_nickname,
       };
       io.emit(
-        'chat message',
-        msg,
-        result.createdAt.toLocaleString(),
-        senderInfo,
+          'chat message',
+          msg,
+          result.createdAt.toLocaleString(),
+          senderInfo,
       );
     } catch (e) {
       console.error('error saving message:', e);
@@ -157,5 +159,31 @@ io.on('connection', async socket => {
     console.log('a user disconnected');
   });
 });
+
+
+io.of("/visitors").use(
+    async (socket, next) => {
+      const token = socket.handshake.auth.token;
+
+      const user = await tokenParsing(token);
+      socket.user = user;
+      if (user !== null) {
+        next();
+      } else {
+        //예외처리
+      }
+    }
+)
+io.of("/visitors").on("connection", (socket) => {
+  socket.emit('userinfo', socket.user);
+
+
+  socket.on('disconnect', () => {
+    console.log('a user disconnected');
+    socket.emit('userExit', socket.user);
+
+  });
+})
+
 
 module.exports = io;

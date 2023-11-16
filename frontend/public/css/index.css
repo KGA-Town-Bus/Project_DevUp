@@ -434,7 +434,7 @@ textarea::placeholder {
   border: none;
 }
 
-.chatroom {
+.visitors {
   display: none;
   position: absolute;
   top: 100%; /* Position directly below the user box */
@@ -449,7 +449,7 @@ textarea::placeholder {
   padding: 10px 0 10px 10px;
 }
 
-.chat-contents {
+.visitors-contents {
   width: 300px;
   height: 49vh;
   overflow-x: hidden;
