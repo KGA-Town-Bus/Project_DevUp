@@ -108,6 +108,8 @@ const postByPage = async (page, searchString) => {
     contents.innerHTML = contents.innerHTML + template;
   });
 
+  Prism.highlightAll();
+
   addClickListenerToPosts();
 };
 

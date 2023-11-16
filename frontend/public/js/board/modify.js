@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const url = window.location.pathname;
       const postUid = url.substring(url.lastIndexOf('/') + 1);
 
+      if (!postTitle.trim() || !postContent.trim()) {
+        alert('제목과 내용을 모두 입력해주세요.');
+        return; // 함수 실행 중단
+      }
+
       const axiosPath = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/posts/${postUid}`;
       const axiosBody = {
         postTitle,
