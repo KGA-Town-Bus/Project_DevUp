@@ -12,6 +12,7 @@
   --ck-sample-sidebar-width: 350px;
   --ck-sample-editor-min-height: 400px;
   --ck-sample-editor-z-index: 10;
+  --ck-border-radius: 15%;
 }
 
 /* --------- EDITOR STYLES  ---------------------------------------------------------------------------------------- */
@@ -62,6 +63,21 @@ main .ck-editor[role='application'] .ck.ck-content,
   border-radius: 25px !important;
   background-color: rgb(40, 40, 40) !important;
 }
+
+.ck-reset_all :not(.ck-reset_all-excluded *),
+.ck.ck-reset,
+.ck.ck-reset_all {
+  word-wrap: break-word;
+  background: #374151;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  transition: none;
+  vertical-align: middle;
+}
+
+
 
 /* --------- DECOUPLED (DOCUMENT) BUILD. ---------------------------------------------*/
 body[data-editor='DecoupledEditor'] .document-editor__toolbar {
@@ -525,3 +541,4 @@ footer {
     font-size: 1.5em;
   }
 }
+
