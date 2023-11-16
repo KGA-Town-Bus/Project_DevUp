@@ -97,7 +97,6 @@ textarea::placeholder {
   border: none;
 }
 
-
 .container {
   min-width: 100%;
   display: block;
@@ -109,9 +108,7 @@ textarea::placeholder {
   flex-direction: row;
   gap: 80px;
   justify-content: center;
-
 }
-
 
 .post-container {
   min-height: 860px;
@@ -124,7 +121,6 @@ textarea::placeholder {
   border-radius: 20px;
   width: 500px;
 }
-
 
 .post-wrapper {
   width: 100%;
@@ -145,7 +141,7 @@ textarea::placeholder {
   flex-direction: row;
   gap: 10px;
   color: white;
-  padding:10px
+  padding: 10px;
 }
 
 .post-header div {
@@ -175,7 +171,7 @@ textarea::placeholder {
 }
 
 .post-content img {
-  width: 300px;
+  max-width: 100%;
 }
 
 .button-box {
@@ -208,7 +204,6 @@ textarea::placeholder {
   background-color: #8ab3cf;
 }
 
-
 .like-button {
   background-color: rgba(0, 0, 0, 0);
   border: none;
@@ -218,7 +213,6 @@ textarea::placeholder {
   color: white;
 }
 
-
 .post-footer {
   display: flex;
   flex-direction: row;
@@ -226,12 +220,10 @@ textarea::placeholder {
   margin-top: 20px;
 }
 
-
 .form-comment {
   width: 900px;
   height: 50px;
 }
-
 
 /*comment*/
 .comment-wrapper {
@@ -244,7 +236,6 @@ textarea::placeholder {
   background-color: rgba(0, 0, 0, 30%);
   font-size: 24px;
   color: white;
-
 }
 
 .comment-box {
@@ -260,7 +251,6 @@ textarea::placeholder {
   border-radius: 20px;
   color: white;
   margin-bottom: 15px;
-
 }
 
 .comment-item-header {
@@ -273,7 +263,6 @@ textarea::placeholder {
 .comment-user-nickname {
   width: 80px;
 }
-
 
 .comment-created-at {
   margin-left: 10px;
@@ -306,7 +295,6 @@ textarea::placeholder {
   border: none;
 }
 
-
 .replies-item {
   height: 120px;
   background-color: rgba(0, 0, 0, 30%);
@@ -326,7 +314,6 @@ textarea::placeholder {
   width: 660px;
 }
 
-
 /* 웹키트 기반 브라우저에서 스크롤 바 숨기기 */
 ::-webkit-scrollbar {
   display: none; /* 스크롤 바를 완전히 숨김 */
@@ -336,4 +323,3 @@ textarea::placeholder {
 html {
   scrollbar-width: none; /* 스크롤 바를 완전히 숨김 */
 }
-
