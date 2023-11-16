@@ -10,7 +10,7 @@
   --ck-sample-color-blue: #1a9aef;
   --ck-sample-container-width: 1285px;
   --ck-sample-sidebar-width: 350px;
-  --ck-sample-editor-min-height: 400px;
+  --ck-sample-editor-min-height: 500px;
   --ck-sample-editor-z-index: 10;
   --ck-border-radius: 15%;
 }
@@ -76,8 +76,6 @@ main .ck-editor[role='application'] .ck.ck-content,
   transition: none;
   vertical-align: middle;
 }
-
-
 
 /* --------- DECOUPLED (DOCUMENT) BUILD. ---------------------------------------------*/
 body[data-editor='DecoupledEditor'] .document-editor__toolbar {
@@ -541,4 +539,3 @@ footer {
     font-size: 1.5em;
   }
 }
-

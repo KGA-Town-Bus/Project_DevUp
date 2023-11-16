@@ -2,6 +2,11 @@
   width: 1200px;
 }
 
+.editor img:active,
+.editor img:focus {
+  opacity: 1; /* 투명도 변경 */
+}
+
 .post-wrapper {
   display: flex;
   flex-direction: column;
