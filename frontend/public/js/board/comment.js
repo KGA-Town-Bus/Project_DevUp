@@ -36,7 +36,7 @@ class Comment {
       commentItemElement.innerHTML =
           `<div class="comment-item-header">
             <div><img class="content-user-pfp" src="${comment.commentUserProfile}"></div>
-            <div>${comment.commentUserNickname} </div>
+            <div class="comment-user-nickname">${comment.commentUserNickname} </div>
             <div class="comment-created-at">${comment.commentCreatedAt}</div>
             <button class="button-replies" data-commentId="${comment.commentUid}">Replies</button>
          </div>
@@ -54,7 +54,7 @@ class Comment {
             `<div class="comment-item-header">
             <div><img class="replies-arrow" src="/images/replies-arrow.png"></div>
             <div><img class="content-user-pfp" src="${comment.commentUserProfile}"></div>
-            <div>${comment.commentUserNickname} </div>
+            <div class="comment-user-nickname">${comment.commentUserNickname} </div>
             <div class="comment-created-at">${comment.commentCreatedAt}</div>
          </div>
          <div class="replies-item-content">${comment.commentContent} </div>`
@@ -101,8 +101,11 @@ class Comment {
   }
 
   debounceScroll = _.debounce(async () => {
-    const nowHeight = this.commentBoxElement.scrollY || this.commentBoxElement.scrollTop;
-    const targetHeight = this.commentBoxElement.offsetHeight / 1.6;
+
+    const commentBoxElement = document.getElementById("comment-box")
+
+    const nowHeight = commentBoxElement.scrollY || commentBoxElement.scrollTop;
+    const targetHeight = commentBoxElement.scrollHeight / 6;
 
     if (
         nowHeight >= targetHeight &&
@@ -134,7 +137,7 @@ class Comment {
       spinner.src = '/images/loading.png';
       spinnerWrapper.appendChild(spinner);
 
-      contents.appendChild(spinnerWrapper);
+      this.commentBoxElement.appendChild(spinnerWrapper);
     },
 
     end: () => {
@@ -162,7 +165,8 @@ class Comment {
         form.appendChild(button)
 
         this.commentForm = form
-        this.commentWrapperElement.insertBefore(form, this.commentWrapperElement.firstChild)
+
+        document.getElementById("post-footer").insertBefore(form, document.getElementById("post-footer").firstChild)
         this.commentSubmitEvent(this.postUid)
       }
     })

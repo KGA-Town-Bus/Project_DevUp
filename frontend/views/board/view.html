@@ -83,22 +83,38 @@
           </div>
         </div>
 
-        <div class="button-box">
-          {% if canEdit %}
-          <button class="modify-button" data-postid="{{ post.postUid }}">
-            Edit
-          </button>
-          <button class="delete-button">Delete</button>
-          {% endif %}
-          <button class="back-button" onclick="location.href = '/'">
-            Back to List
-          </button>
-          
 
-          <button class="like-button" id="like-button">
-            <img src="/images/Like Icon.svg" alt=""/>
-          </button>
-          <p class="like-count" id="likeCount">{{post.postLike}}</p>
+        <div class="post-footer" id="post-footer">
+
+          <form class="form-comment" id="form-comment">
+            <input
+                    type="text"
+                    name="comment"
+                    class="comment-input"
+                    id="commentInput"
+                    placeholder="Comments..."
+            />
+            <button type="submit" class="comment-submit">Post</button>
+          </form>
+          <div class="button-box">
+            {% if canEdit %}
+            <button class="modify-button" data-postid="{{ post.postUid }}">
+              Edit
+            </button>
+            <button class="delete-button">Delete</button>
+            {% endif %}
+            <button class="back-button" onclick="location.href = '/'">
+              Back to List
+            </button>
+
+
+            <button class="like-button" id="like-button">
+              <img src="/images/Like Icon.svg" alt=""/>
+            </button>
+            <p class="like-count" id="likeCount">{{post.postLike}}</p>
+          </div>
+
+
         </div>
       </div>
     </div>
@@ -106,19 +122,10 @@
 
     <div class="comment-container">
       <div class="comment-wrapper" id="comment-wrapper">
-        <form class="form-comment" id="form-comment">
-          <input
-                  type="text"
-                  name="comment"
-                  class="comment-input"
-                  id="commentInput"
-                  placeholder="Comments..."
-          />
-          <button type="submit" class="comment-submit">Post</button>
-        </form>
         <div class="comment-box" id="comment-box"></div>
       </div>
     </div>
+
   </div>
 
   <!--      <div class="user bs">-->

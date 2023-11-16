@@ -11,7 +11,7 @@ class CommentService {
 
   async commentList(postUid, page) {
     try {
-      const pageSize = 5;
+      const pageSize = 10;
       const offset = (page - 1) * pageSize;
 
       const commentList = await this.commentRepository.findAll({
