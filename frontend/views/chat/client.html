@@ -8,6 +8,7 @@
     </script>
     <meta charset="UTF-8" />
     <title>DEVUP Homepage</title>
+    <link rel="icon" href="/images/DevUp Logo.png" />
     <link rel="stylesheet" href="/css/index.css" />
     <link rel="stylesheet" href="/css/chat/chat.css" />
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
@@ -19,21 +20,37 @@
         ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
       /></a>
       <div class="text-set ts">
-        <span href="/chat">Public Chat</span>
-        <span href="/admin">Admin</span>
+        <a href="/chat"><span>PUBLIC CHAT</span></a>
+      </div>
+      <div class="search">
+        <span class="search-icon">🔍</span>
+        <input
+          spellcheck="false"
+          type="text"
+          class="search-bar bs"
+          placeholder="Search..."
+          id="search"
+        />
       </div>
       {% if user %}
       <div class="buttons">
-        <a href="/users/logout"
-          ><button onclick="localStorage.clear()" class="logout bs">
+        <a href="/admin">
+          <button class="admin bs">Admin</button>
+        </a>
+        <a href="/users/logout">
+          <button onclick="localStorage.clear()" class="logout bs">
             Logout
-          </button></a
-        >
+          </button>
+        </a>
       </div>
       {% else %}
       <div class="buttons">
-        <a href="/users"><button class="signup bs">Sign Up</button></a>
-        <a href="/users/login"><button class="signin bs">Sign In</button></a>
+        <a href="/users">
+          <button class="signup bs">Sign Up</button>
+        </a>
+        <a href="/users/login">
+          <button class="signin bs">Sign In</button>
+        </a>
       </div>
       {% endif %}
     </div>

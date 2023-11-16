@@ -3,14 +3,12 @@
   <head>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script> -->
-    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/super-build/ckeditor.js"></script> -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DEVUP Homepage</title>
+    <link rel="icon" href="/images/DevUp Logo.png" />
     <link rel="stylesheet" href="/css/index.css" />
-    <link rel="stylesheet" href="/css/board/editor.css" />
-
+    <script defer src="/js/chat/client.js"></script>
     <script defer src="/js/lib/posts.js"></script>
     <script>
       const PROTOCOL = "{{backServer.PROTOCOL}}"
@@ -26,9 +24,7 @@
         ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
       /></a>
       <div class="text-set ts">
-        <a href="/chat"><span>Public Chat</span></a>
-        <span>Stats</span>
-        <a href="/admin"><span>Admin</span></a>
+        <a href="/chat"><span>PUBLIC CHAT</span></a>
       </div>
       <div class="search">
         <span class="search-icon">🔍</span>
@@ -42,6 +38,9 @@
       </div>
       {% if user %}
       <div class="buttons">
+        <a href="/admin">
+          <button class="admin bs">Admin</button>
+        </a>
         <a href="/users/logout">
           <button onclick="localStorage.clear()" class="logout bs">
             Logout
@@ -236,7 +235,6 @@
       {% endif %}
     </div>
   </body>
-  <script src="/js/board/editor.js"></script>
   <script src="/js/lib/messageCheck.js"></script>
   <script src="/js/lib/tokenCheck.js"></script>
 </html>

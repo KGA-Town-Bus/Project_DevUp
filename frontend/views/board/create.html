@@ -4,6 +4,7 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Create</title>
+    <link rel="icon" href="/images/DevUp Logo.png" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -31,8 +32,7 @@
           ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
         /></a>
         <div class="text-set ts">
-          <span href="/chat">Public Chat</span>
-          <a href="/admin"><span>Admin</span></a>
+          <a href="/chat"><span>PUBLIC CHAT</span></a>
         </div>
         <div class="search">
           <span class="search-icon">🔍</span>
@@ -46,6 +46,9 @@
         </div>
         {% if user %}
         <div class="buttons">
+          <a href="/admin">
+            <button class="admin bs">Admin</button>
+          </a>
           <a href="/users/logout">
             <button onclick="localStorage.clear()" class="logout bs">
               Logout
