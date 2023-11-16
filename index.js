@@ -38,8 +38,6 @@ io.use(async (socket, next) => {
 
 const Messages = db.Messages;
 
-console.log(Messages);
-
 frontApp.listen(3000, () => {
   console.log(`Frontend START: 3000`);
 });
@@ -67,11 +65,9 @@ let users = {};
 
 io.on('connection', async socket => {
   socket.emit('userinfo', socket.user);
-  console.log('a userinfo has been handed to the client');
 
   socket.on('register', uid => {
     users[uid] = socket.id;
-    console.log(`${uid} connected with ${socket.id}`);
   });
 
   if (!socket.recovered) {
@@ -175,7 +171,17 @@ io.of("/visitors").use(
 
 let userList = []
 io.of("/visitors").on("connection", (socket) => {
-  userList.push(socket.user)
+
+
+  const isUser = userList.find((user) => {
+    return user.Users_uid === socket.user.Users_uid
+  })
+
+
+  if (!isUser) userList.push(socket.user)
+
+
+
   io.of("/visitors").emit('userList', userList);
 
 
@@ -188,7 +194,6 @@ io.of("/visitors").on("connection", (socket) => {
     clearInterval(socket.interval);
   });
 })
-
 
 
 module.exports = io;

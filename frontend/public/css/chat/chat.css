@@ -1,12 +1,12 @@
 
 .public-chat {
-  position: relative;
-  top: 20vh;
-  margin: auto;
+  margin: 200px 0 0 200px;
+
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 30px;
   width: 920px;
   height: 680px;
+
 }
 
 .chat-header {
@@ -118,15 +118,21 @@
 }
 
 
+.chat-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
 .visitors {
   display: block;
-  position: fixed;
-  top: 200px;
-  left: 1500px;
-
+  position: relative;
+  top: 70px;
+  left: 100px;
   width: 310px;
   height: 55vh;
+
   background: linear-gradient(rgba(23, 29, 37, 0.35), #374151);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
@@ -137,7 +143,7 @@
 
 .visitors-contents {
   width: 300px;
-  height: 49vh;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
 }
