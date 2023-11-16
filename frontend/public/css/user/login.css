@@ -72,3 +72,7 @@ form > button {
 html {
   scrollbar-width: none; /* 스크롤 바를 완전히 숨김 */
 }
+
+input, textarea {
+  caret-color: rgb(255, 255, 255); /* 원하는 색상으로 변경 */
+}

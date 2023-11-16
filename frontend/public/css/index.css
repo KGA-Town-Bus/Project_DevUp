@@ -112,12 +112,16 @@ input[type='text']:focus,
 input[type='password']:focus,
 input[type='email']:focus {
   /* color: #6ba7ce; */
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
 .search > input,
 .search > input::placeholder {
   color: #eee;
+}
+
+input, textarea {
+  caret-color: rgb(255, 255, 255); /* 원하는 색상으로 변경 */
 }
 
 .buttons {

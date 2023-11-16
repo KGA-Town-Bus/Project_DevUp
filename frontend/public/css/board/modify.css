@@ -82,6 +82,10 @@ input.postTitle {
   color: white; /* 원하는 색상 코드로 변경 */
 }
 
+input, textarea {
+  caret-color: rgb(255, 255, 255); /* 원하는 색상으로 변경 */
+}
+
 textarea {
   resize: none;
   outline: none;
