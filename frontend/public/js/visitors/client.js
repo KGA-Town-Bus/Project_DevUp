@@ -6,36 +6,59 @@ if(localStorage.getItem('token') !== null){
     },
   });
 
+
   const targetElement = document.getElementById("visitors-contents")
-  socket.on('userinfo', user => {
+  socket.on('userList', userList => {
+    targetElement.innerHTML = ""
+    userList.forEach((user) => {
+      const div = document.createElement("div")
+      div.style.display = "flex"
+      div.style.alignItems = "center"
+      div.style.gap = "10px"
 
-    const div = document.createElement("div")
-    div.style.display = "flex"
-    div.style.alignItems = "center"
-    div.style.gap = "10px"
+      div.dataset.user = `${user.Users_uid}`
 
-    div.dataset.user = `${user.Users_uid}`
+      const img =  document.createElement("img")
+      img.src = user.Users_profile
+      img.style.width = "50px";
+      img.style.height = "50px"
 
-    const img =  document.createElement("img")
-    img.src = user.Users_profile
-    img.style.width = "50px";
-    img.style.height = "50px"
+      const p = document.createElement("p")
+      p.innerText = `${user.Users_provider}:${user.Role_authority} / ${user.Users_nickname}`
 
-    const p = document.createElement("p")
-    p.innerText = `${user.Users_provider}:${user.Role_authority} / ${user.Users_nickname}`
-
-    div.appendChild(img)
-    div.appendChild(p)
-    targetElement.appendChild(div)
+      div.appendChild(img)
+      div.appendChild(p)
+      targetElement.appendChild(div)
+    })
   });
 
-  socket.on('userExit', (user) => {
-    console.log("나간 유저 : ", user)
-    document.querySelector(`[data-user='${user.Users_uid}']`).remove()
+  socket.on('userExit', (userList) => {
+    targetElement.innerHTML = ""
 
+    userList.forEach((user) => {
+      const div = document.createElement("div")
+      div.style.display = "flex"
+      div.style.alignItems = "center"
+      div.style.gap = "10px"
+
+      div.dataset.user = `${user.Users_uid}`
+
+      const img =  document.createElement("img")
+      img.src = user.Users_profile
+      img.style.width = "50px";
+      img.style.height = "50px"
+
+      const p = document.createElement("p")
+      p.innerText = `${user.Users_provider}:${user.Role_authority} / ${user.Users_nickname}`
+
+      div.appendChild(img)
+      div.appendChild(p)
+      targetElement.appendChild(div)
+    })
   });
 
 }
+
 
 
 

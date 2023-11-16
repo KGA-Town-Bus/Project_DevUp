@@ -175,14 +175,24 @@ io.of("/visitors").use(
     }
 )
 
+
+let userList = []
 io.of("/visitors").on("connection", (socket) => {
-  io.of("/visitors").emit('userinfo', socket.user);
+  userList.push(socket.user)
+  io.of("/visitors").emit('userList', userList);
+
 
   socket.on('disconnect', () => {
-    io.of("/visitors").emit('userExit', socket.user);
+
+    userList = userList.filter((user) => {
+      return user.Users_uid !== socket.user.Users_uid
+    })
+    io.of("/visitors").emit('userExit', userList);
     clearInterval(socket.interval);
   });
 })
 
 
+
 module.exports = io;
+
