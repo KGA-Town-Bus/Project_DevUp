@@ -97,14 +97,33 @@ textarea::placeholder {
   border: none;
 }
 
-
+.container {
+  min-width: 100%;
+  display: block;
+}
 
 .contents{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  justify-content: center;
+
+}
+
+.post-container {
+    background-color: rgba(0,0,0,30%);
+    min-height: 860px;
+    border-radius: 20px;
+}
+
+.comment-container{
   background-color: rgba(0,0,0,30%);
   min-height: 860px;
-
   border-radius: 20px;
+  width: 500px;
 }
+
 
 .post-wrapper {
   width: 80%;
@@ -169,8 +188,7 @@ textarea::placeholder {
 
 .modify-button,
 .delete-button,
-.back-button,
-.comment-button {
+.back-button{
   width: 105px;
   height: 27px;
   border-radius: 20px;
@@ -178,8 +196,7 @@ textarea::placeholder {
   color: white;
 }
 
-.modify-button,
-.comment-button {
+.modify-button{
   background-color: #8d8acf;
 }
 
@@ -193,9 +210,6 @@ textarea::placeholder {
   background-color: #8ab3cf;
 }
 
-.comment-button {
-  margin-left: 24px;
-}
 
 .like-button {
   background-color: rgba(0, 0, 0, 0);
@@ -214,7 +228,7 @@ textarea::placeholder {
 }
 /*comment*/
 .comment-wrapper {
-  width: 80%;
+  width: 100%;
 }
 
 .comment-input {
@@ -226,13 +240,9 @@ textarea::placeholder {
   padding-left: 30px;
 }
 
-
-
-
 .comment-box{
-  height: 240px;
-
-  width: 710px;
+  height: 800px;
+  width: 100%;
   overflow-y: scroll;
 }
 
@@ -283,4 +293,24 @@ textarea::placeholder {
   color: white;
   border-radius: 10px;
   border: none;
+}
+
+.replies-item {
+  height: 120px;
+  background-color: #374151;
+  padding: 10px 10px 10px 60px;
+  border-radius: 20px;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.replies-arrow {
+  width: 30px;
+  transform: scaleX(-1);
+}
+
+.replies-item-content {
+  padding: 0 90px;
+  width: 660px;
+
 }

@@ -9,9 +9,8 @@ class CommentListResponseDTO extends baseDTO {
   commentPostUid
   commentUserUid
   commentUserNickname
-  commentUid2
   commentUserProfile
-
+  replies = []
 
   constructor(comment) {
     super()
@@ -20,10 +19,24 @@ class CommentListResponseDTO extends baseDTO {
     this.commentCreatedAt = comment.Comments_created_at
     this.commentPostUid = comment.Posts_uid
     this.commentUserUid = comment.Users_uid
-    this.commentUid2 = comment.Comments_uid2
     this.commentUserNickname = comment.User.dataValues.Users_nickname
     this.commentUserProfile = comment.User.dataValues.Users_profile
+    comment.Replies.forEach((comment) => {
+      if (comment) {
 
+        const replies = {
+          commentUid: comment.dataValues.Comments_uid,
+          commentContent: comment.dataValues.Comments_content,
+          commentCreatedAt: comment.dataValues.Comments_created_at,
+          commentPostUid: comment.dataValues.Posts_uid,
+          commentUserUid: comment.dataValues.Users_uid,
+          commentUserNickname: comment.dataValues.User.Users_nickname,
+          commentUserProfile: comment.dataValues.User.Users_profile,
+        }
+
+        this.replies.push(replies)
+      }
+    })
     this.validate(this, InternalServerError)
   }
 }

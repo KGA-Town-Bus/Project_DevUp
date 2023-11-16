@@ -85,10 +85,12 @@ db.Users.hasMany(db.Comments, {
 
 db.Comments.belongsTo(db.Comments, {
   foreignKey: 'Comments_uid2',
+  as: "ParentComment"
 });
 
 db.Comments.hasMany(db.Comments, {
   foreignKey: 'Comments_uid2',
+  as: "Replies"
 });
 
 db.Messages.belongsTo(db.Users, {
