@@ -25,7 +25,9 @@ class JWT {
       const result = this.decode(payload);
       return result;
     } catch (e) {
-      throw new Error("❌JWT Token Verify Error");
+
+      // throw new Error("❌JWT Token Verify Error");
+      throw e
     }
   }
 
