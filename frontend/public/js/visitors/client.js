@@ -6,7 +6,9 @@ if (localStorage.getItem('token') !== null) {
     },
   });
 
-  if (window.location.pathname.split("/")[1] !== "posts") {
+
+  const path = window.location.pathname.split("/")[1]
+  if (path !== "posts" && path !== "users" && path !== "admin" && path !== "create") {
 
     const targetElement = document.getElementById("visitors-contents")
     socket.on('userList', userList => {

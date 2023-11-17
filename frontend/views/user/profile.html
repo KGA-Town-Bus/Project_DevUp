@@ -1,11 +1,19 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      const PROTOCOL = "{{backServer.PROTOCOL}}"
+      const BACKEND_SERVER_IP = "{{backServer.BACKEND_SERVER_IP}}"
+      const BACKEND_SERVER_PORT = {{backServer.BACKEND_SERVER_PORT}}
+    </script>
     <meta charset="UTF-8" />
     <title>DEVUP Homepage</title>
     <link rel="icon" href="/images/DevUp Logo.png" />
     <link rel="stylesheet" href="/css/index.css" />
     <link rel="stylesheet" href="/css/user/profile.css" />
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script defer src="/js/visitors/client.js"></script>
   </head>
 
   <body>

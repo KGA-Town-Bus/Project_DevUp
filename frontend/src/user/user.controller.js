@@ -72,7 +72,7 @@ class UserController {
       const user = req.user ? req.user : undefined
       if (!user) return res.redirect("/")
 
-      res.render("user/profile.html", {user})
+      res.render("user/profile.html", {user, backServer})
     } catch (e) {
       next(e)
     }
