@@ -13,10 +13,10 @@ exports.auth = async (req, res, next) => {
     if (req.headers.authorization) await headerLogic(req, res, next);
     if (req.headers.cookie) await cookieLogic(req, res, next);
 
-    // if (req.user){
-    //   const isUserAccountLocked = await userService.userLockedCheck(req.user)
-    //   if(isUserAccountLocked) throw new BadRequest("잠긴 계정입니다.")
-    // }
+    if (req.user){
+      const isUserAccountLocked = await userService.userLockedCheck(req.user)
+      if(isUserAccountLocked) throw new BadRequest("잠긴 계정입니다.")
+    }
     return next();
   } catch (e) {
     next(e);
@@ -33,12 +33,16 @@ const headerLogic = async (req, res, next) => {
   return;
 };
 const cookieLogic = async (req, res, next) => {
-  // 쿠키로 보내는 경우
-  const token = req.headers.cookie.split('authorization=')[1];
-  const user = await parsing(token);
 
-  req.user = user;
-  return;
+  // 쿠키로 보내는 경우
+  try{
+    const token = req.headers.cookie.split('authorization=')[1];
+    const user = await parsing(token);
+
+    req.user = user;
+    return;
+  }catch(e){
+  }
 };
 
 const parsing = async token => {
