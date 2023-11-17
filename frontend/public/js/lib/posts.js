@@ -81,9 +81,13 @@ const postByPage = async (page, searchString) => {
   }
 
   postList.forEach(post => {
+    const hasImage = post.postContent.includes('<img');
+    const imageIcon = hasImage ? '<span class="fas fa-image" style="display: inline"></span> ' : '';
     const template = `<section class="post-container" data-post-id="${post.postUid}">
       <div class="content-header">
-        <span class="content-title" id="postTitle">${post.postTitle}</span>
+        <span class="content-title" id="postTitle">
+            ${imageIcon}
+            ${post.postTitle}</span>
         <div class="content-user">
           <img class="content-user-pfp" id="userProfile" src='${post.userProfile}'>
           <span class="content-username" id="postWriter">${post.postWriter}</span>

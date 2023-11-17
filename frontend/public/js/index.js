@@ -17,11 +17,12 @@ postButton.addEventListener('click', function () {
   window.location.href = '/create';
 });
 
-// // post modal close
-// const closeButton = document.querySelector('.close-button');
-
-// closeButton.addEventListener('click', function () {
-//   postModal.style.display = 'none';
-// });
-
-// publish button activation -> handed to CHAMDOM
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.post-container').forEach(postContainer => {
+    // 게시물에 이미지가 있는지 확인 (예: post 객체의 postImage 속성)
+    if (postContainer.dataset.postImage) { // postImage는 게시물의 이미지 URL을 나타냅니다.
+      const imageIcon = postContainer.querySelector('.image-icon');
+      imageIcon.style.display = 'inline'; // 이미지 아이콘 표시
+    }
+  });
+});
