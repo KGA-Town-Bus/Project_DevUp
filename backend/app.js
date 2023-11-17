@@ -65,13 +65,9 @@ app.use((error, req, res, next) => {
   if (errorObject.errorMessage === "userPassword 속성이 비어있습니다.") return res.redirect(
       `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/login?error=userPassword 속성이 비어있습니다.`,
   );
-
-
-
-
+  return
 
   // return res.status(error.statusCode).json(errorObject);
-
 });
 
 module.exports = app;
