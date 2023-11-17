@@ -103,9 +103,6 @@ class Comment {
       })
       this.commentInputElement.value = ""
       this.commentBoxElement.innerHTML = ""
-
-      console.log(postUid)
-      console.log(this.page)
       await this.commentsByPage(postUid, 1)
     })
   }

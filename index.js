@@ -206,8 +206,6 @@ io.of("/visitors").on("connection", (socket) => {
   socket.on('disconnect', () => {
     let toggle = false
 
-    // 3 3
-
     userList = userList.filter((user) => {
       if(toggle === false && user.Users_uid === socket.user.Users_uid) {
         toggle = true

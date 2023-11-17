@@ -10,6 +10,7 @@ const {UserSignupResponseDTO} = require("./dto/user.signup.response.dto");
 const mailer = require("../lib/mail")
 const {BadRequest} = require("../lib/customException");
 const bcrypt = require("bcryptjs")
+const db = require("../lib/db");
 
 require("dotenv").config()
 
@@ -17,7 +18,6 @@ const ENV = process.env.ENV
 const BACKEND_SERVER_IP = process.env.BACKEND_SERVER_IP
 const BACKEND_SERVER_PORT = process.env.BACKEND_SERVER_PORT
 const PROTOCOL = process.env.PROTOCOL
-
 
 
 class UserService {
@@ -28,10 +28,10 @@ class UserService {
   async signup(requestDTO) {
     try {
       const [user, isNewRecord] = await this.userRepository.findOrBuild({
-        where: { Users_id : requestDTO.userId},
+        where: {Users_id: requestDTO.userId},
       })
 
-      if(!isNewRecord) throw new BadRequest("이미 존재하는 아이디 입니다.")
+      if (!isNewRecord) throw new BadRequest("이미 존재하는 아이디 입니다.")
 
       user.Users_id = requestDTO.userId;
 
@@ -88,8 +88,11 @@ class UserService {
       }
 
       if (provider === "login") {
-
         const result = await this.userRepository.findOne({
+          include: {
+            model: db.Mail,
+            attributes: ["Mail_check"]
+          },
           where: {
             [Op.and]: [
               {Users_id: userLoginRequestDTO.userId},
@@ -97,19 +100,22 @@ class UserService {
             ]
           }
         })
-        if(result === null) throw new BadRequest("아이디 혹은 비밀번호를 확인해 주세요.")
+        if (result === null) throw new BadRequest("아이디 혹은 비밀번호를 확인해 주세요.")
 
 
         const isPasswordCorrect = await bcrypt.compare(
             userLoginRequestDTO.userPassword,
             result.dataValues.Users_password
         )
-        if(isPasswordCorrect === false) throw new BadRequest("아이디 혹은 비밀번호를 확인해 주세요.")
+        if (isPasswordCorrect === false) throw new BadRequest("아이디 혹은 비밀번호를 확인해 주세요.")
 
 
         const {dataValues: user} = result
-        if(user.Users_account_locked === true) throw new BadRequest("이메일 인증을 진행해 주세요.")
-        delete user.Users_password
+
+        if (user.Mail.dataValues.Mail_check === false) throw new BadRequest("이메일 인증을 진행해 주세요.")
+        if (user.Users_account_locked === true) throw new BadRequest("잠긴 계정입니다.")
+
+          delete user.Users_password
 
         return setJWTToken(user)
       }
@@ -144,7 +150,7 @@ class UserService {
   async profileUpload(requestDTO) {
     try {
       let domain;
-        domain = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`
+      domain = `${PROTOCOL}://${BACKEND_SERVER_IP}:${BACKEND_SERVER_PORT}/`
 
       const filePath = domain + requestDTO.profile.filename
 
@@ -163,26 +169,26 @@ class UserService {
   }
 
   async userInfoUpdate(requestDTO) {
-    try{
+    try {
       const salt = bcrypt.genSaltSync(10)
 
       const result = await this.userRepository.update(
           {
             Users_nickname: requestDTO.userNickname,
             Users_name: requestDTO.userName,
-            Users_email : requestDTO.userEmail,
-            Users_password : requestDTO.userPassword ? bcrypt.hashSync(requestDTO.userPassword, salt) : "password"
+            Users_email: requestDTO.userEmail,
+            Users_password: requestDTO.userPassword ? bcrypt.hashSync(requestDTO.userPassword, salt) : "password"
           },
-      {
-        where:{
-          Users_uid : requestDTO.userUid
-        }
-      },
+          {
+            where: {
+              Users_uid: requestDTO.userUid
+            }
+          },
       )
 
       return result
 
-    }catch(e){
+    } catch (e) {
       throw e
     }
 

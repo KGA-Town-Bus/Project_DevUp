@@ -35,11 +35,7 @@ app.use((error, req, res, next) => {
 
   if(error.errorMessage === "로그인을 해주세요.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=로그인을 해주세요.`)
   if(error.errorMessage === "관리자만 접근 가능합니다.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=관리자만 접근 가능합니다.`)
-  if(error.errorMessage === "잠긴 계정입니다.") return res.json({
-    "message": "잠긴 계정입니다. 관리자에게 문의해주세요."
-  })
-
-
+  if(error.errorMessage === "잠긴 계정입니다.") return res.redirect(`${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=잠긴 계정입니다. 관리자에게 문의해주세요.`)
 
 
 })

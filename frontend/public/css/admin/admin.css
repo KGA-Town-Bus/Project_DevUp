@@ -5,9 +5,10 @@ img {
 }
 
 table{
-  background-color: grey;
+  background-color: rgba(0, 0, 0, 0.35);
   border-collapse: collapse;
   border-radius: 10px;
+  color: #b4afaf;
 }
 
 th {
