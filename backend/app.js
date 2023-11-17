@@ -65,8 +65,12 @@ app.use((error, req, res, next) => {
       `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/login?error=userPassword 속성이 비어있습니다.`);
 
 
+  console.log(1)
+  console.log(error)
   error.stack = undefined;
   const errorObject = Object.assign({}, error);
+  console.log(2)
+  console.log(errorObject)
   return res.status(error.statusCode).json(errorObject);
 });
 
