@@ -22,11 +22,11 @@ const allowedOrigins = [
 ];
 
 app.use(
-  cors({
-    origin: allowedOrigins,
-    method: 'GET,POST,OPTIONS,PUT,DELETE,UPDATE',
-    credentials: true,
-  }),
+    cors({
+      origin: allowedOrigins,
+      method: 'GET,POST,OPTIONS,PUT,DELETE,UPDATE',
+      credentials: true,
+    }),
 );
 
 app.use(cookieParser());
@@ -34,25 +34,29 @@ app.use(auth);
 app.use(router);
 
 app.use(
-  '/api-docs',
-  swaggerUi.serveFiles(backSpecs),
-  swaggerUi.setup(backSpecs, {explorer: true}),
+    '/api-docs',
+    swaggerUi.serveFiles(backSpecs),
+    swaggerUi.setup(backSpecs, {explorer: true}),
 );
 
 app.use((error, req, res, next) => {
   if (error.errorMessage === '이메일 인증을 진행해 주세요.')
     return res.redirect(
-      `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=email 인증을 진행해 주세요.`,
+        `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=email 인증을 진행해 주세요.`,
     );
   if (error.errorMessage === '아이디 혹은 비밀번호를 확인해 주세요.')
     return res.redirect(
-      `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/login?error=아이디 혹은 비밀번호를 확인해 주세요.`,
+        `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/login?error=아이디 혹은 비밀번호를 확인해 주세요.`,
     );
 
-  if (error.errorMessage === '잠긴 계정입니다.')
+
+  if (req.url === "/users/check" && error.errorMessage === "잠긴 계정입니다.") return res.json(error)
+
+  if (req.url === "/users/login" && error.errorMessage === "잠긴 계정입니다.") {
     return res.redirect(
-        `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=잠긴 계정입니다. 관리자에게 문의해주세요.`,
-    );
+        `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=잠긴 계정입니다. 관리자에게 문의해주세요.`)
+  }
+
 
   error.stack = undefined;
   const errorObject = Object.assign({}, error);

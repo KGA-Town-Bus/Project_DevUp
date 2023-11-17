@@ -7,6 +7,7 @@ const postSignup = userController.postSignup.bind(userController);
 const login = userController.login.bind(userController);
 const postProfile = userController.postProfile.bind(userController)
 const putProfile = userController.putProfile.bind(userController)
+const postUserLockedCheck = userController.postUserLockedCheck.bind(userController)
 /**
  * @swagger
  *  /users:
@@ -54,10 +55,12 @@ userRouter.post('/', postSignup);
 
 userRouter.post("/profile", upload.single("profile"), postProfile)
 userRouter.put("/profile",  putProfile)
+userRouter.post("/check", postUserLockedCheck)
 
 
 userRouter.get('/:provider', login);
 userRouter.post('/:provider', login);
+
 
 
 module.exports = userRouter;

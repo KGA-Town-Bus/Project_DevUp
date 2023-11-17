@@ -1,7 +1,7 @@
 const {UserSignupRequestDTO} = require("./dto/user.signup.request.dto");
 const {UserLoginRequestDTO} = require("./dto/user.login.request.dto");
 const {BadRequest} = require("../lib/customException");
-const {Created} = require("../lib/customMessage");
+const {Created, OK} = require("../lib/customMessage");
 const axios = require("axios");
 const {UserProfileImageRequestDTO} = require("./dto/userProfileImageRequestDTO");
 const JWT = require("../lib/jwt")
@@ -102,7 +102,7 @@ class UserController {
   async putProfile(req, res, next) {
     try {
       const userProfileFormRequestDTO = new UserProfileFormRequestDTO(req)
-      const result = this.service.userInfoUpdate(userProfileFormRequestDTO)
+      const result = await this.service.userInfoUpdate(userProfileFormRequestDTO)
       req.user.Users_nickname = userProfileFormRequestDTO.userNickname
       req.user.Users_name = userProfileFormRequestDTO.userName
       req.user.Users_email = userProfileFormRequestDTO.userEmail
@@ -111,6 +111,15 @@ class UserController {
       const token = setJWTToken(req.user)
       res.status(201).json(new Created(token))
 
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async postUserLockedCheck(req, res, next) {
+    try {
+      const isUserAccountLocked = await this.service.userLockedCheck(req.user)
+      return res.status(200).json(new OK(isUserAccountLocked))
     } catch (e) {
       next(e)
     }

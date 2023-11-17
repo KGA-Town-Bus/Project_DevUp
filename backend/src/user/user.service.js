@@ -133,7 +133,6 @@ class UserService {
 
       if (isUser !== null) return setJWTToken(isUser.dataValues)
 
-      // const response = await user.save()
       const response = await user.save().then(() => {
         return user.reload()
       })
@@ -171,7 +170,6 @@ class UserService {
   async userInfoUpdate(requestDTO) {
     try {
       const salt = bcrypt.genSaltSync(10)
-
       const result = await this.userRepository.update(
           {
             Users_nickname: requestDTO.userNickname,
@@ -185,14 +183,27 @@ class UserService {
             }
           },
       )
-
       return result
-
     } catch (e) {
       throw e
     }
-
   }
+
+  async userLockedCheck(user) {
+    try{
+      const findUser = await this.userRepository.findOne({
+        where: {
+          Users_uid: user.Users_uid
+        }
+      })
+      return findUser.dataValues.Users_account_locked;
+    }catch(e){
+      throw e
+    }
+  }
+
+
+
 }
 
 const setJWTToken = (data) => {

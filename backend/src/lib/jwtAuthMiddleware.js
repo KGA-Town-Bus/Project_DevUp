@@ -1,17 +1,25 @@
 const JWT = require('./jwt');
 const jwt = new JWT();
 const db = require('./db');
-
 require('dotenv').config();
+
+const UserService = require("../user/user.service")
+const {BadRequest} = require("./customException");
+const {Users} = db
+const userService = new UserService(Users)
 
 exports.auth = async (req, res, next) => {
   try {
     if (req.headers.authorization) await headerLogic(req, res, next);
     if (req.headers.cookie) await cookieLogic(req, res, next);
 
+    if (req.user){
+      const isUserAccountLocked = await userService.userLockedCheck(req.user)
+      if(isUserAccountLocked) throw new BadRequest("잠긴 계정입니다.")
+    }
     return next();
   } catch (e) {
-    next();
+    next(e);
   }
 };
 
