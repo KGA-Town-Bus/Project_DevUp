@@ -48,7 +48,7 @@ frontApp.listen(3000, () => {
 // });
 
 server.listen(4000, async () => {
-  await db.sequelize.sync({force: true});
+  await db.sequelize.sync({force: false});
 
   const data = ['admin', 'user'];
 
