@@ -1,4 +1,8 @@
 const {BadRequest} = require("./customException");
+
+require("dotenv").config()
+const DOMAIN = process.env.DOMAIN
+
 exports.auth = async (req, res, next) => {
   try {
     if(req.originalUrl === "/favicon.ico") return next()
@@ -17,7 +21,7 @@ exports.auth = async (req, res, next) => {
 
     return next()
   } catch (e) {
-    res.clearCookie("authorization")
+    res.clearCookie("authorization", { domain: DOMAIN})
     next(e)
   }
 }
