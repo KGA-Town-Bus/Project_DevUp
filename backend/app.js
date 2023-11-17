@@ -71,7 +71,8 @@ app.use((error, req, res, next) => {
   const errorObject = Object.assign({}, error);
   console.log(2)
   console.log(errorObject)
-  return res.status(error.statusCode).json(errorObject);
+  // return res.status(error.statusCode).json(error);
+  return res.status(400).json({});
 });
 
 module.exports = app;
