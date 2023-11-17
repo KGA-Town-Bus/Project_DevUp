@@ -13,10 +13,10 @@ exports.auth = async (req, res, next) => {
     if (req.headers.authorization) await headerLogic(req, res, next);
     if (req.headers.cookie) await cookieLogic(req, res, next);
 
-    if (req.user){
-      const isUserAccountLocked = await userService.userLockedCheck(req.user)
-      if(isUserAccountLocked) throw new BadRequest("잠긴 계정입니다.")
-    }
+    // if (req.user){
+    //   const isUserAccountLocked = await userService.userLockedCheck(req.user)
+    //   if(isUserAccountLocked) throw new BadRequest("잠긴 계정입니다.")
+    // }
     return next();
   } catch (e) {
     next(e);
