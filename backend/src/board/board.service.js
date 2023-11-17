@@ -32,7 +32,6 @@ class BoardService {
         Posts_writer: userNickName,
         Users_uid: userUid,
       });
-      console.log(createdValues);
       const createdPost = createdValues.dataValues;
       return new PostCreateResponseDTO(createdPost);
     } catch (e) {
