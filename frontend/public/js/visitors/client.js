@@ -62,6 +62,8 @@ if(localStorage.getItem('token') !== null){
       div.style.display = "flex"
       div.style.alignItems = "center"
       div.style.gap = "10px"
+      div.style.color = "white"
+
 
       div.dataset.user = `${user.Users_uid}`
 

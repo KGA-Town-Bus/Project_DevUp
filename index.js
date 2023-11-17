@@ -206,15 +206,21 @@ io.of("/visitors").on("connection", (socket) => {
   socket.on('disconnect', () => {
     let toggle = false
 
-    userList = userList.filter((user) => {
+    // 3 3
 
+    userList = userList.filter((user) => {
       if(toggle === false && user.Users_uid === socket.user.Users_uid) {
         toggle = true
         return false
       }
       return true
     })
-    io.of("/visitors").emit('userExit', userList);
+
+    let deDuplicationUserList = Array.from(new Set(userList.map(obj => obj.Users_uid))).map(id => {
+      return userList.find(obj => obj.Users_uid === id);
+    });
+
+    io.of("/visitors").emit('userExit', deDuplicationUserList);
     clearInterval(socket.interval);
   });
 
