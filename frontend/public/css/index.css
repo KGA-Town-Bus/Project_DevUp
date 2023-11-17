@@ -245,6 +245,10 @@ section > .content-header {
   line-height: 1.5;
 }
 
+.content-body img{
+  display: none;
+}
+
 .content-footer {
   padding-top: 5px;
   align-self: center;
@@ -507,4 +511,9 @@ textarea::placeholder {
 /* Firefox에서 스크롤 바 숨기기 */
 html {
   scrollbar-width: none; /* 스크롤 바를 완전히 숨김 */
+}
+
+
+.fa-image{
+  width: 20px !important;
 }

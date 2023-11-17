@@ -14,7 +14,6 @@
         ><img class="logo" src="/images/DevUp Logo.png" alt="DEVUP"
       /></a>
       <div class="text-set ts">
-
         <a href="/chat"><span>PUBLIC CHAT</span></a>
       </div>
       <div class="search">
@@ -27,7 +26,6 @@
           id="search"
           readonly
         />
-
       </div>
       {% if user %}
       <div class="buttons">
@@ -130,18 +128,11 @@
               name="userEmail"
               placeholder="email"
               value="{{user.Users_email}}"
+              readonly
             />
             <button type="submit">Edit</button>
           </form>
           {% endif %}
-        </div>
-
-        <div class="friends">
-          <div class="friends-buttons">
-            <button>Contributions</button>
-            <button>Friends</button>
-          </div>
-          <div class="friends-view"></div>
         </div>
       </div>
     </div>

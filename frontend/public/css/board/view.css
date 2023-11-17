@@ -181,7 +181,7 @@ textarea::placeholder {
 }
 
 .post-content img {
-  max-width: 100%;
+  max-width: 50%;
 }
 
 .button-box {
