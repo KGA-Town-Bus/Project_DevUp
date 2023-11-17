@@ -73,7 +73,7 @@ if(localStorage.getItem('token') !== null){
       img.style.height = "50px"
 
       const p = document.createElement("p")
-      p.innerText = `${user.Users_provider}:${user.Role_authority} / ${user.Users_nickname}`
+      p.innerText = `${user.Users_nickname}(${user.Role_authority})`
 
       div.appendChild(img)
       div.appendChild(p)
