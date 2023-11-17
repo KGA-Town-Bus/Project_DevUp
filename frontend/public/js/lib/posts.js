@@ -85,7 +85,7 @@ const postByPage = async (page, searchString) => {
       <div class="content-header">
         <span class="content-title" id="postTitle">${post.postTitle}</span>
         <div class="content-user">
-          <img class="content-user-pfp" id="userProfile" src=${post.userProfile}>
+          <img class="content-user-pfp" id="userProfile" src='${post.userProfile}'>
           <span class="content-username" id="postWriter">${post.postWriter}</span>
         </div>
       </div>

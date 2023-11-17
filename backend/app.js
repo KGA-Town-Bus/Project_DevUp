@@ -49,26 +49,29 @@ app.use((error, req, res, next) => {
         `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/login?error=아이디 혹은 비밀번호를 확인해 주세요.`,
     );
 
+  if (req.url === "/users/check" && error.errorMessage === "잠긴 계정입니다.") return res.json(error)
 
-  try {
-    if (req.url === "/users/check" && error.errorMessage === "잠긴 계정입니다.") return res.json(error)
-
-
-    console.log(req.url)
-    if (req.url === "/users/login" && error.errorMessage === "잠긴 계정입니다.") {
-      return res.redirect(
-          `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=잠긴 계정입니다. 관리자에게 문의해주세요.`)
-    }
-
+  if (req.url === "/users/login" && error.errorMessage === "잠긴 계정입니다.") return res.redirect(
+      `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=잠긴 계정입니다. 관리자에게 문의해주세요.`)
 
 
   error.stack = undefined;
   const errorObject = Object.assign({}, error);
-  return res.status(error.statusCode).json(errorObject);
 
-  }catch (e){
-    console.log(e)
-  }
+  if (errorObject.errorMessage === "userId 속성이 비어있습니다.") return res.redirect(
+      `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/login?error=userId 속성이 비어있습니다.`,
+  );
+
+  if (errorObject.errorMessage === "userPassword 속성이 비어있습니다.") return res.redirect(
+      `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}/users/login?error=userPassword 속성이 비어있습니다.`,
+  );
+
+
+
+
+
+  // return res.status(error.statusCode).json(errorObject);
+
 });
 
 module.exports = app;
