@@ -50,17 +50,25 @@ app.use((error, req, res, next) => {
     );
 
 
-  if (req.url === "/users/check" && error.errorMessage === "잠긴 계정입니다.") return res.json(error)
+  try {
+    if (req.url === "/users/check" && error.errorMessage === "잠긴 계정입니다.") return res.json(error)
 
-  if (req.url === "/users/login" && error.errorMessage === "잠긴 계정입니다.") {
-    return res.redirect(
-        `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=잠긴 계정입니다. 관리자에게 문의해주세요.`)
-  }
+
+    console.log(req.url)
+    if (req.url === "/users/login" && error.errorMessage === "잠긴 계정입니다.") {
+      return res.redirect(
+          `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?error=잠긴 계정입니다. 관리자에게 문의해주세요.`)
+    }
+
 
 
   error.stack = undefined;
   const errorObject = Object.assign({}, error);
   return res.status(error.statusCode).json(errorObject);
+
+  }catch (e){
+    console.log(e)
+  }
 });
 
 module.exports = app;
