@@ -9,7 +9,8 @@
 
 ## ERD
 https://www.erdcloud.com/d/hg5QWHXF2ExSE6cyf
-![image](https://github.com/KGA-Town-Bus/Project_DevUp/assets/54355780/3f639116-f4bf-429b-ba5e-f790ec9a56b0)
+![image](https://github.com/KGA-Town-Bus/Project_DevUp/assets/54355780/54516368-fee1-4513-bfc3-00b80b51ea04)
+
 
 <br>
 
