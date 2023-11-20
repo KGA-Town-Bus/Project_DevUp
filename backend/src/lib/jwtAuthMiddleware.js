@@ -19,18 +19,24 @@ exports.auth = async (req, res, next) => {
     }
     return next();
   } catch (e) {
+    const DOMAIN = process.env.DOMAIN
+    res.clearCookie("authorization",{path: "/", domain: DOMAIN})
     next(e);
   }
 };
 
 const headerLogic = async (req, res, next) => {
-  // 헤더로 JWT 토큰을 보낼 경우
-  const {authorization} = req.headers;
-  const token = authorization.split('Bearer ')[1];
+  try {
+    // 헤더로 JWT 토큰을 보낼 경우
+    const {authorization} = req.headers;
+    const token = authorization.split('Bearer ')[1];
 
-  const user = await parsing(token);
-  req.user = user;
-  return;
+    const user = await parsing(token);
+    req.user = user;
+    return;
+  }catch(e){
+    next(e)
+  }
 };
 const cookieLogic = async (req, res, next) => {
 
@@ -42,6 +48,7 @@ const cookieLogic = async (req, res, next) => {
     req.user = user;
     return;
   }catch(e){
+    next(e)
   }
 };
 
